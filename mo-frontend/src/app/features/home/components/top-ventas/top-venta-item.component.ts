@@ -1,0 +1,145 @@
+import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
+import { TrendIndicatorComponent } from '@mro/shared-ui';
+import { TopVenta, TopVentaTendencia } from '../../models';
+
+const FOOD_EMOJI_MAP: Record<string, string> = {
+  hamburguesa: '🍔',
+  hamb: '🍔',
+  pizza: '🍕',
+  ensalada: '🥗',
+  milanesa: '🥩',
+  lomo: '🥪',
+  pasta: '🍝',
+  empanada: '🥟',
+  pollo: '🍗',
+  sushi: '🍣',
+  taco: '🌮',
+  cafe: '☕',
+  postre: '🍰',
+  helado: '🍨',
+  cerveza: '🍺',
+  vino: '🍷',
+  agua: '💧',
+  gaseosa: '🥤',
+  papas: '🍟',
+  sopa: '🍜',
+};
+
+const MEDAL_COLORS: Record<number, string> = {
+  1: '#FFD700',
+  2: '#C0C0C0',
+  3: '#CD7F32',
+};
+
+const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
+  SUBE: 'up',
+  BAJA: 'down',
+  ESTABLE: 'neutral',
+};
+
+@Component({
+  selector: 'app-top-venta-item',
+  standalone: true,
+  imports: [TrendIndicatorComponent],
+  template: `
+    <div class="venta-item">
+      <span class="venta-posicion" [style.background-color]="medalColor()">
+        #{{ venta().posicion }}
+      </span>
+
+      <span class="venta-emoji">{{ foodEmoji() }}</span>
+
+      <div class="venta-info">
+        <span class="venta-nombre">{{ venta().nombre }}</span>
+      </div>
+
+      <span class="venta-cantidad">{{ venta().cantidadPedidos }} pedidos</span>
+
+      <app-trend-indicator
+        [valor]="venta().variacionPct ?? 0"
+        [direccion]="trendDirection()"
+      />
+    </div>
+  `,
+  styles: [`
+    .venta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      min-height: 40px;
+      border-bottom: 1px solid var(--gray-100, #F3F4F6);
+    }
+
+    .venta-item:last-child {
+      border-bottom: none;
+    }
+
+    .venta-posicion {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .venta-emoji {
+      flex-shrink: 0;
+      font-size: 20px;
+      line-height: 1;
+      width: 24px;
+      text-align: center;
+    }
+
+    .venta-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .venta-nombre {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-800, #1F2937);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+    }
+
+    .venta-cantidad {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-500, #6B7280);
+      white-space: nowrap;
+    }
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TopVentaItemComponent {
+  venta = input.required<TopVenta>();
+
+  protected foodEmoji = computed(() => {
+    const nombre = this.venta().nombre.toLowerCase();
+    for (const [keyword, emoji] of Object.entries(FOOD_EMOJI_MAP)) {
+      if (nombre.includes(keyword)) {
+        return emoji;
+      }
+    }
+    return '🍽️';
+  });
+
+  protected medalColor = computed(() => {
+    const pos = this.venta().posicion;
+    return MEDAL_COLORS[pos] ?? 'var(--gray-400, #9CA3AF)';
+  });
+
+  protected trendDirection = computed(
+    (): 'up' | 'down' | 'neutral' => TENDENCIA_MAP[this.venta().tendencia]
+  );
+}

@@ -1,0 +1,416 @@
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter,
+  signal,
+  effect,
+  OnDestroy,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+
+export interface FilterContadores {
+  todos: number;
+  activos: number;
+  inactivos: number;
+  stockBajo: number;
+  sinStock: number;
+}
+
+export type FiltroTipo = 'todos' | 'activos' | 'inactivos' | 'stockBajo' | 'sinStock';
+interface TabConfig {
+  id: FiltroTipo;
+  label: string;
+  countKey: keyof FilterContadores;
+}
+
+@Component({
+  selector: 'app-filter-toolbar',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
+    <div class="filter-toolbar">
+      <!-- Filter Tabs (Left) -->
+      <div class="filter-tabs">
+        @for (tab of tabs; track tab.id) {
+          <button
+            type="button"
+            class="filter-tab"
+            [class.filter-tab-active]="filtroActivo === tab.id"
+            (click)="onFiltroClick(tab.id)"
+          >
+            {{ tab.label }} ({{ getCount(tab.countKey) }})
+          </button>
+        }
+      </div>
+
+      <!-- Right Section -->
+      <div class="toolbar-right">
+        <!-- Search Box -->
+        <div class="search-box">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="search-icon"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            class="search-input"
+            [ngModel]="busquedaInterna()"
+            (ngModelChange)="onBusquedaInput($event)"
+          />
+          @if (busquedaInterna()) {
+            <button
+              type="button"
+              class="search-clear"
+              (click)="clearSearch()"
+              title="Limpiar busqueda"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          }
+        </div>
+
+        <!-- Nueva Categoria Button -->
+        <button
+          type="button"
+          class="btn-nueva-categoria"
+          (click)="onNuevaCategoriaClick()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Nueva categoria
+        </button>
+
+      </div>
+    </div>
+  `,
+  styles: [`
+    .filter-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Filter Tabs - Pill style like reference */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: #6B7280;
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .filter-tab:hover {
+      border-color: #D1D5DB;
+      background: #F9FAFB;
+    }
+
+    .filter-tab-active {
+      color: #F97316;
+      border-color: #F97316;
+      background: #FFF7ED;
+    }
+
+    .filter-tab-active:hover {
+      background: #FFF7ED;
+      border-color: #F97316;
+    }
+
+    /* Toolbar Right */
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Search Box - Matching reference design */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 0 12px;
+      min-width: 220px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .search-box:focus-within {
+      border-color: #F97316;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    }
+
+    .search-icon {
+      width: 18px;
+      height: 18px;
+      color: #9CA3AF;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 10px 10px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #374151;
+      background: transparent;
+      min-width: 140px;
+    }
+
+    .search-input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .search-clear {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      background: #F3F4F6;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: #6B7280;
+      transition: all 0.15s ease;
+    }
+
+    .search-clear:hover {
+      background: #E5E7EB;
+      color: #374151;
+    }
+
+    .search-clear svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Nueva Categoria Button - Orange like reference */
+    .btn-nueva-categoria {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: white;
+      background: #F97316;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      box-shadow: 0 1px 2px rgba(249, 115, 22, 0.2);
+    }
+
+    .btn-nueva-categoria:hover {
+      background: #EA580C;
+    }
+
+    .btn-nueva-categoria:active {
+      background: #C2410C;
+    }
+
+    .btn-nueva-categoria svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .filter-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-tabs {
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-tabs::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .filter-tabs::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 4px;
+      }
+
+      .toolbar-right {
+        justify-content: space-between;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .toolbar-right {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .btn-nueva-categoria {
+        width: 100%;
+        justify-content: center;
+      }
+
+    }
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FilterToolbarComponent implements OnDestroy {
+  // Inputs
+  @Input() contadores: FilterContadores = {
+    todos: 0,
+    activos: 0,
+    inactivos: 0,
+    stockBajo: 0,
+    sinStock: 0,
+  };
+
+  @Input() filtroActivo: FiltroTipo = 'todos';
+  @Input() busqueda: string = '';
+
+  // Outputs
+  @Output() filtroChange = new EventEmitter<FiltroTipo>();
+  @Output() busquedaChange = new EventEmitter<string>();
+  @Output() nuevaCategoria = new EventEmitter<void>();
+  // Internal state
+  busquedaInterna = signal<string>('');
+
+  // Tabs configuration
+  readonly tabs: TabConfig[] = [
+    { id: 'todos', label: 'Todos', countKey: 'todos' },
+    { id: 'activos', label: 'Activos', countKey: 'activos' },
+    { id: 'inactivos', label: 'Inactivos', countKey: 'inactivos' },
+    { id: 'stockBajo', label: 'Stock bajo', countKey: 'stockBajo' },
+    { id: 'sinStock', label: 'Sin stock', countKey: 'sinStock' },
+  ];
+
+  // Debounce for search
+  private searchSubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
+
+  constructor() {
+    // Setup debounce for search input
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(value => {
+        this.busquedaChange.emit(value);
+      });
+
+    // Sync busqueda input with internal signal
+    effect(() => {
+      // This effect will run when the component initializes
+      // and sync the external busqueda value with internal state
+    }, { allowSignalWrites: true });
+  }
+
+  ngOnChanges(changes: any): void {
+    if (changes['busqueda'] && !changes['busqueda'].firstChange) {
+      this.busquedaInterna.set(this.busqueda);
+    }
+    if (changes['busqueda']?.firstChange) {
+      this.busquedaInterna.set(this.busqueda);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  getCount(key: keyof FilterContadores): number {
+    return this.contadores[key] ?? 0;
+  }
+
+  onFiltroClick(filtro: FiltroTipo): void {
+    if (filtro !== this.filtroActivo) {
+      this.filtroChange.emit(filtro);
+    }
+  }
+
+  onBusquedaInput(value: string): void {
+    this.busquedaInterna.set(value);
+    this.searchSubject.next(value);
+  }
+
+  clearSearch(): void {
+    this.busquedaInterna.set('');
+    this.searchSubject.next('');
+  }
+
+  onNuevaCategoriaClick(): void {
+    this.nuevaCategoria.emit();
+  }
+
+}

@@ -1,0 +1,10 @@
+// Home feature services barrel export
+export { TurnoContextService } from './turno-context.service';
+export { KpiService } from './kpi.service';
+export { AiInsightsService } from './ai-insights.service';
+export { DemandForecastService } from './demand-forecast.service';
+export { StockAlertsService } from './stock-alerts.service';
+export { TopVentasService } from './top-ventas.service';
+export { RentabilityService } from './rentability.service';
+export { AlertFactory } from './alert.factory';
+export { DashboardFacadeService } from './dashboard-facade.service';

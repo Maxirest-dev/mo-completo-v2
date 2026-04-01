@@ -1,0 +1,207 @@
+import { Component, ChangeDetectionStrategy, signal, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ToastContainerComponent } from '@mro/shared-ui';
+import { VentasHeaderComponent } from './components/ventas-header/ventas-header.component';
+import { TabNavComponent } from './components/tab-nav/tab-nav.component';
+import { ResumenCardsComponent } from './components/resumen-cards/resumen-cards.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ArticulosComponent } from './components/articulos/articulos.component';
+import { FormasCobroComponent } from './components/formas-cobro/formas-cobro.component';
+import { ComprobantesComponent } from './components/comprobantes/comprobantes.component';
+import { ConceptosComponent } from './components/conceptos/conceptos.component';
+import {
+  TabVentas, FiltroVentas, VentaResumen,
+  FormaCobro, ComprobanteVenta, ArticuloVenta,
+  ConceptoVenta, CategoriaVenta, MovimientoHora,
+} from './models';
+import {
+  MOCK_RESUMEN_VENTAS, MOCK_RESUMEN_FORMAS, MOCK_RESUMEN_OTROS,
+  MOCK_FORMAS_COBRO, MOCK_ARTICULOS, MOCK_COMPROBANTES,
+  MOCK_CONCEPTOS, MOCK_CATEGORIAS, MOCK_MOVIMIENTOS_HORA,
+  MOCK_VENTAS_COMPROBANTES, filterByTurno,
+} from './data/mock-ventas.data';
+
+@Component({
+  selector: 'app-ventas',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ToastContainerComponent,
+    VentasHeaderComponent,
+    TabNavComponent,
+    ResumenCardsComponent,
+    DashboardComponent,
+    ArticulosComponent,
+    FormasCobroComponent,
+    ComprobantesComponent,
+    ConceptosComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <app-toast-container />
+
+    @if (loading()) {
+      <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Cargando datos...</p>
+      </div>
+    } @else {
+      <!-- Header: Titulo + Tabs -->
+      <header class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">Estadisticas de Ventas</h1>
+          <p class="page-subtitle">Analisis detallado de las estadisticas</p>
+        </div>
+        <app-tab-nav
+          [tabActivo]="tabActivo()"
+          (tabChange)="tabActivo.set($event)"
+        />
+      </header>
+
+      <!-- Filtros -->
+      <app-ventas-header
+        [filtro]="filtro()"
+        (filtroChange)="onFiltroChange($event)"
+      />
+
+      <app-resumen-cards
+        [ventasResumen]="ventasResumen()"
+        [formasResumen]="formasResumen()"
+        [otrosResumen]="otrosResumen()"
+      />
+
+      @switch (tabActivo()) {
+        @case ('dashboard') {
+          <app-dashboard
+            [formasCobro]="formasCobro()"
+            [comprobantes]="comprobantes()"
+            [articulos]="articulos()"
+            [categorias]="categorias()"
+            [movimientos]="movimientosFiltrados()"
+          />
+        }
+        @case ('formasCobro') {
+          <app-formas-cobro
+            [formasCobro]="formasCobro()"
+          />
+        }
+        @case ('conceptos') {
+          <app-conceptos
+            [conceptos]="conceptos()"
+          />
+        }
+        @case ('comprobantes') {
+          <app-comprobantes
+            [comprobantes]="comprobantes()"
+            [ventas]="ventasComprobantes()"
+          />
+        }
+        @case ('articulos') {
+          <app-articulos
+            [articulos]="articulos()"
+            [categorias]="categorias()"
+          />
+        }
+      }
+    }
+  `,
+  styles: [`
+    :host { display: block; }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      gap: 24px;
+    }
+    .page-title {
+      font-size: 26px; font-weight: 600; color: var(--gray-900);
+      margin: 0 0 6px; letter-spacing: -0.01em;
+    }
+    .page-subtitle { font-size: 14px; color: var(--gray-500); margin: 0; }
+
+    .loading-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      gap: 16px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #E5E7EB;
+      border-top-color: #F97316;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #6B7280;
+      margin: 0;
+    }
+  `],
+})
+export class VentasComponent implements OnInit {
+  readonly tabActivo = signal<TabVentas>('dashboard');
+  readonly loading = signal(true);
+
+  readonly filtro = signal<FiltroVentas>({
+    fechaDesde: this.getDefaultFechaDesde(),
+    fechaHasta: this.getDefaultFechaHasta(),
+    turno: 'todos',
+  });
+
+  readonly ventasResumen = signal<VentaResumen>(MOCK_RESUMEN_VENTAS);
+  readonly formasResumen = signal<VentaResumen>(MOCK_RESUMEN_FORMAS);
+  readonly otrosResumen = signal<VentaResumen>(MOCK_RESUMEN_OTROS);
+  readonly formasCobro = signal<FormaCobro[]>([]);
+  readonly articulos = signal<ArticuloVenta[]>([]);
+  readonly comprobantes = signal<ComprobanteVenta[]>([]);
+  readonly ventasComprobantes = signal<any[]>([]);
+  readonly conceptos = signal<ConceptoVenta[]>([]);
+  readonly categorias = signal<CategoriaVenta[]>([]);
+  readonly movimientos = signal<MovimientoHora[]>([]);
+
+  movimientosFiltrados(): MovimientoHora[] {
+    return filterByTurno(this.movimientos(), this.filtro().turno);
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.formasCobro.set(MOCK_FORMAS_COBRO);
+      this.articulos.set(MOCK_ARTICULOS);
+      this.comprobantes.set(MOCK_COMPROBANTES);
+      this.ventasComprobantes.set(MOCK_VENTAS_COMPROBANTES);
+      this.conceptos.set(MOCK_CONCEPTOS);
+      this.categorias.set(MOCK_CATEGORIAS);
+      this.movimientos.set(MOCK_MOVIMIENTOS_HORA);
+      this.loading.set(false);
+    }, 500);
+  }
+
+  onFiltroChange(filtro: FiltroVentas): void {
+    this.filtro.set(filtro);
+  }
+
+  private getDefaultFechaDesde(): string {
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    return d.toISOString().slice(0, 10);
+  }
+
+  private getDefaultFechaHasta(): string {
+    return new Date().toISOString().slice(0, 10);
+  }
+}

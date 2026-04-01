@@ -1,0 +1,102 @@
+// Status badges - matching reference design
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+// Disponible - Green badge with dot
+.badge-success,
+.badge-disponible {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+  }
+}
+
+// Stock medio - Yellow/Amber badge with dot
+.badge-warning,
+.badge-stock-medio {
+  background-color: var(--warning-bg);
+  color: var(--warning-text);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: var(--warning-color);
+    border-radius: 50%;
+  }
+}
+
+// Sin stock - Red badge with dot
+.badge-danger,
+.badge-sin-stock {
+  background-color: var(--danger-bg);
+  color: var(--danger-text);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: var(--danger-color);
+    border-radius: 50%;
+  }
+}
+
+// Info - Blue badge with dot
+.badge-info {
+  background-color: var(--info-bg);
+  color: var(--info-text);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: var(--info-color);
+    border-radius: 50%;
+  }
+}
+
+// Inactivo - Gray badge
+.badge-neutral,
+.badge-inactivo {
+  background-color: var(--inactive-bg);
+  color: var(--inactive-text);
+}
+
+// Activo badge for products
+.badge-activo {
+  background-color: var(--success-bg);
+  color: var(--success-color);
+}
+
+// Status indicator dot
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.status-active {
+    background-color: var(--success-color);
+  }
+
+  &.status-warning {
+    background-color: var(--warning-color);
+  }
+
+  &.status-inactive {
+    background-color: var(--gray-400);
+  }
+}

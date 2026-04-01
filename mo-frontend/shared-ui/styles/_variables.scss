@@ -1,0 +1,73 @@
+// Custom CSS Variables
+:root {
+  // Primary Colors (Orange from reference)
+  --primary-orange: #F97316;
+  --primary-orange-hover: #EA580C;
+  --primary-orange-light: #FFF7ED;
+  --primary-orange-lighter: #FFEDD5;
+
+  // Neutral Colors (Gray scale)
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+
+  // Status Colors - Disponible (Green)
+  --success-color: #10B981;
+  --success-bg: #D1FAE5;
+  --success-text: #065F46;
+
+  // Status Colors - Stock medio (Yellow/Amber)
+  --warning-color: #F59E0B;
+  --warning-bg: #FEF3C7;
+  --warning-text: #92400E;
+
+  // Status Colors - Sin stock (Red)
+  --danger-color: #EF4444;
+  --danger-bg: #FEE2E2;
+  --danger-text: #991B1B;
+
+  // Status Colors - Info (Blue)
+  --info-color: #3B82F6;
+  --info-bg: #DBEAFE;
+  --info-text: #1E40AF;
+
+  // Status Colors - Inactivo (Gray)
+  --inactive-color: #6B7280;
+  --inactive-bg: #F3F4F6;
+  --inactive-text: #4B5563;
+
+  // Legacy variables (for backwards compatibility)
+  --primary-color: var(--primary-orange);
+  --primary-hover: var(--primary-orange-hover);
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-500);
+  --bg-primary: white;
+  --bg-secondary: var(--gray-50);
+  --border-color: var(--gray-200);
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  // Border Radius
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  // Shadows
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}

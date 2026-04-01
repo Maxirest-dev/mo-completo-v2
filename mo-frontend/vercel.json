@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build:prod",
+  "outputDirectory": "dist/mo-frontend/browser",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+  ]
+}

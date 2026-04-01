@@ -1,27 +1,40 @@
 // Custom CSS Variables — v2 Design System (from Pencil)
 :root {
-  // Primary Colors (Orange brand — Pencil)
-  --primary-orange: #F27920;
-  --primary-orange-hover: #E06A10;
-  --primary-orange-light: #FFF7ED;
-  --primary-orange-lighter: #FFD6A7;
-  --primary-orange-dark: #CA3500;
+  // Primary — Azul sobrio (acción principal, links, botones)
+  --primary-blue: #1155CC;
+  --primary-blue-hover: #0D44A6;
+  --primary-blue-light: #E8F0FE;
+  --primary-blue-lighter: #C5DAFC;
 
-  // Header / Dark surfaces
-  --surface-dark: #14161B;
-  --surface-dark-nav: #383E47;
+  // Accent — Naranja intenso (acentos, detalles, contraste cálido)
+  --accent-orange: #F18800;
+  --accent-orange-hover: #D97800;
+  --accent-orange-light: #FFF3E0;
+  --accent-orange-lighter: #F79E4D;
+  --accent-orange-cream: #F79E4D;
 
-  // Neutral Colors (Slate scale — Pencil)
-  --slate-50: #F8FAFC;
-  --slate-100: #F1F5F9;
-  --slate-200: #E2E8F0;
-  --slate-300: #CBD5E1;
-  --slate-400: #90A1B9;
-  --slate-500: #64748B;
-  --slate-600: #45556C;
-  --slate-700: #314158;
-  --slate-800: #1E293B;
-  --slate-900: #0F172B;
+  // Legacy orange aliases (para no romper componentes existentes)
+  --primary-orange: var(--accent-orange);
+  --primary-orange-hover: var(--accent-orange-hover);
+  --primary-orange-light: var(--accent-orange-light);
+  --primary-orange-lighter: var(--accent-orange-lighter);
+  --primary-orange-dark: #C47000;
+
+  // Header / Dark surfaces — Azul oscuro
+  --surface-dark: #01033E;
+  --surface-dark-nav: #0A0D52;
+
+  // Neutral Colors (Slate scale con tinte azulado)
+  --slate-50: #F8FCFF;
+  --slate-100: #EEF2F7;
+  --slate-200: #DDE3ED;
+  --slate-300: #BCC5D3;
+  --slate-400: #8896A7;
+  --slate-500: #5F6D7E;
+  --slate-600: #3D4B5C;
+  --slate-700: #2A3547;
+  --slate-800: #152036;
+  --slate-900: #01033E;
 
   // Legacy gray aliases
   --gray-50: var(--slate-50);
@@ -53,11 +66,11 @@
   --danger-text: #DC2626;
   --danger-border: #FECACA;
 
-  // Status — Info (Blue)
-  --info-color: #3B82F6;
-  --info-bg: #EFF6FF;
-  --info-text: #1E40AF;
-  --info-border: #BFDBFE;
+  // Status — Info (Blue — ahora usa el primary blue)
+  --info-color: #1155CC;
+  --info-bg: #E8F0FE;
+  --info-text: #0D44A6;
+  --info-border: #C5DAFC;
 
   // Status — Inactivo (Slate)
   --inactive-color: #90A1B9;
@@ -71,8 +84,8 @@
   --status-available-border: #FFD6A7;
 
   // Semantic aliases
-  --primary-color: var(--primary-orange);
-  --primary-hover: var(--primary-orange-hover);
+  --primary-color: var(--primary-blue);
+  --primary-hover: var(--primary-blue-hover);
   --text-primary: var(--slate-700);
   --text-secondary: var(--slate-400);
   --text-heading: var(--slate-900);

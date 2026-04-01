@@ -23,8 +23,8 @@
 
   &:focus {
     outline: none;
-    border-color: var(--primary-orange);
-    box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(17, 85, 204, 0.1);
   }
 
   &::placeholder {
@@ -50,7 +50,7 @@
   transition: border-color 0.2s;
 
   &:focus-within {
-    border-color: var(--primary-orange);
+    border-color: var(--primary-blue);
   }
 
   input {

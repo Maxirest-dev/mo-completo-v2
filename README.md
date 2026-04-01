@@ -44,8 +44,7 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 ### 2026-04-01
 
 **Commits incluidos:**
-- 056b19c chore: remove temporary migration script
-- 90ecb0b feat: apply Pencil v2 UI design system across all modules
+- (sin commits pendientes)
 
 **Archivos modificados:**
-  - `.sh`: update-v2-styles.sh
+  - `.md`: README.md

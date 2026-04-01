@@ -47,4 +47,4 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 - (sin commits pendientes)
 
 **Archivos modificados:**
-  - `.md`: README.md
+  - `.ts`: header.component.ts

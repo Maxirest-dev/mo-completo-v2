@@ -313,30 +313,30 @@ const MOCK_NEGOCIO: NegocioData = {
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -347,8 +347,8 @@ const MOCK_NEGOCIO: NegocioData = {
       gap: 6px;
       padding: 10px 22px;
       border: none;
-      border-radius: 8px;
-      background: #F97316;
+      border-radius: var(--radius-sm);
+      background: var(--primary-orange);
       color: white;
       font-size: 13px;
       font-weight: 600;
@@ -357,7 +357,7 @@ const MOCK_NEGOCIO: NegocioData = {
       white-space: nowrap;
     }
     .btn-primary:hover {
-      background: #EA580C;
+      background: var(--primary-orange-hover);
     }
 
     .btn-dark {
@@ -366,8 +366,8 @@ const MOCK_NEGOCIO: NegocioData = {
       gap: 6px;
       padding: 10px 22px;
       border: none;
-      border-radius: 8px;
-      background: #111827;
+      border-radius: var(--radius-sm);
+      background: var(--slate-900);
       color: white;
       font-size: 13px;
       font-weight: 600;
@@ -376,7 +376,7 @@ const MOCK_NEGOCIO: NegocioData = {
       white-space: nowrap;
     }
     .btn-dark:hover {
-      background: #1F2937;
+      background: var(--slate-800);
     }
 
     .btn-secondary {
@@ -384,27 +384,28 @@ const MOCK_NEGOCIO: NegocioData = {
       align-items: center;
       gap: 6px;
       padding: 10px 22px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .btn-secondary:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     /* ===== Business Card ===== */
     .business-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       padding: 28px;
       margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
     }
 
     .business-top {
@@ -416,12 +417,12 @@ const MOCK_NEGOCIO: NegocioData = {
     .business-logo {
       width: 80px;
       height: 80px;
-      border-radius: 14px;
-      background: #FFF7ED;
+      border-radius: var(--radius-lg);
+      background: var(--primary-orange-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #F97316;
+      color: var(--primary-orange);
       flex-shrink: 0;
     }
 
@@ -433,7 +434,7 @@ const MOCK_NEGOCIO: NegocioData = {
 
     .card-separator {
       height: 1px;
-      background: #F3F4F6;
+      background: var(--slate-100);
       margin: 24px 0;
     }
 
@@ -441,7 +442,7 @@ const MOCK_NEGOCIO: NegocioData = {
     .section-label {
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-700);
       margin: 0 0 16px;
     }
 
@@ -460,12 +461,12 @@ const MOCK_NEGOCIO: NegocioData = {
     .contact-icon {
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      background: #FFF7ED;
+      border-radius: var(--radius-md);
+      background: var(--primary-orange-light);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #F97316;
+      color: var(--primary-orange);
       flex-shrink: 0;
     }
 
@@ -481,14 +482,14 @@ const MOCK_NEGOCIO: NegocioData = {
     .field-label {
       font-size: 11px;
       font-weight: 600;
-      color: #9CA3AF;
+      color: var(--slate-400);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
 
     .field-value {
       font-size: 14px;
-      color: #111827;
+      color: var(--slate-900);
       font-weight: 500;
     }
     .field-value--bold {
@@ -498,10 +499,10 @@ const MOCK_NEGOCIO: NegocioData = {
 
     .field-input {
       padding: 8px 12px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
       font-size: 14px;
-      color: #374151;
+      color: var(--slate-700);
       font-family: inherit;
       outline: none;
       transition: border-color 0.15s;
@@ -509,8 +510,8 @@ const MOCK_NEGOCIO: NegocioData = {
       box-sizing: border-box;
     }
     .field-input:focus {
-      border-color: #F97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
     .field-input--sm {
       padding: 6px 10px;
@@ -526,9 +527,10 @@ const MOCK_NEGOCIO: NegocioData = {
 
     .info-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .info-card-header {
@@ -538,7 +540,7 @@ const MOCK_NEGOCIO: NegocioData = {
     .info-card-title {
       font-size: 16px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0;
     }
 

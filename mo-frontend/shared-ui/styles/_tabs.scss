@@ -1,4 +1,4 @@
-// Tabs component
+// Tabs component — v2 Pencil
 .tabs {
   display: flex;
   gap: 4px;
@@ -12,13 +12,13 @@
   color: var(--text-secondary);
   background: transparent;
   border: none;
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
     color: var(--text-primary);
-    background-color: var(--gray-100);
+    background-color: var(--slate-100);
   }
 
   &.tab-active {
@@ -27,39 +27,41 @@
   }
 }
 
-// Filter pills - matching menu project filter-tab design
+// Filter pills — v2 Pencil (rounded 10px, slate borders)
 .filter-pills {
   display: flex;
-  gap: 8px;
+  gap: 22px;
   flex-wrap: wrap;
 }
 
 .filter-pill {
-  padding: 9px 18px;
+  padding: 11px 16px;
   font-size: 14px;
   font-weight: 500;
   font-family: inherit;
-  color: var(--gray-500);
+  color: var(--slate-700);
   background: white;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-full);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
+  text-align: center;
+  line-height: 1.428;
 
   &:hover {
-    border-color: var(--gray-300);
-    background: var(--gray-50);
+    border-color: var(--slate-300);
+    background: var(--slate-50);
   }
 
   &.filter-pill-active {
-    color: var(--primary-orange);
-    border-color: var(--primary-orange);
+    color: var(--primary-orange-dark);
+    border-color: var(--primary-orange-lighter);
     background-color: var(--primary-orange-light);
 
     &:hover {
       background-color: var(--primary-orange-light);
-      border-color: var(--primary-orange);
+      border-color: var(--primary-orange-lighter);
     }
   }
 }

@@ -205,13 +205,13 @@ import { Categoria } from '../../models/categoria.model';
     .dialog-title {
       font-size: 22px;
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0 0 6px 0;
     }
 
     .dialog-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -248,12 +248,12 @@ import { Categoria } from '../../models/categoria.model';
       display: block;
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
     .required {
-      color: #EF4444;
+      color: var(--danger-color);
     }
 
     .form-input,
@@ -262,9 +262,9 @@ import { Categoria } from '../../models/categoria.model';
       padding: 12px 14px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       transition: all 0.15s ease;
     }
@@ -272,20 +272,20 @@ import { Categoria } from '../../models/categoria.model';
     .form-input:focus,
     .form-select:focus {
       outline: none;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
     .form-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .form-input-error {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
     }
 
     .form-input-error:focus {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
 
@@ -308,7 +308,7 @@ import { Categoria } from '../../models/categoria.model';
       display: block;
       margin-top: 6px;
       font-size: 12px;
-      color: #EF4444;
+      color: var(--danger-color);
     }
 
     /* Input with prefix */
@@ -321,7 +321,7 @@ import { Categoria } from '../../models/categoria.model';
     .input-prefix {
       position: absolute;
       left: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       font-size: 14px;
       font-weight: 500;
       pointer-events: none;
@@ -381,22 +381,22 @@ import { Categoria } from '../../models/categoria.model';
     }
 
     .btn-primary {
-      background-color: #1F2937;
+      background-color: var(--text-heading);
       color: white;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: #374151;
+      background-color: var(--text-primary);
     }
 
     .btn-secondary {
       background-color: white;
-      color: #374151;
-      border: 1px solid #E5E7EB;
+      color: var(--text-primary);
+      border: 1px solid var(--slate-200);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background-color: #F9FAFB;
+      background-color: var(--slate-50);
     }
 
     /* Spinner */

@@ -87,10 +87,11 @@ Chart.register(...registerables);
     }
 
     .comp-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 20px 24px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      padding: 20px 25px;
       border-left: 4px solid;
     }
 
@@ -98,7 +99,7 @@ Chart.register(...registerables);
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-400, #90A1B9);
       margin: 0 0 8px;
     }
 
@@ -106,7 +107,7 @@ Chart.register(...registerables);
       font-family: 'Inter', sans-serif;
       font-size: 22px;
       font-weight: 700;
-      color: #111827;
+      color: var(--slate-900, #0F172B);
       margin-bottom: 14px;
     }
 
@@ -125,28 +126,29 @@ Chart.register(...registerables);
     .comp-detail-label {
       font-family: 'Inter', sans-serif;
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400, #90A1B9);
     }
 
     .comp-detail-value {
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-700, #314158);
     }
 
     .chart-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 20px 24px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      padding: 20px 25px;
     }
 
     .chart-title {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-900, #0F172B);
       margin: 0 0 16px;
     }
 
@@ -156,33 +158,52 @@ Chart.register(...registerables);
     }
 
     .table-card {
-      background: white; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px 24px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      padding: 20px 25px;
     }
     .table-title {
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-      color: #374151; margin: 0 0 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--slate-900, #0F172B);
+      margin: 0 0 16px;
     }
     .table-wrapper { overflow-x: auto; }
     .data-table {
-      width: 100%; border-collapse: separate; border-spacing: 0;
-      font-family: 'Inter', sans-serif; font-size: 13px;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
     }
-    .data-table thead tr { background: #F3F4F6; }
+    .data-table thead tr { background: var(--slate-50, #F8FAFC); }
     .data-table th {
-      padding: 10px 12px; font-weight: 600; color: #6B7280; text-align: left;
-      font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;
-      white-space: nowrap; border-bottom: 1px solid #E5E7EB;
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--slate-400, #90A1B9);
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
     }
-    .data-table th:first-child { border-top-left-radius: 8px; }
-    .data-table th:last-child { border-top-right-radius: 8px; }
+    .data-table th:first-child { border-top-left-radius: var(--radius-sm, 8px); }
+    .data-table th:last-child { border-top-right-radius: var(--radius-sm, 8px); }
     .data-table td {
-      padding: 10px 12px; color: #374151; border-bottom: 1px solid #F3F4F6; white-space: nowrap;
+      padding: 10px 12px;
+      color: var(--slate-700, #314158);
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
+      white-space: nowrap;
     }
-    .data-table tbody tr:hover { background: #FAFAFA; }
+    .data-table tbody tr:hover { background: var(--slate-50, #F8FAFC); }
     .text-right { text-align: right; }
     .font-bold { font-weight: 600; }
-    .cell-code { font-family: 'Inter', monospace; font-size: 12px; color: #6B7280; }
-    .desc-cell { color: #DC2626; }
+    .cell-code { font-family: 'Inter', monospace; font-size: 12px; color: var(--slate-400, #90A1B9); }
+    .desc-cell { color: var(--danger-text, #DC2626); }
 
     @media (max-width: 1024px) {
       .cards-row {
@@ -221,11 +242,11 @@ export class ComprobantesComponent {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
-        grid: { color: '#F3F4F6' },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
+        grid: { color: '#F1F5F9' },
       },
       x: {
-        ticks: { font: { family: 'Inter', size: 11 } },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
         grid: { display: false },
       },
     },

@@ -20,7 +20,7 @@ import { HeaderComponent } from '../header/header.component';
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-color: #F9FAFB;
+      background-color: var(--bg-secondary, #F8FAFC);
     }
 
     .main-content {

@@ -151,18 +151,18 @@ export interface ConteosInsumos {
 // ============================================================
 
 export const ESTADO_ORDEN_COLORS: Record<EstadoOrden, { bg: string; text: string; dot: string }> = {
-  'Pendiente':  { bg: '#FEF3C7', text: '#92400E', dot: '#F59E0B' },
+  'Pendiente':  { bg: 'var(--warning-bg)', text: '#92400E', dot: 'var(--warning-color)' },
   'Pedida':     { bg: '#DBEAFE', text: '#1E40AF', dot: '#3B82F6' },
-  'Recibida':   { bg: '#D1FAE5', text: '#065F46', dot: '#10B981' },
+  'Recibida':   { bg: 'var(--success-bg)', text: 'var(--success-text)', dot: 'var(--success-color)' },
   'Facturada':  { bg: '#EDE9FE', text: '#5B21B6', dot: '#8B5CF6' },
-  'Pagada':     { bg: '#D1FAE5', text: '#065F46', dot: '#10B981' }
+  'Pagada':     { bg: 'var(--success-bg)', text: 'var(--success-text)', dot: 'var(--success-color)' }
 };
 
 export const ESTADO_INSUMO_COLORS: Record<EstadoInsumo, { bg: string; text: string; dot: string }> = {
-  'Activo':    { bg: '#D1FAE5', text: '#065F46', dot: '#10B981' },
-  'Inactivo':  { bg: '#F3F4F6', text: '#4B5563', dot: '#6B7280' },
-  'StockBajo': { bg: '#FEF3C7', text: '#92400E', dot: '#F59E0B' },
-  'SinStock':  { bg: '#FEE2E2', text: '#991B1B', dot: '#EF4444' }
+  'Activo':    { bg: 'var(--success-bg)', text: 'var(--success-text)', dot: 'var(--success-color)' },
+  'Inactivo':  { bg: 'var(--slate-100)', text: 'var(--slate-600)', dot: 'var(--slate-500)' },
+  'StockBajo': { bg: 'var(--warning-bg)', text: '#92400E', dot: 'var(--warning-color)' },
+  'SinStock':  { bg: 'var(--danger-bg)', text: 'var(--danger-text)', dot: 'var(--danger-color)' }
 };
 
 // ============================================================

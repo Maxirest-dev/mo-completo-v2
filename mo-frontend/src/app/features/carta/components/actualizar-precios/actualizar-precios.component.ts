@@ -39,7 +39,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
         <div class="header-info">
           <div class="header-title-row">
             <h1 class="page-title">Actualizar Precios</h1>
-            <svg class="title-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.5">
+            <svg class="title-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
             </svg>
           </div>
@@ -342,7 +342,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
 
             <!-- Resumen -->
             <div class="mg-summary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
               </svg>
               <span>Esto afectara a <strong>{{ selectedProductosCount() }} productos</strong> en <strong>{{ selectedCatsCount() }} categorias</strong></span>
@@ -435,26 +435,26 @@ interface CategoriaPrecios extends CategoriaGridRow {
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7280;
+      color: var(--slate-500);
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 9999px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
     .filter-tab:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
     .filter-tab-active {
-      color: #F97316;
-      border-color: #F97316;
+      color: var(--primary-orange);
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
     .filter-tab-active:hover {
       background: #FFF7ED;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     /* Dropdown "Mas" */
@@ -488,7 +488,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       left: 0;
       min-width: 200px;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       z-index: 10;
@@ -510,7 +510,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: transparent;
       border: none;
       border-radius: 6px;
@@ -519,17 +519,17 @@ interface CategoriaPrecios extends CategoriaGridRow {
       text-align: left;
     }
     .dropdown-item:hover {
-      background: #F9FAFB;
+      background: var(--slate-50);
     }
     .dropdown-item-active {
-      color: #F97316;
+      color: var(--primary-orange);
       background: #FFF7ED;
     }
     .dropdown-item-active:hover {
       background: #FFF7ED;
     }
     .dropdown-item-count {
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-weight: 400;
       font-size: 13px;
     }
@@ -549,20 +549,20 @@ interface CategoriaPrecios extends CategoriaGridRow {
       display: flex;
       align-items: center;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       padding: 0 12px;
       min-width: 220px;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .search-box:focus-within {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
     .search-icon {
       width: 18px;
       height: 18px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       flex-shrink: 0;
     }
     .search-input {
@@ -572,11 +572,11 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 10px 10px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: transparent;
       min-width: 140px;
     }
-    .search-input::placeholder { color: #9CA3AF; }
+    .search-input::placeholder { color: var(--slate-400); }
     .search-clear {
       display: flex;
       align-items: center;
@@ -584,14 +584,14 @@ interface CategoriaPrecios extends CategoriaGridRow {
       width: 20px;
       height: 20px;
       padding: 0;
-      background: #F3F4F6;
+      background: var(--slate-100);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      color: #6B7280;
+      color: var(--slate-500);
       transition: all 0.15s ease;
     }
-    .search-clear:hover { background: #E5E7EB; color: #374151; }
+    .search-clear:hover { background: var(--slate-200); color: var(--text-primary); }
     .search-clear svg { width: 12px; height: 12px; }
 
     /* Nueva lista button */
@@ -604,7 +604,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       font-weight: 500;
       font-family: inherit;
       color: white;
-      background: #F97316;
+      background: var(--primary-orange);
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -612,7 +612,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       white-space: nowrap;
       box-shadow: 0 1px 2px rgba(249, 115, 22, 0.2);
     }
-    .btn-nueva:hover { background: #EA580C; }
+    .btn-nueva:hover { background: var(--primary-orange-hover); }
     .btn-nueva:active { background: #C2410C; }
     .btn-nueva svg { width: 18px; height: 18px; }
 
@@ -626,14 +626,14 @@ interface CategoriaPrecios extends CategoriaGridRow {
       font-weight: 500;
       font-family: inherit;
       color: white;
-      background: #1F2937;
+      background: var(--text-heading);
       border: none;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
-    .btn-mass-global:hover { background: #374151; }
+    .btn-mass-global:hover { background: var(--text-primary); }
     .btn-mass-global svg { width: 18px; height: 18px; }
 
     /* Mass global dialog */
@@ -651,60 +651,60 @@ interface CategoriaPrecios extends CategoriaGridRow {
     }
     @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     .mg-header { padding: 28px 28px 0; }
-    .mg-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px; }
-    .mg-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .mg-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px; }
+    .mg-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
     .mg-body { padding: 24px 28px; }
     .mg-toggle-row { display: flex; gap: 8px; margin-bottom: 20px; }
     .mg-toggle {
       flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
       padding: 10px; font-size: 14px; font-weight: 500; font-family: inherit;
-      color: #6B7280; background: white; border: 1px solid #E5E7EB;
+      color: var(--slate-500); background: white; border: 1px solid var(--slate-200);
       border-radius: 8px; cursor: pointer; transition: all 0.15s;
     }
     .mg-toggle span { font-weight: 700; }
-    .mg-toggle:hover { border-color: #D1D5DB; }
-    .mg-toggle-active { color: #F97316; border-color: #F97316; background: #FFF7ED; }
-    .mg-label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .mg-toggle:hover { border-color: var(--slate-300); }
+    .mg-toggle-active { color: var(--primary-orange); border-color: var(--primary-orange); background: #FFF7ED; }
+    .mg-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
     .mg-input-wrapper { position: relative; display: flex; align-items: center; }
     .mg-input-prefix {
-      position: absolute; left: 14px; color: #6B7280;
+      position: absolute; left: 14px; color: var(--slate-500);
       font-size: 14px; font-weight: 500; pointer-events: none;
     }
     .mg-input {
       width: 100%; padding: 12px 14px 12px 30px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; transition: all 0.15s;
     }
-    .mg-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
-    .mg-hint { display: block; margin-top: 6px; font-size: 12px; color: #9CA3AF; }
+    .mg-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+    .mg-hint { display: block; margin-top: 6px; font-size: 12px; color: var(--slate-400); }
     .mg-section { margin-bottom: 20px; }
     .mg-cat-header {
       padding: 8px 0;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
       margin-bottom: 4px;
     }
     .mg-checkbox-label {
       display: flex; align-items: center; gap: 8px;
-      font-size: 14px; color: #374151; cursor: pointer;
+      font-size: 14px; color: var(--text-primary); cursor: pointer;
     }
     .mg-checkbox-label input[type="checkbox"] {
-      width: 16px; height: 16px; accent-color: #F97316; cursor: pointer;
+      width: 16px; height: 16px; accent-color: var(--primary-orange); cursor: pointer;
     }
     .mg-cat-list {
       max-height: 180px; overflow-y: auto;
-      border: 1px solid #E5E7EB; border-radius: 8px;
+      border: 1px solid var(--slate-200); border-radius: 8px;
       margin-top: 8px;
     }
     .mg-cat-item {
       padding: 8px 12px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
       transition: background 0.1s;
     }
     .mg-cat-item:last-child { border-bottom: none; }
-    .mg-cat-item:hover { background: #F9FAFB; }
+    .mg-cat-item:hover { background: var(--slate-50); }
     .mg-cat-count {
       margin-left: auto;
-      font-size: 12px; color: #9CA3AF;
+      font-size: 12px; color: var(--slate-400);
     }
     .mg-summary {
       display: flex; align-items: center; gap: 8px; margin-top: 20px;
@@ -720,10 +720,10 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 12px 24px; font-size: 14px; font-weight: 500; font-family: inherit;
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s;
     }
-    .mg-actions .btn-secondary { background: white; color: #374151; border: 1px solid #E5E7EB; }
-    .mg-actions .btn-secondary:hover { background: #F9FAFB; }
-    .mg-actions .btn-primary { background: #1F2937; color: white; }
-    .mg-actions .btn-primary:hover:not(:disabled) { background: #374151; }
+    .mg-actions .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .mg-actions .btn-secondary:hover { background: var(--slate-50); }
+    .mg-actions .btn-primary { background: var(--text-heading); color: white; }
+    .mg-actions .btn-primary:hover:not(:disabled) { background: var(--text-primary); }
     .mg-actions .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ---- Card ---- */
@@ -751,11 +751,11 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 14px 16px;
       font-size: 12px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
       background: white;
     }
 
@@ -764,8 +764,8 @@ interface CategoriaPrecios extends CategoriaGridRow {
     .col-nombre { width: 28%; }
     .col-productos { width: auto; }
     .productos-count { display: flex; flex-direction: column; }
-    .count-number { font-weight: 600; font-size: 14px; color: #F97316; }
-    .count-label { font-size: 12px; color: #9CA3AF; }
+    .count-number { font-weight: 600; font-size: 14px; color: var(--primary-orange); }
+    .count-label { font-size: 12px; color: var(--slate-400); }
     .col-edicion { width: 240px; }
 
     /* ---- Master row ---- */
@@ -778,7 +778,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
 
     .master-row td {
       padding: 14px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
       vertical-align: middle;
       font-size: 14px;
       color: var(--gray-700);
@@ -789,7 +789,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       transition: transform 0.2s ease;
     }
     .chevron-open { transform: rotate(90deg); }
@@ -806,7 +806,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
     }
     .nombre-padre {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* Mass edit - compact group */
@@ -823,18 +823,18 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 8px 12px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .mass-edit-input:focus {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
-    .mass-edit-input::placeholder { color: #9CA3AF; }
+    .mass-edit-input::placeholder { color: var(--slate-400); }
 
     .btn-mass {
       display: flex;
@@ -859,14 +859,14 @@ interface CategoriaPrecios extends CategoriaGridRow {
     .btn-mass-percent:hover { background: #3B82F6; }
 
     .btn-mass-fixed {
-      background: #F97316;
+      background: var(--primary-orange);
     }
-    .btn-mass-fixed:hover { background: #EA580C; }
+    .btn-mass-fixed:hover { background: var(--primary-orange-hover); }
 
     /* ---- Detail row ---- */
     .detail-row td {
       padding: 0;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
 
     .detail-wrapper {
@@ -878,7 +878,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       width: 100%;
       border-collapse: collapse;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       overflow: hidden;
     }
@@ -887,12 +887,12 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 10px 16px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      background: #F3F4F6;
-      border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
     }
 
     .det-codigo { width: 10%; }
@@ -906,7 +906,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 12px 16px;
       font-size: 14px;
       color: var(--gray-700);
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .producto-row:last-child td { border-bottom: none; }
 
@@ -916,15 +916,15 @@ interface CategoriaPrecios extends CategoriaGridRow {
       padding: 6px 10px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .precio-input:focus {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
@@ -957,18 +957,18 @@ interface CategoriaPrecios extends CategoriaGridRow {
       border-radius: 4px;
     }
     .badge-positive {
-      color: #F97316;
+      color: var(--primary-orange);
       background: #FFF7ED;
     }
     .badge-negative {
-      color: #EF4444;
+      color: var(--danger-color);
       background: #FEF2F2;
     }
 
     .empty-productos {
       padding: 24px 16px;
       text-align: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 13px;
     }
 
@@ -993,7 +993,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
 
     .empty-state-description {
       font-size: 14px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* ---- Footer hint ---- */
@@ -1004,7 +1004,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
@@ -1027,7 +1027,7 @@ interface CategoriaPrecios extends CategoriaGridRow {
       margin: 0 2px;
     }
     .hint-btn-percent { background: #60A5FA; }
-    .hint-btn-fixed { background: #F97316; }
+    .hint-btn-fixed { background: var(--primary-orange); }
 
     /* ---- Responsive ---- */
     @media (max-width: 1024px) {

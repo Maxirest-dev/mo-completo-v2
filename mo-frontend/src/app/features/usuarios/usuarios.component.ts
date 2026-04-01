@@ -43,19 +43,20 @@ const MOCK_USUARIOS: Usuario[] = [
       </button>
       <div class="page-header-info">
         <h1 class="page-title">Usuarios</h1>
-        <p class="page-subtitle">Administrar el ingreso de tu restaurante</p>
+        <p class="page-subtitle">{{ countTodos() }} usuarios registrados</p>
       </div>
     </div>
+    <div class="title-divider"></div>
 
     <!-- Toolbar -->
     <div class="toolbar">
       <div class="toolbar-left">
-        <!-- Filter Tabs -->
-        <div class="filter-tabs">
+        <!-- Filter Pills -->
+        <div class="filter-pills">
           @for (tab of tabs; track tab.key) {
             <button
-              class="filter-tab"
-              [class.filter-tab--active]="tabActivo() === tab.key"
+              class="filter-pill"
+              [class.filter-pill--active]="tabActivo() === tab.key"
               (click)="tabActivo.set(tab.key)">
               {{ tab.label }} ({{ tab.count() }})
             </button>
@@ -72,7 +73,7 @@ const MOCK_USUARIOS: Usuario[] = [
           <input
             type="text"
             class="search-input"
-            placeholder="Buscar usuario..."
+            placeholder="Buscar..."
             [ngModel]="searchTerm()"
             (ngModelChange)="searchTerm.set($event)"
           />
@@ -83,7 +84,7 @@ const MOCK_USUARIOS: Usuario[] = [
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          Nuevo usuario
+          Nuevo Usuario
         </button>
       </div>
     </div>
@@ -94,9 +95,9 @@ const MOCK_USUARIOS: Usuario[] = [
         <thead>
           <tr>
             <th>USUARIO</th>
-            <th>SUCURSALES</th>
             <th>EMAIL</th>
             <th>TELEFONO</th>
+            <th>ESTADO</th>
             <th class="th-acciones">ACCIONES</th>
           </tr>
         </thead>
@@ -117,13 +118,25 @@ const MOCK_USUARIOS: Usuario[] = [
                 </div>
               </td>
               <td>
-                <span class="cell-text">{{ user.sucursales }}</span>
+                <div class="cell-with-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cell-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                  </svg>
+                  <span class="cell-text">{{ user.email }}</span>
+                </div>
               </td>
               <td>
-                <span class="cell-text">{{ user.email }}</span>
+                <div class="cell-with-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cell-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                  </svg>
+                  <span class="cell-text">{{ user.telefono }}</span>
+                </div>
               </td>
               <td>
-                <span class="cell-text">{{ user.telefono }}</span>
+                <span class="status-badge" [class]="user.activo ? 'status-badge--active' : 'status-badge--inactive'">
+                  {{ user.activo ? 'Activo' : 'Inactivo' }}
+                </span>
               </td>
               <td>
                 <div class="actions-cell">
@@ -133,11 +146,11 @@ const MOCK_USUARIOS: Usuario[] = [
                     </svg>
                     Editar
                   </button>
-                  <button class="btn-action btn-action--secondary">
+                  <button class="btn-action btn-action--hold" (click)="toggleUserActive(user)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="15" height="15">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
                     </svg>
-                    Modificar permisos
+                    {{ user.activo ? 'Suspender' : 'Activar' }}
                   </button>
                 </div>
               </td>
@@ -168,7 +181,7 @@ const MOCK_USUARIOS: Usuario[] = [
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 16px;
     }
 
     .back-btn {
@@ -177,31 +190,37 @@ const MOCK_USUARIOS: Usuario[] = [
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
-      background: white;
-      color: #374151;
+      border-radius: var(--radius-md, 10px);
+      border: 1px solid var(--border-color, #E2E8F0);
+      background: var(--bg-primary, white);
+      color: var(--slate-700, #314158);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--text-heading, #0F172B);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--text-secondary, #90A1B9);
       margin: 0;
+    }
+
+    .title-divider {
+      height: 1px;
+      background: var(--border-color, #E2E8F0);
+      margin-bottom: 20px;
     }
 
     /* Toolbar */
@@ -220,70 +239,62 @@ const MOCK_USUARIOS: Usuario[] = [
       gap: 12px;
     }
 
-    /* Filter Tabs - pill style like inventario/produccion */
-    .filter-tabs {
+    /* Filter Pills — Pencil v2 */
+    .filter-pills {
       display: flex;
-      gap: 8px;
+      gap: 22px;
       flex-wrap: wrap;
     }
 
-    .filter-tab {
+    .filter-pill {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 9px 18px;
+      padding: 8px 18px;
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7280;
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 9999px;
+      color: var(--slate-500, #64748B);
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
     }
-    .filter-tab:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+    .filter-pill:hover {
+      border-color: var(--slate-300, #CBD5E1);
+      background: var(--slate-50, #F8FAFC);
     }
-    .filter-tab--active {
-      color: #F97316;
-      border-color: #F97316;
-      background: #FFF7ED;
+    .filter-pill--active {
+      color: var(--primary-orange-dark, #CA3500);
+      border-color: var(--primary-orange-lighter, #FFD6A7);
+      background: var(--primary-orange-light, #FFF7ED);
     }
-    .filter-tab--active:hover {
-      background: #FFF7ED;
-      border-color: #F97316;
-    }
-
-    .filter-tab-count {
-      font-size: 13px;
-      font-weight: 500;
-    }
-    .filter-tab-count--active {
-      color: #F97316;
+    .filter-pill--active:hover {
+      background: var(--primary-orange-light, #FFF7ED);
+      border-color: var(--primary-orange-lighter, #FFD6A7);
     }
 
-    /* Search - same style as inventario/produccion */
+    /* Search — Pencil v2 buscador */
     .search-box {
       display: flex;
       align-items: center;
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
       padding: 0 12px;
-      min-width: 220px;
+      width: 256px;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
     .search-box:focus-within {
-      border-color: #F97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--primary-orange, #F27920);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
     .search-icon {
       width: 18px;
       height: 18px;
-      color: #9CA3AF;
+      color: var(--text-secondary, #90A1B9);
       flex-shrink: 0;
     }
     .search-input {
@@ -293,38 +304,38 @@ const MOCK_USUARIOS: Usuario[] = [
       padding: 10px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary, #314158);
       background: transparent;
       min-width: 140px;
     }
-    .search-input::placeholder { color: #9CA3AF; }
+    .search-input::placeholder { color: var(--text-secondary, #90A1B9); }
 
-    /* Primary Button */
+    /* Primary Button — Pencil v2 */
     .btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 9px 18px;
+      gap: 12px;
+      padding: 8px 12px;
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
       color: white;
-      background: #F97316;
+      background: var(--primary-orange, #F27920);
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm, 8px);
       cursor: pointer;
       transition: background 0.15s;
       white-space: nowrap;
     }
-    .btn-primary:hover { background: #EA580C; }
+    .btn-primary:hover { background: var(--primary-hover, #E06A10); }
 
-    /* Table */
+    /* Table — Pencil v2 */
     .table-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0, 0, 0, 0.1), 0 1px 2.625px rgba(0, 0, 0, 0.1));
     }
 
     .data-table {
@@ -332,37 +343,49 @@ const MOCK_USUARIOS: Usuario[] = [
       border-collapse: collapse;
     }
     .data-table thead {
-      background: #F3F4F6;
+      background: var(--slate-50, #F8FAFC);
     }
     .data-table th {
       padding: 12px 20px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500, #64748B);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--border-color, #E2E8F0);
     }
     .th-acciones { text-align: right; }
 
     .data-table td {
       padding: 16px 20px;
       font-size: 14px;
-      color: #374151;
-      border-bottom: 1px solid #F3F4F6;
+      color: var(--text-primary, #314158);
+      border-bottom: 1px solid var(--divider-color, #F1F5F9);
       vertical-align: middle;
     }
     .data-table tbody tr:last-child td {
       border-bottom: none;
     }
     .data-table tbody tr:hover {
-      background: #FAFAFA;
+      background: var(--slate-50, #F8FAFC);
     }
 
+    /* Cell with icon prefix */
+    .cell-with-icon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cell-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--text-secondary, #90A1B9);
+      flex-shrink: 0;
+    }
     .cell-text {
       font-size: 14px;
-      color: #374151;
+      color: var(--text-primary, #314158);
     }
 
     /* User Cell */
@@ -394,7 +417,7 @@ const MOCK_USUARIOS: Usuario[] = [
     .user-name {
       font-size: 14px;
       font-weight: 500;
-      color: #111827;
+      color: var(--text-heading, #0F172B);
     }
 
     .user-badge {
@@ -403,26 +426,47 @@ const MOCK_USUARIOS: Usuario[] = [
       padding: 2px 8px;
       font-size: 11px;
       font-weight: 600;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm, 8px);
       width: fit-content;
     }
     .user-badge--red {
-      background: #FEF2F2;
-      color: #DC2626;
-      border: 1px solid #FECACA;
+      background: var(--danger-bg, #FEF2F2);
+      color: var(--danger-text, #DC2626);
+      border: 1px solid var(--danger-border, #FECACA);
     }
     .user-badge--orange {
-      background: #FFF7ED;
-      color: #EA580C;
-      border: 1px solid #FED7AA;
+      background: var(--primary-orange-light, #FFF7ED);
+      color: var(--primary-orange, #F27920);
+      border: 1px solid var(--primary-orange-lighter, #FFD6A7);
     }
     .user-badge--blue {
-      background: #EFF6FF;
-      color: #2563EB;
-      border: 1px solid #BFDBFE;
+      background: var(--info-bg, #EFF6FF);
+      color: var(--info-text, #1E40AF);
+      border: 1px solid var(--info-border, #BFDBFE);
     }
 
-    /* Actions */
+    /* Status Badge — Pencil v2 */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-sm, 8px);
+      white-space: nowrap;
+    }
+    .status-badge--active {
+      background: var(--success-bg, #ECFDF5);
+      color: var(--success-text, #00A43D);
+      border: 1px solid var(--success-border, #A4F4CF);
+    }
+    .status-badge--inactive {
+      background: var(--inactive-bg, #F1F5F9);
+      color: var(--inactive-text, #45556C);
+      border: 1px solid var(--inactive-border, #E2E8F0);
+    }
+
+    /* Actions — Pencil v2 pill buttons */
     .actions-cell {
       display: flex;
       align-items: center;
@@ -434,24 +478,24 @@ const MOCK_USUARIOS: Usuario[] = [
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 7px 14px;
+      padding: 6px 12px;
       font-size: 13px;
       font-weight: 500;
       font-family: inherit;
-      color: #374151;
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      color: var(--text-primary, #314158);
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-sm, 8px);
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
     }
     .btn-action:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
-    .btn-action--secondary {
-      color: #6B7280;
+    .btn-action--hold {
+      color: var(--slate-500, #64748B);
     }
 
     /* Empty State */
@@ -466,11 +510,11 @@ const MOCK_USUARIOS: Usuario[] = [
     .empty-icon {
       width: 40px;
       height: 40px;
-      color: #D1D5DB;
+      color: var(--slate-300, #CBD5E1);
     }
     .empty-text {
       font-size: 14px;
-      color: #9CA3AF;
+      color: var(--text-secondary, #90A1B9);
       margin: 0;
     }
 
@@ -484,74 +528,17 @@ const MOCK_USUARIOS: Usuario[] = [
         width: 100%;
         flex-wrap: wrap;
       }
-      .search-input {
+      .search-box {
         width: 100%;
-        min-width: 160px;
       }
     }
 
-    /* Dialog */
-    .dialog-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1000; padding: 16px;
-    }
-    .dialog-container {
-      background: white; border-radius: 16px;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
-    }
-    .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
-    .dialog-body { padding: 24px 28px; }
-    .dialog-avatar-section {
-      display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-      padding-bottom: 20px; border-bottom: 1px solid #F3F4F6;
-    }
-    .dialog-avatar {
-      width: 56px; height: 56px; border-radius: 50%; color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 600; flex-shrink: 0;
-    }
-    .dialog-avatar-name { font-size: 18px; font-weight: 600; color: #1F2937; }
-    .dialog-section-title {
-      font-size: 12px; font-weight: 600; color: #9CA3AF; text-transform: uppercase;
-      letter-spacing: 0.04em; margin: 20px 0 12px;
-    }
-    .dialog-section-title:first-of-type { margin-top: 0; }
-    .dialog-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
-    .dialog-field { display: flex; flex-direction: column; gap: 4px; }
-    .dialog-label { font-size: 13px; font-weight: 600; color: #374151; }
-    .dialog-input {
-      width: 100%; padding: 10px 12px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
-      border-radius: 8px; transition: all 0.15s;
-    }
-    .dialog-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
-    .dialog-actions {
-      display: flex; justify-content: flex-end; gap: 12px; padding: 0 28px 28px;
-    }
-    .btn-secondary {
-      padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
-      border-radius: 10px; cursor: pointer; transition: all 0.15s;
-    }
-    .btn-secondary:hover { background: #F9FAFB; }
-    .btn-dark {
-      padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: inherit;
-      color: white; background: #1F2937; border: none;
-      border-radius: 10px; cursor: pointer; transition: all 0.15s;
-    }
-    .btn-dark:hover { background: #374151; }
-    .btn-dark:disabled { opacity: 0.5; cursor: not-allowed; }
-
     @media (max-width: 768px) {
       .page-title { font-size: 22px; }
-      .filter-tabs { flex-wrap: wrap; }
+      .filter-pills { flex-wrap: wrap; gap: 10px; }
       .table-card { overflow-x: auto; }
-      .data-table { min-width: 700px; }
-      .btn-action--secondary { display: none; }
+      .data-table { min-width: 750px; }
+      .btn-action--hold { display: none; }
     }
   `],
 })
@@ -629,6 +616,12 @@ export class UsuariosComponent {
       case 'Encargado': return 'orange';
       case 'Administrador': return 'blue';
     }
+  }
+
+  toggleUserActive(user: Usuario): void {
+    this.usuarios.update(list =>
+      list.map(u => u.id === user.id ? { ...u, activo: !u.activo } : u)
+    );
   }
 
   navigateToUser(id: number): void {

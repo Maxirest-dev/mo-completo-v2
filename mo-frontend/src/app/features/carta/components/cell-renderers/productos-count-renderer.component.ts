@@ -26,7 +26,7 @@ import { CategoriaGridRow } from '../../models/categoria-grid.model';
     .count {
       font-weight: 600;
       font-size: 14px;
-      color: #374151;
+      color: var(--text-primary);
     }
 
     /* Highlight numbers in blue when count > 20 like reference */
@@ -36,7 +36,7 @@ import { CategoriaGridRow } from '../../models/categoria-grid.model';
 
     .label {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
   `]
 })

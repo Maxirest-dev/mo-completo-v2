@@ -81,10 +81,11 @@ Chart.register(...registerables);
     }
 
     .chart-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 20px 24px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      padding: 20px 25px;
     }
 
     .chart-card-half {
@@ -101,9 +102,9 @@ Chart.register(...registerables);
 
     .chart-title {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-900, #0F172B);
       margin: 0 0 16px;
     }
 
@@ -139,7 +140,7 @@ Chart.register(...registerables);
     .comprobante-tipo {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      color: #374151;
+      color: var(--slate-700, #314158);
       flex: 1;
     }
 
@@ -147,7 +148,7 @@ Chart.register(...registerables);
       font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900, #0F172B);
     }
 
     @media (max-width: 1024px) {
@@ -180,6 +181,7 @@ export class DashboardComponent {
         position: 'right',
         labels: {
           font: { family: 'Inter', size: 12 },
+          color: '#314158',
           padding: 12,
           usePointStyle: true,
           pointStyleWidth: 8,
@@ -197,11 +199,11 @@ export class DashboardComponent {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
-        grid: { color: '#F3F4F6' },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
+        grid: { color: '#F1F5F9' },
       },
       x: {
-        ticks: { font: { family: 'Inter', size: 11 } },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
         grid: { display: false },
       },
     },
@@ -217,11 +219,11 @@ export class DashboardComponent {
     scales: {
       x: {
         beginAtZero: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
-        grid: { color: '#F3F4F6' },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
+        grid: { color: '#F1F5F9' },
       },
       y: {
-        ticks: { font: { family: 'Inter', size: 11 } },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
         grid: { display: false },
       },
     },
@@ -235,6 +237,7 @@ export class DashboardComponent {
         position: 'top',
         labels: {
           font: { family: 'Inter', size: 12 },
+          color: '#314158',
           usePointStyle: true,
           pointStyleWidth: 8,
           padding: 16,
@@ -244,11 +247,11 @@ export class DashboardComponent {
     scales: {
       y: {
         beginAtZero: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
-        grid: { color: '#F3F4F6' },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
+        grid: { color: '#F1F5F9' },
       },
       x: {
-        ticks: { font: { family: 'Inter', size: 11 } },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
         grid: { display: false },
       },
     },
@@ -301,8 +304,8 @@ export class DashboardComponent {
         {
           label: 'Salon',
           data: movs.map(m => m.salon),
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderColor: '#F27920',
+          backgroundColor: 'rgba(242, 121, 32, 0.1)',
           tension: 0.3,
           fill: false,
           pointRadius: 3,
@@ -311,8 +314,8 @@ export class DashboardComponent {
         {
           label: 'Delivery',
           data: movs.map(m => m.delivery),
-          borderColor: '#10B981',
-          backgroundColor: 'rgba(16, 185, 129, 0.1)',
+          borderColor: '#314158',
+          backgroundColor: 'rgba(49, 65, 88, 0.1)',
           tension: 0.3,
           fill: false,
           pointRadius: 3,
@@ -321,8 +324,8 @@ export class DashboardComponent {
         {
           label: 'Take Away',
           data: movs.map(m => m.takeaway),
-          borderColor: '#F59E0B',
-          backgroundColor: 'rgba(245, 158, 11, 0.1)',
+          borderColor: '#90A1B9',
+          backgroundColor: 'rgba(144, 161, 185, 0.1)',
           tension: 0.3,
           fill: false,
           pointRadius: 3,

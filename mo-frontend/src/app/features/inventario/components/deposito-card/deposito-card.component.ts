@@ -143,14 +143,14 @@ import {
     .deposito-card {
       background: white;
       border-radius: 12px;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       overflow: hidden;
       transition: border-color 0.15s;
     }
 
     .deposito-card:hover {
-      border-color: #D1D5DB;
+      border-color: var(--slate-300);
     }
 
     .card-inactive {
@@ -184,7 +184,7 @@ import {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       transition: transform 0.2s ease;
       flex-shrink: 0;
     }
@@ -207,13 +207,13 @@ import {
     .deposito-name {
       font-size: 15px;
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0;
     }
 
     .deposito-desc {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 4px 0 0 0;
       white-space: nowrap;
       overflow: hidden;
@@ -226,18 +226,18 @@ import {
       padding: 2px 10px;
       font-size: 11px;
       font-weight: 600;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
 
-    .tipo-verduras { background: #D1FAE5; color: #065F46; }
-    .tipo-carnes { background: #FEE2E2; color: #991B1B; }
+    .tipo-verduras { background: var(--success-bg); color: var(--success-text); }
+    .tipo-carnes { background: var(--danger-bg); color: var(--danger-text); }
     .tipo-lacteos { background: #DBEAFE; color: #1E40AF; }
     .tipo-bebidas { background: #E0E7FF; color: #3730A3; }
-    .tipo-secos { background: #FEF3C7; color: #92400E; }
+    .tipo-secos { background: var(--warning-bg); color: #92400E; }
     .tipo-congelados { background: #CFFAFE; color: #155E75; }
-    .tipo-otros { background: #F3F4F6; color: #4B5563; }
+    .tipo-otros { background: var(--slate-100); color: var(--slate-600); }
 
     /* Stock Status Badge */
     .stock-status-badge {
@@ -247,7 +247,7 @@ import {
       padding: 2px 10px;
       font-size: 11px;
       font-weight: 600;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       letter-spacing: 0.03em;
     }
 
@@ -258,26 +258,26 @@ import {
       flex-shrink: 0;
     }
 
-    .stock-normal { background: #D1FAE5; color: #065F46; }
-    .stock-normal .stock-status-dot { background: #10B981; }
+    .stock-normal { background: var(--success-bg); color: var(--success-text); }
+    .stock-normal .stock-status-dot { background: var(--success-color); }
 
-    .stock-bajo { background: #FEF3C7; color: #92400E; }
-    .stock-bajo .stock-status-dot { background: #F59E0B; }
+    .stock-bajo { background: var(--warning-bg); color: #92400E; }
+    .stock-bajo .stock-status-dot { background: var(--warning-color); }
 
-    .stock-critico { background: #FEE2E2; color: #991B1B; }
-    .stock-critico .stock-status-dot { background: #EF4444; }
+    .stock-critico { background: var(--danger-bg); color: var(--danger-text); }
+    .stock-critico .stock-status-dot { background: var(--danger-color); }
 
-    .stock-vacio { background: #F3F4F6; color: #6B7280; }
-    .stock-vacio .stock-status-dot { background: #9CA3AF; }
+    .stock-vacio { background: var(--slate-100); color: var(--slate-500); }
+    .stock-vacio .stock-status-dot { background: var(--slate-400); }
 
     .inactive-badge {
       display: inline-flex;
       padding: 2px 10px;
       font-size: 11px;
       font-weight: 600;
-      border-radius: 9999px;
-      background: #F3F4F6;
-      color: #6B7280;
+      border-radius: var(--radius-md);
+      background: var(--slate-100);
+      color: var(--slate-500);
     }
 
     .header-right {
@@ -296,12 +296,12 @@ import {
     .count-number {
       font-weight: 600;
       font-size: 15px;
-      color: #F97316;
+      color: var(--primary-orange);
     }
 
     .count-label {
       font-size: 11px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .ubicacion-tag {
@@ -309,8 +309,8 @@ import {
       padding: 4px 12px;
       font-size: 12px;
       font-weight: 500;
-      color: #6B7280;
-      background: #F3F4F6;
+      color: var(--slate-500);
+      background: var(--slate-100);
       border-radius: 6px;
       white-space: nowrap;
     }
@@ -328,26 +328,26 @@ import {
       height: 32px;
       padding: 0;
       background: transparent;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
-      color: #6B7280;
+      color: var(--slate-500);
       cursor: pointer;
       transition: all 0.15s;
     }
 
     .btn-action:hover {
-      background: #F3F4F6;
-      border-color: #D1D5DB;
-      color: #374151;
+      background: var(--slate-100);
+      border-color: var(--slate-300);
+      color: var(--text-primary);
     }
 
     .btn-activate {
-      color: #10B981;
-      border-color: #D1FAE5;
+      color: var(--success-color);
+      border-color: var(--success-bg);
     }
 
     .btn-activate:hover {
-      background: #D1FAE5;
+      background: var(--success-bg);
       color: #059669;
     }
 
@@ -361,7 +361,7 @@ import {
       font-weight: 600;
       font-family: inherit;
       color: white;
-      background: #F97316;
+      background: var(--primary-orange);
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -370,12 +370,12 @@ import {
     }
 
     .btn-agregar:hover {
-      background: #EA580C;
+      background: var(--primary-orange-hover);
     }
 
     /* Card Body - Insumos Table */
     .card-body {
-      border-top: 1px solid #F3F4F6;
+      border-top: 1px solid var(--slate-100);
       padding: 0;
     }
 
@@ -388,12 +388,12 @@ import {
       padding: 10px 16px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      background: #F9FAFB;
-      border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
     }
 
     .col-nombre { width: 22%; }
@@ -408,8 +408,8 @@ import {
     .insumo-row td {
       padding: 12px 16px;
       font-size: 14px;
-      color: #374151;
-      border-bottom: 1px solid #F3F4F6;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--slate-100);
       vertical-align: middle;
     }
 
@@ -429,7 +429,7 @@ import {
 
     .insumo-name {
       font-weight: 500;
-      color: #1F2937;
+      color: var(--text-heading);
     }
 
     .insumo-link {
@@ -439,19 +439,19 @@ import {
     }
 
     .insumo-link:hover {
-      color: #F97316;
+      color: var(--primary-orange);
     }
 
     .insumo-code {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* Tipo Insumo Badge */
     .tipo-insumo-badge {
       font-size: 12px;
       font-weight: 500;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .tipo-elaborado {
@@ -466,7 +466,7 @@ import {
       padding: 3px 10px;
       font-size: 12px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
     }
 
@@ -476,14 +476,14 @@ import {
       border-radius: 50%;
     }
 
-    .estado-normal { background: #D1FAE5; color: #065F46; }
-    .estado-normal .estado-dot { background: #10B981; }
+    .estado-normal { background: var(--success-bg); color: var(--success-text); }
+    .estado-normal .estado-dot { background: var(--success-color); }
 
-    .estado-bajo { background: #FEF3C7; color: #92400E; }
-    .estado-bajo .estado-dot { background: #F59E0B; }
+    .estado-bajo { background: var(--warning-bg); color: #92400E; }
+    .estado-bajo .estado-dot { background: var(--warning-color); }
 
-    .estado-critico { background: #FEE2E2; color: #991B1B; }
-    .estado-critico .estado-dot { background: #EF4444; }
+    .estado-critico { background: var(--danger-bg); color: var(--danger-text); }
+    .estado-critico .estado-dot { background: var(--danger-color); }
 
     /* Stock value */
     .stock-value {
@@ -492,8 +492,8 @@ import {
       display: block;
     }
 
-    .stock-critical { color: #EF4444; }
-    .stock-low { color: #F59E0B; }
+    .stock-critical { color: var(--danger-color); }
+    .stock-low { color: var(--warning-color); }
 
     .col-minimo {
       text-align: center;
@@ -516,10 +516,10 @@ import {
       font-size: 12px;
       font-weight: 500;
       font-family: inherit;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       background: transparent;
-      color: #6B7280;
+      color: var(--slate-500);
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
@@ -528,13 +528,13 @@ import {
     .btn-adjust-insumo:hover {
       background: #FFF7ED;
       border-color: #FDBA74;
-      color: #EA580C;
+      color: var(--primary-orange-hover);
     }
 
     .btn-edit-insumo:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
-      color: #374151;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
+      color: var(--text-primary);
     }
 
     .btn-deactivate-insumo:hover {
@@ -544,19 +544,19 @@ import {
     }
 
     .btn-activate-insumo {
-      color: #10B981;
-      border-color: #D1FAE5;
+      color: var(--success-color);
+      border-color: var(--success-bg);
     }
 
     .btn-activate-insumo:hover {
-      background: #D1FAE5;
+      background: var(--success-bg);
       color: #059669;
     }
 
     .empty-insumos {
       padding: 24px 16px !important;
       text-align: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 13px;
     }
 

@@ -108,7 +108,7 @@ import { CierreTurnoData } from '../../models';
     .dialog-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 43, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,18 +117,19 @@ import { CierreTurnoData } from '../../models';
     }
 
     .dialog {
-      background: white;
-      border-radius: 16px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
       width: 100%;
       max-width: 580px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
     }
 
     .dialog-header {
       padding: 24px 24px 16px;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--divider-color);
     }
 
     .dialog-header-top {
@@ -141,7 +142,7 @@ import { CierreTurnoData } from '../../models';
     .dialog-title {
       font-size: 20px;
       font-weight: 600;
-      color: var(--gray-900);
+      color: var(--text-heading);
       margin: 0;
     }
 
@@ -152,16 +153,16 @@ import { CierreTurnoData } from '../../models';
       width: 32px;
       height: 32px;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       background: transparent;
-      color: var(--gray-400);
+      color: var(--slate-400);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .close-btn:hover {
-      background: var(--gray-100);
-      color: var(--gray-600);
+      background: var(--slate-100);
+      color: var(--slate-600);
     }
 
     .filter-badges {
@@ -174,12 +175,13 @@ import { CierreTurnoData } from '../../models';
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 12px;
+      padding: 5px 12px;
       font-size: 12px;
       font-weight: 500;
-      background: var(--gray-100);
-      color: var(--gray-600);
-      border-radius: 9999px;
+      background: var(--inactive-bg);
+      color: var(--inactive-text);
+      border: 1px solid var(--inactive-border);
+      border-radius: var(--radius-sm);
     }
 
     .dialog-kpis {
@@ -194,15 +196,16 @@ import { CierreTurnoData } from '../../models';
       flex-direction: column;
       gap: 4px;
       padding: 16px;
-      background: var(--gray-50);
-      border-radius: 10px;
+      background: var(--slate-50);
+      border: 1px solid var(--divider-color);
+      border-radius: var(--radius-md);
       text-align: center;
     }
 
     .kpi-box-label {
       font-size: 12px;
       font-weight: 500;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -210,14 +213,15 @@ import { CierreTurnoData } from '../../models';
     .kpi-box-value {
       font-size: 24px;
       font-weight: 700;
-      color: var(--gray-900);
+      color: var(--text-heading);
     }
 
     .total-card {
       margin: 0 24px 20px;
       padding: 20px;
       background: var(--success-bg);
-      border-radius: 12px;
+      border: 1px solid var(--success-border);
+      border-radius: var(--radius-lg);
       text-align: center;
     }
 
@@ -225,7 +229,7 @@ import { CierreTurnoData } from '../../models';
       display: block;
       font-size: 13px;
       font-weight: 500;
-      color: var(--success-text);
+      color: var(--success-color);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin-bottom: 4px;
@@ -234,7 +238,7 @@ import { CierreTurnoData } from '../../models';
     .total-value {
       font-size: 32px;
       font-weight: 700;
-      color: var(--success-text);
+      color: var(--success-color);
     }
 
     .table-section {
@@ -244,7 +248,7 @@ import { CierreTurnoData } from '../../models';
     .section-title {
       font-size: 14px;
       font-weight: 600;
-      color: var(--gray-700);
+      color: var(--text-primary);
       margin: 0 0 12px 0;
     }
 
@@ -257,33 +261,29 @@ import { CierreTurnoData } from '../../models';
       padding: 8px 12px;
       font-size: 11px;
       font-weight: 600;
-      color: var(--gray-500);
+      color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
-      background: var(--gray-50);
+      background: var(--slate-50);
     }
 
     .cobro-table td {
       padding: 10px 12px;
       font-size: 14px;
-      color: var(--gray-700);
-      border-bottom: 1px solid var(--gray-100);
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--divider-color);
     }
 
     .text-right {
       text-align: right;
       font-weight: 600;
-      color: var(--gray-900);
+      color: var(--text-heading);
     }
 
     .cobro-table th:last-child {
       text-align: right;
-    }
-
-    .tasa-section {
-      padding: 0 24px 20px;
     }
 
     .dialog-actions {
@@ -291,23 +291,7 @@ import { CierreTurnoData } from '../../models';
       justify-content: flex-end;
       gap: 12px;
       padding: 16px 24px;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .btn-dark {
-      background: var(--gray-900);
-      color: white;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .btn-dark:hover {
-      background: var(--gray-800);
+      border-top: 1px solid var(--divider-color);
     }
   `],
 })

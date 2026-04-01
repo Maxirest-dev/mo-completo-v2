@@ -190,13 +190,13 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
       border-radius: var(--radius-full);
 
       &--activo {
-        background: #D1FAE5;
-        color: #065F46;
+        background: var(--success-bg);
+        color: var(--success-text);
       }
 
       &--inactivo {
-        background: #F3F4F6;
-        color: #4B5563;
+        background: var(--slate-100);
+        color: var(--slate-600);
       }
     }
 
@@ -218,7 +218,7 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
       }
 
       &--danger:hover {
-        background: #FEE2E2;
+        background: var(--danger-bg);
         border-color: #FECACA;
         color: #DC2626;
       }

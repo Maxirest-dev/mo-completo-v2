@@ -113,30 +113,30 @@ import { Router } from '@angular/router';
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -150,16 +150,17 @@ import { Router } from '@angular/router';
     .card-item {
       display: flex;
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       overflow: hidden;
       cursor: pointer;
       transition: all 0.2s ease;
       min-height: 180px;
+      box-shadow: var(--shadow-sm);
     }
     .card-item:hover {
-      border-color: #D1D5DB;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: var(--slate-300);
+      box-shadow: var(--shadow-md);
       transform: translateY(-1px);
     }
 
@@ -169,7 +170,7 @@ import { Router } from '@angular/router';
       flex-shrink: 0;
     }
     .card-left-border--red { background: #EF4444; }
-    .card-left-border--orange { background: #F97316; }
+    .card-left-border--orange { background: var(--primary-orange); }
     .card-left-border--blue { background: #3B82F6; }
     .card-left-border--green { background: #22C55E; }
 
@@ -184,13 +185,13 @@ import { Router } from '@angular/router';
     .card-title {
       font-size: 16px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0;
     }
 
     .card-description {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
       line-height: 1.5;
     }
@@ -206,7 +207,7 @@ import { Router } from '@angular/router';
     .card-label {
       font-size: 12px;
       font-weight: 500;
-      color: #9CA3AF;
+      color: var(--slate-400);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
@@ -217,7 +218,7 @@ import { Router } from '@angular/router';
       line-height: 1;
     }
     .card-value--red { color: #EF4444; }
-    .card-value--dark { color: #111827; }
+    .card-value--dark { color: var(--slate-900); }
     .card-value--blue { color: #3B82F6; }
 
     .card-data-row {
@@ -238,7 +239,7 @@ import { Router } from '@angular/router';
       align-items: center;
       gap: 4px;
       padding: 4px 12px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
       width: fit-content;
@@ -249,9 +250,9 @@ import { Router } from '@angular/router';
       border: 1px solid #BBF7D0;
     }
     .badge--orange {
-      background: #FFF7ED;
-      color: #EA580C;
-      border: 1px solid #FED7AA;
+      background: var(--primary-orange-light);
+      color: var(--primary-orange-hover);
+      border: 1px solid var(--primary-orange-lighter);
     }
     .badge--blue {
       background: #EFF6FF;

@@ -195,11 +195,11 @@ import {
       padding: 14px 16px;
       font-size: 12px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
       background: white;
     }
 
@@ -220,7 +220,7 @@ import {
 
     .master-row td {
       padding: 12px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
       vertical-align: middle;
       font-size: 14px;
       color: var(--gray-700);
@@ -231,7 +231,7 @@ import {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       transition: transform 0.2s ease;
       flex-shrink: 0;
     }
@@ -283,7 +283,7 @@ import {
       padding: 4px 12px;
       font-size: 13px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
     }
     .badge::before {
@@ -293,17 +293,17 @@ import {
       border-radius: 50%;
     }
 
-    .badge-disponible { background: #D1FAE5; color: #065F46; }
-    .badge-disponible::before { background: #10B981; }
+    .badge-disponible { background: var(--success-bg); color: var(--success-text); }
+    .badge-disponible::before { background: var(--success-color); }
 
-    .badge-stock-medio { background: #FEF3C7; color: #92400E; }
-    .badge-stock-medio::before { background: #F59E0B; }
+    .badge-stock-medio { background: var(--warning-bg); color: #92400E; }
+    .badge-stock-medio::before { background: var(--warning-color); }
 
-    .badge-sin-stock { background: #FEE2E2; color: #991B1B; }
-    .badge-sin-stock::before { background: #EF4444; }
+    .badge-sin-stock { background: var(--danger-bg); color: var(--danger-text); }
+    .badge-sin-stock::before { background: var(--danger-color); }
 
-    .badge-inactivo { background: #F3F4F6; color: #4B5563; }
-    .badge-inactivo::before { background: #6B7280; }
+    .badge-inactivo { background: var(--slate-100); color: var(--slate-600); }
+    .badge-inactivo::before { background: var(--slate-500); }
 
     /* Productos count */
     .productos-count {
@@ -313,11 +313,11 @@ import {
     .count-number {
       font-weight: 600;
       font-size: 14px;
-      color: #F97316;
+      color: var(--primary-orange);
     }
     .count-label {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* Acciones */
@@ -354,12 +354,12 @@ import {
       font-weight: 500;
       color: var(--gray-700);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-edit:hover { background: #F9FAFB; border-color: #D1D5DB; }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .btn-more {
       display: inline-flex;
@@ -367,14 +367,14 @@ import {
       justify-content: center;
       width: 32px;
       height: 32px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       background: transparent;
       border: none;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-more:hover { background: #F3F4F6; color: #6B7280; }
+    .btn-more:hover { background: var(--slate-100); color: var(--slate-500); }
 
     .btn-deactivate {
       padding: 6px 12px;
@@ -394,7 +394,7 @@ import {
       font-size: 13px;
       font-weight: 500;
       color: white;
-      background: #10B981;
+      background: var(--success-color);
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -405,7 +405,7 @@ import {
     /* ---- Detail row ---- */
     .detail-row td {
       padding: 0;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
 
     .detail-wrapper {
@@ -417,7 +417,7 @@ import {
       width: 100%;
       border-collapse: collapse;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       overflow: hidden;
     }
@@ -426,12 +426,12 @@ import {
       padding: 10px 16px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      background: #F3F4F6;
-      border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
     }
 
     .detail-table thead th:last-child { text-align: right; }
@@ -440,7 +440,7 @@ import {
       padding: 12px 16px;
       font-size: 14px;
       color: var(--gray-700);
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .producto-row:last-child td { border-bottom: none; }
 
@@ -448,8 +448,8 @@ import {
       font-size: 13px;
       font-weight: 500;
     }
-    .badge-prod-activo { color: #10B981; }
-    .badge-prod-inactivo { color: #6B7280; }
+    .badge-prod-activo { color: var(--success-color); }
+    .badge-prod-inactivo { color: var(--slate-500); }
 
     .badge-estadistica {
       display: inline-flex;
@@ -472,7 +472,7 @@ import {
     .empty-productos {
       padding: 24px 16px;
       text-align: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 13px;
     }
 

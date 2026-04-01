@@ -106,8 +106,8 @@ import { ESTACIONES_DISPONIBLES } from '../../data/mock-producto-perfil.data';
     }
 
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px 0; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .dialog-body { padding: 24px 28px; }
 
@@ -126,24 +126,24 @@ import { ESTACIONES_DISPONIBLES } from '../../data/mock-producto-perfil.data';
       gap: 10px;
       width: 120px;
       height: 120px;
-      border: 2px solid #E5E7EB;
+      border: 2px solid var(--slate-200);
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
       background: white;
     }
     .estacion-card:hover {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
 
     .estacion-selected {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       background: #FFF7ED;
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
     }
-    .estacion-selected .estacion-icon { color: #F97316; }
-    .estacion-selected .estacion-name { color: #EA580C; font-weight: 600; }
+    .estacion-selected .estacion-icon { color: var(--primary-orange); }
+    .estacion-selected .estacion-name { color: var(--primary-orange-hover); font-weight: 600; }
 
     .estacion-check {
       position: absolute;
@@ -157,23 +157,23 @@ import { ESTACIONES_DISPONIBLES } from '../../data/mock-producto-perfil.data';
 
     .estacion-add {
       border-style: dashed;
-      border-color: #D1D5DB;
-      color: #9CA3AF;
+      border-color: var(--slate-300);
+      color: var(--slate-400);
     }
     .estacion-add:hover {
-      border-color: #9CA3AF;
-      background: #F9FAFB;
+      border-color: var(--slate-400);
+      background: var(--slate-50);
     }
-    .estacion-add .estacion-icon { color: #D1D5DB; }
-    .estacion-add .estacion-name { color: #9CA3AF; }
+    .estacion-add .estacion-icon { color: var(--slate-300); }
+    .estacion-add .estacion-name { color: var(--slate-400); }
 
-    .estacion-icon { color: #6B7280; transition: color 0.2s; }
-    .estacion-name { font-size: 13px; font-weight: 500; color: #374151; transition: all 0.2s; }
+    .estacion-icon { color: var(--slate-500); transition: color 0.2s; }
+    .estacion-name { font-size: 13px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; }
 
     .selection-summary {
       margin-top: 20px;
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .dialog-actions {
@@ -187,10 +187,10 @@ import { ESTACIONES_DISPONIBLES } from '../../data/mock-producto-perfil.data';
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

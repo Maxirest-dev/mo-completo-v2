@@ -72,8 +72,8 @@ import { NotificationService } from '../../services/notification.service';
       gap: 12px;
       padding: 12px 16px;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-lg);
       animation: slideIn 0.3s ease-out;
       border-left: 4px solid;
     }
@@ -90,11 +90,11 @@ import { NotificationService } from '../../services/notification.service';
     }
 
     .toast-success {
-      border-left-color: #10B981;
+      border-left-color: var(--success-color, #00A43D);
     }
 
     .toast-success .toast-icon {
-      color: #10B981;
+      color: var(--success-color, #00A43D);
     }
 
     .toast-error {

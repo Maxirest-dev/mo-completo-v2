@@ -191,7 +191,7 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
       padding: 28px 28px 20px;
     }
     .dialog-title {
-      font-size: 18px; font-weight: 700; color: #1F2937;
+      font-size: 18px; font-weight: 700; color: var(--text-heading);
       text-transform: uppercase; letter-spacing: 0.04em; margin: 0;
     }
     .header-badges { display: flex; gap: 10px; }
@@ -212,11 +212,11 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     }
     .add-input {
       padding: 10px 12px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; transition: all 0.15s;
     }
-    .add-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
-    .add-input::placeholder { color: #9CA3AF; }
+    .add-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+    .add-input::placeholder { color: var(--slate-400); }
     .add-unidad { width: 70px; cursor: pointer; appearance: none; padding-right: 8px; text-align: center; }
     .add-cantidad { width: 60px; text-align: center; }
     .add-nombre { flex: 1; min-width: 0; }
@@ -225,10 +225,10 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     .add-btn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 42px; height: 42px; padding: 0; flex-shrink: 0;
-      background: #1F2937; color: white; border: none;
+      background: var(--text-heading); color: white; border: none;
       border-radius: 10px; cursor: pointer; transition: all 0.15s;
     }
-    .add-btn:hover:not(:disabled) { background: #374151; }
+    .add-btn:hover:not(:disabled) { background: var(--text-primary); }
     .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
     /* Ingredient list */
@@ -236,9 +236,9 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     .ingredient-row {
       display: flex; align-items: center; gap: 16px;
       padding: 18px 0;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
-    .ingredient-row:last-child { border-bottom: 1px solid #F3F4F6; }
+    .ingredient-row:last-child { border-bottom: 1px solid var(--slate-100); }
 
     /* Stepper */
     .stepper {
@@ -248,24 +248,24 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     .stepper-btn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 28px; height: 28px; padding: 0;
-      background: white; color: #6B7280; border: 1px solid #E5E7EB;
+      background: white; color: var(--slate-500); border: 1px solid var(--slate-200);
       border-radius: 8px; cursor: pointer; transition: all 0.15s;
     }
-    .stepper-btn:hover:not(:disabled) { border-color: #F97316; color: #F97316; }
+    .stepper-btn:hover:not(:disabled) { border-color: var(--primary-orange); color: var(--primary-orange); }
     .stepper-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .stepper-value {
-      font-size: 18px; font-weight: 700; color: #1F2937;
+      font-size: 18px; font-weight: 700; color: var(--text-heading);
       min-width: 30px; text-align: center;
     }
     .stepper-unit {
-      font-size: 13px; color: #9CA3AF; font-weight: 500;
+      font-size: 13px; color: var(--slate-400); font-weight: 500;
       margin-right: 2px;
     }
 
     /* Info */
     .ingredient-info { flex: 1; min-width: 0; }
     .ingredient-name {
-      display: block; font-size: 15px; font-weight: 600; color: #1F2937;
+      display: block; font-size: 15px; font-weight: 600; color: var(--text-heading);
       margin-bottom: 4px;
     }
     .ingredient-details {
@@ -273,31 +273,31 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     }
     .detail-item {
       display: inline-flex; align-items: center; gap: 4px;
-      font-size: 13px; color: #6B7280;
+      font-size: 13px; color: var(--slate-500);
     }
 
     .remove-btn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 28px; height: 28px; padding: 0; flex-shrink: 0;
-      background: transparent; color: #D1D5DB; border: none;
+      background: transparent; color: var(--slate-300); border: none;
       border-radius: 6px; cursor: pointer; transition: all 0.15s;
     }
-    .remove-btn:hover { color: #EF4444; background: #FEF2F2; }
+    .remove-btn:hover { color: var(--danger-color); background: #FEF2F2; }
 
     .empty-state {
       padding: 32px; text-align: center;
-      font-size: 14px; color: #9CA3AF;
+      font-size: 14px; color: var(--slate-400);
     }
 
     /* Footer stats */
     .stats-footer {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 0 0; border-top: 1px solid #E5E7EB; margin-top: 8px;
+      padding: 16px 0 0; border-top: 1px solid var(--slate-200); margin-top: 8px;
     }
     .stats-count { font-size: 13px; color: #3B82F6; font-weight: 500; }
     .stats-right { display: flex; gap: 24px; }
-    .stats-right span { font-size: 13px; color: #6B7280; }
-    .stats-right strong { color: #1F2937; }
+    .stats-right span { font-size: 13px; color: var(--slate-500); }
+    .stats-right strong { color: var(--text-heading); }
 
     .dialog-actions {
       display: flex; justify-content: flex-end; gap: 12px;
@@ -310,16 +310,16 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     /* Add section label */
     .add-section-label {
       font-size: 11px;
       font-weight: 600;
-      color: #9CA3AF;
+      color: var(--slate-400);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       padding-top: 8px;
@@ -351,7 +351,7 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
     .btn-crear-ingrediente:hover { background: #E67A00; }
     .create-hint {
       font-size: 13px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
     .create-form {
       flex: 1;
@@ -375,11 +375,11 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
       background: none;
       border: none;
       cursor: pointer;
-      color: #9CA3AF;
+      color: var(--slate-400);
       padding: 2px;
       display: flex;
     }
-    .create-form-close:hover { color: #6B7280; }
+    .create-form-close:hover { color: var(--slate-500); }
     .create-form-fields {
       display: flex;
       gap: 8px;

@@ -95,50 +95,50 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
       width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto;
     }
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 18px; font-weight: 700; color: #1F2937; margin: 0; letter-spacing: 0.04em; }
+    .dialog-title { font-size: 18px; font-weight: 700; color: var(--text-heading); margin: 0; letter-spacing: 0.04em; }
     .dialog-body { padding: 20px 28px; }
 
     .ingredients-list { }
     .ingredient-row {
       display: flex; align-items: center; gap: 12px;
-      padding: 14px 0; border-bottom: 1px solid #F3F4F6;
+      padding: 14px 0; border-bottom: 1px solid var(--slate-100);
     }
-    .ingredient-row:last-child { border-bottom: 1px solid #F3F4F6; }
+    .ingredient-row:last-child { border-bottom: 1px solid var(--slate-100); }
     .ing-info { display: flex; align-items: center; gap: 10px; flex: 1; }
-    .ing-dot { width: 7px; height: 7px; border-radius: 50%; background: #F97316; flex-shrink: 0; }
-    .ing-name { font-size: 14px; font-weight: 500; color: #1F2937; }
-    .ing-qty { font-size: 13px; color: #6B7280; font-weight: 500; white-space: nowrap; }
+    .ing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--primary-orange); flex-shrink: 0; }
+    .ing-name { font-size: 14px; font-weight: 500; color: var(--text-heading); }
+    .ing-qty { font-size: 13px; color: var(--slate-500); font-weight: 500; white-space: nowrap; }
     .ing-actions { display: flex; gap: 4px; margin-left: 8px; }
     .action-btn {
       display: flex; align-items: center; justify-content: center;
       width: 28px; height: 28px; padding: 0;
-      background: white; border: 1px solid #E5E7EB; color: #6B7280;
+      background: white; border: 1px solid var(--slate-200); color: var(--slate-500);
       cursor: pointer; border-radius: 6px; transition: all 0.15s;
     }
-    .action-btn:hover { color: #374151; border-color: #D1D5DB; }
-    .action-delete:hover { color: #EF4444; border-color: #FECACA; }
+    .action-btn:hover { color: var(--text-primary); border-color: var(--slate-300); }
+    .action-delete:hover { color: var(--danger-color); border-color: #FECACA; }
 
-    .empty-state { padding: 32px; text-align: center; font-size: 14px; color: #9CA3AF; }
+    .empty-state { padding: 32px; text-align: center; font-size: 14px; color: var(--slate-400); }
 
     .add-row {
       display: flex; gap: 8px; align-items: center; padding: 16px 0;
     }
     .add-input {
       padding: 10px 12px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; transition: all 0.15s;
     }
-    .add-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+    .add-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
     .add-nombre { flex: 1; min-width: 0; }
     .add-cantidad { width: 70px; text-align: center; }
     .add-unidad { width: 70px; text-align: center; }
     .add-btn {
       display: flex; align-items: center; justify-content: center;
       width: 38px; height: 38px; padding: 0; flex-shrink: 0;
-      background: #F97316; color: white; border: none;
+      background: var(--primary-orange); color: white; border: none;
       border-radius: 10px; cursor: pointer; transition: background 0.15s;
     }
-    .add-btn:hover { background: #EA580C; }
+    .add-btn:hover { background: var(--primary-orange-hover); }
     .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .dialog-actions {
@@ -149,10 +149,10 @@ const UNIDADES = ['Un', 'Gr', 'Ml', 'Kg'];
       padding: 12px 24px; font-size: 14px; font-weight: 500; font-family: inherit;
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s;
     }
-    .btn-primary { background: #1F2937; color: white; }
-    .btn-primary:hover { background: #374151; }
-    .btn-secondary { background: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover { background: #F9FAFB; }
+    .btn-primary { background: var(--text-heading); color: white; }
+    .btn-primary:hover { background: var(--text-primary); }
+    .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover { background: var(--slate-50); }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

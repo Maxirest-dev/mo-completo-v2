@@ -33,9 +33,9 @@ import { StockAlert, StockAlertEstado } from '../../models';
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 8px 0;
+      padding: 10px 0;
       min-height: 40px;
-      border-bottom: 1px solid var(--gray-100, #F3F4F6);
+      border-bottom: 1px solid var(--divider-color, #F1F5F9);
     }
 
     .alert-item:last-child {
@@ -53,7 +53,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
     .alert-nombre {
       font-size: 13px;
       font-weight: 600;
-      color: var(--gray-800, #1F2937);
+      color: var(--slate-700, #314158);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -61,7 +61,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
 
     .alert-deposito {
       font-size: 11px;
-      color: var(--gray-400, #9CA3AF);
+      color: var(--slate-400, #90A1B9);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -77,7 +77,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
       font-size: 12px;
       font-weight: 700;
       padding: 2px 8px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm, 8px);
       min-width: 42px;
       text-align: center;
     }
@@ -93,7 +93,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
     }
 
     .badge-normal {
-      background: var(--success-color, #10B981);
+      background: var(--success-color, #00A43D);
       color: #FFFFFF;
     }
 
@@ -103,7 +103,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
       font-weight: 600;
       padding: 4px 10px;
       border: 1px solid var(--danger-color, #EF4444);
-      border-radius: 6px;
+      border-radius: var(--radius-sm, 8px);
       background: transparent;
       color: var(--danger-color, #EF4444);
       cursor: pointer;

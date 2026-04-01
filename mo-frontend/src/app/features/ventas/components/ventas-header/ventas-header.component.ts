@@ -63,63 +63,69 @@ import { FiltroVentas } from '../../models';
     .header-filters {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
       margin: 4px 0 0;
     }
 
-
     .filter-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .filter-label {
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
-      color: #6B7280;
+      color: var(--slate-700, #314158);
     }
 
     .filter-input {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      padding: 8px 12px;
-      border: 1px solid #D1D5DB;
-      border-radius: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
       background: white;
-      color: #374151;
+      color: var(--slate-700, #314158);
       outline: none;
-      transition: border-color 0.15s ease;
+      transition: all 0.2s ease;
       min-width: 140px;
     }
 
     .filter-input:focus {
-      border-color: #F97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--primary-orange, #F27920);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
 
     .date-range {
       display: flex;
       align-items: center;
-      border: 1px solid #D1D5DB;
-      border-radius: 8px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
       background: white;
       overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .date-range:focus-within {
+      border-color: var(--primary-orange, #F27920);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
     .date-input {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      padding: 8px 12px;
+      padding: 10px 12px;
       border: none;
       background: white;
-      color: #374151;
+      color: var(--slate-700, #314158);
       outline: none;
     }
-    .date-input:focus { background: #FFF7ED; }
+    .date-input:focus { background: var(--primary-orange-light, #FFF7ED); }
     .date-separator {
-      font-size: 14px; color: #9CA3AF; padding: 0 4px;
+      font-size: 14px;
+      color: var(--slate-400, #90A1B9);
+      padding: 0 4px;
     }
 
     .btn-export {
@@ -129,18 +135,18 @@ import { FiltroVentas } from '../../models';
       font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 500;
-      padding: 8px 16px;
-      border: 1px solid #D1D5DB;
-      border-radius: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
       background: white;
-      color: #374151;
+      color: var(--slate-700, #314158);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
 
     .btn-export:hover {
-      background: #F9FAFB;
-      border-color: #9CA3AF;
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
 
     .btn-icon {
@@ -153,7 +159,6 @@ import { FiltroVentas } from '../../models';
         flex-direction: column;
         align-items: flex-start;
       }
-
 
       .filter-input {
         min-width: unset;

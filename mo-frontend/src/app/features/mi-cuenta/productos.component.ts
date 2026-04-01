@@ -52,7 +52,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
     descripcion: 'Activacion del comercio (PedidosYa) y recepcion a nuevos clientes',
     activo: true,
     boton: null,
-    iconColor: '#F97316',
+    iconColor: '#F27920',
     iconLetter: 'PY',
   },
   {
@@ -60,7 +60,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
     descripcion: 'Aplica e gestiona de Rappi (Pedidos, menu, publicaciones, tarifas e envios)',
     activo: true,
     boton: null,
-    iconColor: '#F97316',
+    iconColor: '#F27920',
     iconLetter: 'R',
   },
   {
@@ -187,37 +187,37 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
     /* Product Hero Card */
     .product-hero {
-      background: #1F2937;
-      border-radius: 16px;
+      background: var(--slate-800);
+      border-radius: var(--radius-xl);
       padding: 32px;
       display: flex;
       justify-content: space-between;
@@ -243,7 +243,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       background: #22C55E;
       color: white;
       padding: 4px 14px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
     }
@@ -251,7 +251,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       background: #3B82F6;
       color: white;
       padding: 4px 14px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
     }
@@ -268,7 +268,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
     }
     .product-hero-tax {
       font-size: 13px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .product-hero-right {
@@ -279,7 +279,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
 
     .btn-outline-white {
       padding: 10px 24px;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       border: 1px solid rgba(255, 255, 255, 0.3);
       background: transparent;
       color: white;
@@ -299,7 +299,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       justify-content: center;
       width: 42px;
       height: 42px;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       border: 1px solid rgba(255, 255, 255, 0.3);
       background: transparent;
       color: white;
@@ -318,7 +318,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
     .section-title {
       font-size: 18px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 16px;
     }
 
@@ -331,28 +331,29 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
 
     .integracion-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
     .integracion-card:hover {
-      border-color: #D1D5DB;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border-color: var(--slate-300);
+      box-shadow: var(--shadow-md);
     }
 
     .integracion-icon-placeholder {
       width: 44px;
       height: 44px;
-      border-radius: 10px;
-      background: #F3F4F6;
+      border-radius: var(--radius-md);
+      background: var(--slate-100);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #6B7280;
+      color: var(--slate-500);
       margin-bottom: 4px;
     }
 
@@ -374,13 +375,13 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
     .integracion-nombre {
       font-size: 15px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0;
     }
 
     .integracion-desc {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
       line-height: 1.5;
       flex: 1;
@@ -399,7 +400,7 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       display: inline-flex;
       align-items: center;
       padding: 4px 12px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
       width: fit-content;
@@ -410,25 +411,25 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       border: 1px solid #BBF7D0;
     }
     .badge--gray {
-      background: #F3F4F6;
-      color: #6B7280;
-      border: 1px solid #E5E7EB;
+      background: var(--slate-100);
+      color: var(--slate-500);
+      border: 1px solid var(--slate-200);
     }
 
     .btn-integracion {
       padding: 6px 16px;
-      border-radius: 8px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .btn-integracion:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     /* Responsive */

@@ -30,7 +30,7 @@ const MOCK_TRAMITES: Tramite[] = [
     lugar: 'Autogestionado',
     fechaSeguimiento: '12/12/2025 17:00',
     estado: 'Asignado',
-    avatarColor: '#F97316',
+    avatarColor: '#F27920',
     avatarLetters: 'CR',
     notasInternas: '',
   },
@@ -329,30 +329,30 @@ const MOCK_TRAMITES: Tramite[] = [
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -381,8 +381,8 @@ const MOCK_TRAMITES: Tramite[] = [
     .filter-tabs {
       display: flex;
       gap: 6px;
-      background: #F3F4F6;
-      border-radius: 10px;
+      background: var(--slate-100);
+      border-radius: var(--radius-md);
       padding: 4px;
     }
 
@@ -392,9 +392,9 @@ const MOCK_TRAMITES: Tramite[] = [
       gap: 6px;
       padding: 8px 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       background: transparent;
-      color: #6B7280;
+      color: var(--slate-500);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
@@ -402,12 +402,12 @@ const MOCK_TRAMITES: Tramite[] = [
       white-space: nowrap;
     }
     .filter-tab:hover {
-      color: #374151;
+      color: var(--slate-700);
     }
     .filter-tab--active {
       background: white;
-      color: #111827;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      color: var(--slate-900);
+      box-shadow: var(--shadow-sm);
     }
 
     .filter-tab-count {
@@ -417,14 +417,14 @@ const MOCK_TRAMITES: Tramite[] = [
       min-width: 20px;
       height: 20px;
       padding: 0 6px;
-      border-radius: 9999px;
-      background: #E5E7EB;
-      color: #6B7280;
+      border-radius: var(--radius-full);
+      background: var(--slate-200);
+      color: var(--slate-500);
       font-size: 11px;
       font-weight: 600;
     }
     .filter-tab-count--active {
-      background: #F97316;
+      background: var(--primary-orange);
       color: white;
     }
 
@@ -436,26 +436,26 @@ const MOCK_TRAMITES: Tramite[] = [
     .search-icon {
       position: absolute;
       left: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       pointer-events: none;
     }
     .search-input {
       padding: 8px 12px 8px 36px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      color: #374151;
+      color: var(--slate-700);
       background: white;
       width: 220px;
       outline: none;
       transition: border-color 0.15s;
     }
     .search-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
     .search-input:focus {
-      border-color: #F97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
 
     .btn-primary {
@@ -464,8 +464,8 @@ const MOCK_TRAMITES: Tramite[] = [
       gap: 6px;
       padding: 8px 20px;
       border: none;
-      border-radius: 8px;
-      background: #F97316;
+      border-radius: var(--radius-sm);
+      background: var(--primary-orange);
       color: white;
       font-size: 13px;
       font-weight: 600;
@@ -474,7 +474,7 @@ const MOCK_TRAMITES: Tramite[] = [
       white-space: nowrap;
     }
     .btn-primary:hover {
-      background: #EA580C;
+      background: var(--primary-orange-hover);
     }
 
     .btn-secondary {
@@ -482,26 +482,27 @@ const MOCK_TRAMITES: Tramite[] = [
       align-items: center;
       gap: 6px;
       padding: 8px 20px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .btn-secondary:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     /* ===== Table ===== */
     .table-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
 
     .table-wrapper {
@@ -514,7 +515,7 @@ const MOCK_TRAMITES: Tramite[] = [
     }
 
     .data-table thead tr {
-      background: #F3F4F6;
+      background: var(--slate-100);
     }
 
     .data-table th {
@@ -522,7 +523,7 @@ const MOCK_TRAMITES: Tramite[] = [
       text-align: left;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       white-space: nowrap;
@@ -531,8 +532,8 @@ const MOCK_TRAMITES: Tramite[] = [
     .data-table td {
       padding: 14px 16px;
       font-size: 13px;
-      color: #374151;
-      border-top: 1px solid #F3F4F6;
+      color: var(--slate-700);
+      border-top: 1px solid var(--slate-100);
       vertical-align: middle;
     }
 
@@ -540,7 +541,7 @@ const MOCK_TRAMITES: Tramite[] = [
       transition: background 0.1s ease;
     }
     .data-table tbody tr:hover {
-      background: #FAFAFA;
+      background: var(--slate-50);
     }
 
     .motivo-cell {
@@ -569,27 +570,27 @@ const MOCK_TRAMITES: Tramite[] = [
     }
     .motivo-name {
       font-weight: 500;
-      color: #111827;
+      color: var(--slate-900);
       white-space: nowrap;
     }
     .motivo-tipo {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .estado-badge {
       display: inline-flex;
       align-items: center;
       padding: 4px 12px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
       white-space: nowrap;
     }
     .estado--asignado {
-      background: #FFF7ED;
-      color: #EA580C;
-      border: 1px solid #FED7AA;
+      background: var(--primary-orange-light);
+      color: var(--primary-orange-hover);
+      border: 1px solid var(--primary-orange-lighter);
     }
     .estado--en-tramite {
       background: #EFF6FF;
@@ -609,10 +610,10 @@ const MOCK_TRAMITES: Tramite[] = [
 
     .btn-action {
       padding: 6px 14px;
-      border: 1px solid #E5E7EB;
-      border-radius: 6px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
@@ -620,13 +621,13 @@ const MOCK_TRAMITES: Tramite[] = [
       white-space: nowrap;
     }
     .btn-action:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .empty-row {
       text-align: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       padding: 40px 16px !important;
       font-size: 14px;
     }
@@ -645,11 +646,11 @@ const MOCK_TRAMITES: Tramite[] = [
 
     .dialog {
       background: white;
-      border-radius: 16px;
+      border-radius: var(--radius-xl);
       width: 100%;
       max-width: 560px;
       padding: 28px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-lg);
     }
 
     .dialog-header {
@@ -669,7 +670,7 @@ const MOCK_TRAMITES: Tramite[] = [
     .dialog-title {
       font-size: 20px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0;
     }
 
@@ -680,16 +681,16 @@ const MOCK_TRAMITES: Tramite[] = [
       width: 36px;
       height: 36px;
       border: none;
-      border-radius: 8px;
-      background: #F3F4F6;
-      color: #6B7280;
+      border-radius: var(--radius-sm);
+      background: var(--slate-100);
+      color: var(--slate-500);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
     }
     .dialog-close:hover {
-      background: #E5E7EB;
-      color: #374151;
+      background: var(--slate-200);
+      color: var(--slate-700);
     }
 
     .dialog-info-row {
@@ -697,8 +698,8 @@ const MOCK_TRAMITES: Tramite[] = [
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       padding: 16px;
-      background: #F9FAFB;
-      border-radius: 10px;
+      background: var(--slate-50);
+      border-radius: var(--radius-md);
       margin-bottom: 24px;
     }
 
@@ -711,7 +712,7 @@ const MOCK_TRAMITES: Tramite[] = [
     .dialog-info-label {
       font-size: 11px;
       font-weight: 600;
-      color: #9CA3AF;
+      color: var(--slate-400);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
@@ -719,7 +720,7 @@ const MOCK_TRAMITES: Tramite[] = [
     .dialog-info-value {
       font-size: 13px;
       font-weight: 500;
-      color: #111827;
+      color: var(--slate-900);
     }
 
     .dialog-notes {
@@ -730,17 +731,17 @@ const MOCK_TRAMITES: Tramite[] = [
       display: block;
       font-size: 13px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-700);
       margin-bottom: 8px;
     }
 
     .dialog-notes-input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      color: #374151;
+      color: var(--slate-700);
       font-family: inherit;
       resize: vertical;
       outline: none;
@@ -748,11 +749,11 @@ const MOCK_TRAMITES: Tramite[] = [
       box-sizing: border-box;
     }
     .dialog-notes-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
     .dialog-notes-input:focus {
-      border-color: #F97316;
-      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
     }
 
     .dialog-actions {
@@ -767,9 +768,9 @@ const MOCK_TRAMITES: Tramite[] = [
       bottom: 24px;
       right: 24px;
       width: 360px;
-      border-radius: 16px;
+      border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-lg);
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -781,7 +782,7 @@ const MOCK_TRAMITES: Tramite[] = [
       align-items: center;
       justify-content: space-between;
       padding: 16px 20px;
-      background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+      background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-hover) 100%);
       color: white;
     }
 
@@ -814,7 +815,7 @@ const MOCK_TRAMITES: Tramite[] = [
       width: 32px;
       height: 32px;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.15);
       color: white;
       cursor: pointer;
@@ -833,11 +834,11 @@ const MOCK_TRAMITES: Tramite[] = [
     }
 
     .chat-bubble {
-      background: #F3F4F6;
+      background: var(--slate-100);
       border-radius: 12px 12px 12px 4px;
       padding: 14px 16px;
       font-size: 13px;
-      color: #374151;
+      color: var(--slate-700);
       line-height: 1.6;
     }
 
@@ -849,10 +850,10 @@ const MOCK_TRAMITES: Tramite[] = [
 
     .quick-action-pill {
       padding: 6px 14px;
-      border: 1px solid #FED7AA;
-      border-radius: 9999px;
-      background: #FFF7ED;
-      color: #EA580C;
+      border: 1px solid var(--primary-orange-lighter);
+      border-radius: var(--radius-full);
+      background: var(--primary-orange-light);
+      color: var(--primary-orange-hover);
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
@@ -868,24 +869,24 @@ const MOCK_TRAMITES: Tramite[] = [
       align-items: center;
       gap: 8px;
       padding: 12px 16px;
-      border-top: 1px solid #F3F4F6;
+      border-top: 1px solid var(--slate-100);
     }
 
     .chat-input {
       flex: 1;
       padding: 10px 12px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
       font-size: 13px;
-      color: #374151;
+      color: var(--slate-700);
       outline: none;
       transition: border-color 0.15s;
     }
     .chat-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
     .chat-input:focus {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     .chat-send {
@@ -895,15 +896,15 @@ const MOCK_TRAMITES: Tramite[] = [
       width: 38px;
       height: 38px;
       border: none;
-      border-radius: 8px;
-      background: #F97316;
+      border-radius: var(--radius-sm);
+      background: var(--primary-orange);
       color: white;
       cursor: pointer;
       transition: background 0.15s;
       flex-shrink: 0;
     }
     .chat-send:hover {
-      background: #EA580C;
+      background: var(--primary-orange-hover);
     }
 
     /* ===== Responsive ===== */

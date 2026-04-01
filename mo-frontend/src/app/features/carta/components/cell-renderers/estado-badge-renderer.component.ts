@@ -66,7 +66,7 @@ const ESTADO_CONFIG: Record<string, EstadoConfig> = {
       padding: 5px 12px;
       font-size: 13px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
     }
 
@@ -79,42 +79,42 @@ const ESTADO_CONFIG: Record<string, EstadoConfig> = {
 
     /* Disponible - Green like reference */
     .badge-success {
-      background-color: #D1FAE5;
-      color: #065F46;
+      background-color: var(--success-bg);
+      color: var(--success-text);
     }
 
     .dot-success {
-      background-color: #10B981;
+      background-color: var(--success-color);
     }
 
     /* Stock medio - Amber/Yellow like reference */
     .badge-warning {
-      background-color: #FEF3C7;
+      background-color: var(--warning-bg);
       color: #92400E;
     }
 
     .dot-warning {
-      background-color: #F59E0B;
+      background-color: var(--warning-color);
     }
 
     /* Sin stock - Red */
     .badge-danger {
-      background-color: #FEE2E2;
-      color: #991B1B;
+      background-color: var(--danger-bg);
+      color: var(--danger-text);
     }
 
     .dot-danger {
-      background-color: #EF4444;
+      background-color: var(--danger-color);
     }
 
     /* Inactivo - Gray */
     .badge-inactive {
-      background-color: #F3F4F6;
-      color: #4B5563;
+      background-color: var(--slate-100);
+      color: var(--slate-600);
     }
 
     .dot-inactive {
-      background-color: #6B7280;
+      background-color: var(--slate-500);
     }
   `]
 })

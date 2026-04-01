@@ -1,16 +1,80 @@
-// Card Component
+// Card Component — v2 Pencil design (rounded 14px, shadow, slate borders)
 .card {
   background: var(--bg-primary);
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
+  overflow: hidden;
 }
 
 .card-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 25px;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.card-header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-heading);
 }
 
 .card-body {
-  padding: 24px;
+  padding: 25px;
+}
+
+// StatCard — Pencil dashboard cards
+.stat-card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  padding: 1px;
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 25px 0;
+}
+
+.stat-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-heading);
+}
+
+.stat-card-body {
+  display: flex;
+  gap: 0;
+  padding: 16px 25px 25px;
+}
+
+.stat-card-metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  & + .stat-card-metric {
+    padding-left: 25px;
+    border-left: 1px solid var(--divider-color);
+  }
+}
+
+.stat-card-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.stat-card-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.1;
 }

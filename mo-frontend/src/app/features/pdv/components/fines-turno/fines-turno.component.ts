@@ -22,77 +22,108 @@ interface CalendarDay {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="calendar-card">
-      <div class="calendar-header">
-        <div>
-          <h3 class="calendar-title">Fines de Turno</h3>
-          <span class="calendar-subtitle">Informe mensual</span>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="header-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+          </svg>
+          <div class="card-header-text">
+            <span class="card-header-title">Fines de Turno</span>
+            <span class="card-header-subtitle">Informe mensual</span>
+          </div>
         </div>
       </div>
 
-      <div class="month-nav">
-        <button class="nav-arrow" (click)="prevMonth()" title="Mes anterior">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-          </svg>
-        </button>
-        <span class="month-label">{{ monthLabel() }}</span>
-        <button class="nav-arrow" (click)="nextMonth()" title="Mes siguiente">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
-      </div>
+      <div class="card-body">
+        <div class="month-nav">
+          <button class="nav-arrow" (click)="prevMonth()" title="Mes anterior">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <span class="month-label">{{ monthLabel() }}</span>
+          <button class="nav-arrow" (click)="nextMonth()" title="Mes siguiente">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
 
-      <div class="calendar-grid">
-        <div class="day-header">L</div>
-        <div class="day-header">M</div>
-        <div class="day-header">M</div>
-        <div class="day-header">J</div>
-        <div class="day-header">V</div>
-        <div class="day-header">S</div>
-        <div class="day-header">D</div>
+        <div class="calendar-grid">
+          <div class="day-header">L</div>
+          <div class="day-header">M</div>
+          <div class="day-header">M</div>
+          <div class="day-header">J</div>
+          <div class="day-header">V</div>
+          <div class="day-header">S</div>
+          <div class="day-header">D</div>
 
-        @for (day of calendarDays(); track day.date) {
-          <div
-            class="day-cell"
-            [class.out-of-month]="!day.inMonth"
-            [class.today]="day.isToday"
-            [class.has-shift]="day.hasShift"
-            [class.clickable]="day.hasShift"
-            (click)="day.hasShift ? onDayClick(day.date) : null"
-          >
-            <span class="day-number">{{ day.day }}</span>
-            @if (day.hasShift) {
-              <span class="shift-dot"></span>
-            }
-          </div>
-        }
+          @for (day of calendarDays(); track day.date) {
+            <div
+              class="day-cell"
+              [class.out-of-month]="!day.inMonth"
+              [class.today]="day.isToday"
+              [class.has-shift]="day.hasShift"
+              [class.clickable]="day.hasShift"
+              (click)="day.hasShift ? onDayClick(day.date) : null"
+            >
+              <span class="day-number">{{ day.day }}</span>
+              @if (day.hasShift) {
+                <span class="shift-dot"></span>
+              }
+            </div>
+          }
+        </div>
       </div>
     </div>
   `,
   styles: [`
-    .calendar-card {
-      background: white;
+    .card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      overflow: hidden;
     }
 
-    .calendar-header {
-      margin-bottom: 16px;
+    .card-header {
+      display: flex;
+      align-items: center;
+      padding: 16px 25px;
+      border-bottom: 1px solid var(--divider-color);
     }
 
-    .calendar-title {
-      font-size: 18px;
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--slate-400);
+    }
+
+    .card-header-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header-title {
+      font-size: 16px;
       font-weight: 600;
-      color: var(--gray-900);
-      margin: 0;
+      color: var(--text-heading);
     }
 
-    .calendar-subtitle {
-      font-size: 13px;
-      color: var(--gray-500);
+    .card-header-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .card-body {
+      padding: 20px 25px 25px;
     }
 
     .month-nav {
@@ -105,7 +136,7 @@ interface CalendarDay {
     .month-label {
       font-size: 15px;
       font-weight: 600;
-      color: var(--gray-800);
+      color: var(--text-heading);
       text-transform: capitalize;
     }
 
@@ -116,16 +147,16 @@ interface CalendarDay {
       width: 32px;
       height: 32px;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      background: white;
-      color: var(--gray-600);
+      border-radius: var(--radius-sm);
+      background: var(--bg-primary);
+      color: var(--slate-500);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .nav-arrow:hover {
-      background: var(--gray-50);
-      border-color: var(--gray-300);
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .calendar-grid {
@@ -138,7 +169,7 @@ interface CalendarDay {
       text-align: center;
       font-size: 12px;
       font-weight: 600;
-      color: var(--gray-400);
+      color: var(--slate-400);
       padding: 8px 0;
       text-transform: uppercase;
     }
@@ -150,36 +181,36 @@ interface CalendarDay {
       align-items: center;
       justify-content: center;
       height: 40px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: default;
       transition: background 0.15s ease;
     }
 
     .day-cell:hover {
-      background: var(--gray-50);
+      background: var(--slate-50);
     }
 
     .day-number {
       font-size: 13px;
       font-weight: 500;
-      color: var(--gray-700);
+      color: var(--text-primary);
     }
 
     .day-cell.out-of-month .day-number {
-      color: var(--gray-300);
+      color: var(--slate-300);
     }
 
     .day-cell.today {
-      background: var(--gray-100);
+      background: var(--slate-100);
     }
 
     .day-cell.today .day-number {
-      color: var(--gray-900);
+      color: var(--text-heading);
       font-weight: 700;
     }
 
     .day-cell.has-shift {
-      background: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
     }
 
     .day-cell.has-shift .day-number {
@@ -190,8 +221,9 @@ interface CalendarDay {
     .day-cell.clickable {
       cursor: pointer;
     }
+
     .day-cell.clickable:hover {
-      background: #FDBA74;
+      background: var(--primary-orange-lighter);
     }
 
     .shift-dot {

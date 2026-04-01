@@ -21,54 +21,88 @@ Chart.register(...registerables);
   imports: [BaseChartDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="stats-card">
-      <h3 class="stats-title">Estadisticas</h3>
-      <div class="stats-grid">
-        <div class="chart-container">
-          <h4 class="chart-label">Ventas por concepto</h4>
-          <div class="chart-wrapper">
-            <canvas baseChart
-              [type]="'bar'"
-              [data]="barChartData()"
-              [options]="barChartOptions">
-            </canvas>
-          </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="header-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+          </svg>
+          <span class="card-header-title">Estadisticas</span>
         </div>
-        <div class="chart-container">
-          <h4 class="chart-label">Formas de Cobro</h4>
-          <div class="chart-wrapper-doughnut">
-            <canvas baseChart
-              [type]="'doughnut'"
-              [data]="doughnutChartData()"
-              [options]="doughnutChartOptions">
-            </canvas>
+      </div>
+      <div class="card-body">
+        <div class="stats-grid">
+          <div class="chart-container">
+            <h4 class="chart-label">Ventas por concepto</h4>
+            <div class="chart-wrapper">
+              <canvas baseChart
+                [type]="'bar'"
+                [data]="barChartData()"
+                [options]="barChartOptions">
+              </canvas>
+            </div>
           </div>
-          <div class="legend">
-            @for (fc of formasCobro(); track fc.nombre) {
-              <div class="legend-item">
-                <span class="legend-dot" [style.background]="fc.color"></span>
-                <span class="legend-label">{{ fc.nombre }}</span>
-                <span class="legend-value">{{ fc.porcentaje }}%</span>
-              </div>
-            }
+          <div class="chart-container">
+            <h4 class="chart-label">Formas de Cobro</h4>
+            <div class="chart-wrapper-doughnut">
+              <canvas baseChart
+                [type]="'doughnut'"
+                [data]="doughnutChartData()"
+                [options]="doughnutChartOptions">
+              </canvas>
+            </div>
+            <div class="legend">
+              @for (fc of formasCobro(); track fc.nombre) {
+                <div class="legend-item">
+                  <span class="legend-dot" [style.background]="fc.color"></span>
+                  <span class="legend-label">{{ fc.nombre }}</span>
+                  <span class="legend-value">{{ fc.porcentaje }}%</span>
+                </div>
+              }
+            </div>
           </div>
         </div>
       </div>
     </div>
   `,
   styles: [`
-    .stats-card {
-      background: white;
+    .card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      overflow: hidden;
     }
 
-    .stats-title {
-      font-size: 18px;
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 25px;
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--slate-400);
+    }
+
+    .card-header-title {
+      font-size: 16px;
       font-weight: 600;
-      color: var(--gray-900);
-      margin: 0 0 20px 0;
+      color: var(--text-heading);
+    }
+
+    .card-body {
+      padding: 20px 25px 25px;
     }
 
     .stats-grid {
@@ -85,7 +119,7 @@ Chart.register(...registerables);
     .chart-label {
       font-size: 14px;
       font-weight: 500;
-      color: var(--gray-600);
+      color: var(--text-primary);
       margin: 0 0 16px 0;
     }
 
@@ -104,32 +138,32 @@ Chart.register(...registerables);
     .legend {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       margin-top: 16px;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 13px;
     }
 
     .legend-dot {
       width: 10px;
       height: 10px;
-      border-radius: 50%;
+      border-radius: 3px;
       flex-shrink: 0;
     }
 
     .legend-label {
       flex: 1;
-      color: var(--gray-700);
+      color: var(--text-primary);
     }
 
     .legend-value {
       font-weight: 600;
-      color: var(--gray-900);
+      color: var(--text-heading);
     }
 
     @media (max-width: 768px) {
@@ -147,7 +181,7 @@ export class EstadisticasComponent {
     datasets: [
       {
         data: [95000, 48000, 24128],
-        backgroundColor: ['#F97316', '#FB923C', '#FDBA74'],
+        backgroundColor: ['#F27920', '#F59E0B', '#FFD6A7'],
         borderRadius: 6,
         barThickness: 40,
       },
@@ -168,12 +202,12 @@ export class EstadisticasComponent {
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: '#6B7280', font: { size: 12 } },
+        ticks: { color: '#90A1B9', font: { size: 12 } },
       },
       y: {
-        grid: { color: '#F3F4F6' },
+        grid: { color: '#F1F5F9' },
         ticks: {
-          color: '#6B7280',
+          color: '#90A1B9',
           font: { size: 11 },
           callback: (val) => `$${(Number(val) / 1000).toFixed(0)}k`,
         },

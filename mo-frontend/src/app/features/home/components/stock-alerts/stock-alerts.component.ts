@@ -58,7 +58,7 @@ const ESTADO_PRIORIDAD: Record<StockAlertEstado, number> = {
 
     .empty-text {
       font-size: 14px;
-      color: var(--gray-400, #9CA3AF);
+      color: var(--slate-400, #90A1B9);
       margin: 0;
     }
 

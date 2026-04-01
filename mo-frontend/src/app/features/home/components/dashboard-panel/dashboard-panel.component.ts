@@ -43,10 +43,10 @@ import { LoadingSpinnerComponent } from '@mro/shared-ui';
     }
 
     .dashboard-panel {
-      background: #FFFFFF;
-      border: 1px solid var(--gray-200, #E5E7EB);
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+      background: var(--bg-primary, #FFFFFF);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -56,9 +56,9 @@ import { LoadingSpinnerComponent } from '@mro/shared-ui';
     .panel-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 16px 20px 12px;
-      border-bottom: 1px solid var(--gray-100, #F3F4F6);
+      gap: var(--spacing-sm, 8px);
+      padding: 16px 25px 12px;
+      border-bottom: 1px solid var(--divider-color, #F1F5F9);
     }
 
     .panel-icon {
@@ -70,7 +70,7 @@ import { LoadingSpinnerComponent } from '@mro/shared-ui';
     .panel-title {
       font-size: 16px;
       font-weight: 600;
-      color: var(--gray-900, #111827);
+      color: var(--slate-900, #0F172B);
       margin: 0;
       flex: 1;
       white-space: nowrap;
@@ -87,7 +87,7 @@ import { LoadingSpinnerComponent } from '@mro/shared-ui';
 
     .panel-body {
       flex: 1;
-      padding: 16px 20px;
+      padding: 16px 25px;
       min-height: 0;
       overflow-y: auto;
     }
@@ -97,8 +97,8 @@ import { LoadingSpinnerComponent } from '@mro/shared-ui';
     }
 
     .panel-footer {
-      padding: 12px 20px;
-      border-top: 1px solid var(--gray-100, #F3F4F6);
+      padding: 12px 25px;
+      border-top: 1px solid var(--divider-color, #F1F5F9);
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,

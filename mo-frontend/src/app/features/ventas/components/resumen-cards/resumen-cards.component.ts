@@ -10,85 +10,88 @@ import { VentaResumen } from '../../models';
   template: `
     <div class="cards-row">
       <!-- Ventas totales -->
-      <div class="summary-card card-green">
-        <div class="card-header">
-          <h3 class="card-title">Ventas totales</h3>
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <h3 class="stat-card-title">Ventas totales</h3>
           <span
-            class="badge"
-            [class.badge-positive]="ventasResumen().variacion >= 0"
-            [class.badge-negative]="ventasResumen().variacion < 0"
+            class="trend-badge"
+            [class.trend-up]="ventasResumen().variacion >= 0"
+            [class.trend-down]="ventasResumen().variacion < 0"
           >
+            <span class="trend-arrow">{{ ventasResumen().variacion >= 0 ? '\u2191' : '\u2193' }}</span>
             {{ ventasResumen().variacion >= 0 ? '+' : '' }}{{ ventasResumen().variacion }}%
           </span>
         </div>
-        <div class="card-metrics">
-          <div class="metric">
-            <span class="metric-label">Total</span>
-            <span class="metric-value">\${{ formatNumber(ventasResumen().total) }}</span>
+        <div class="stat-card-body">
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Total</span>
+            <span class="stat-card-value">\${{ formatNumber(ventasResumen().total) }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Operaciones</span>
-            <span class="metric-value">{{ ventasResumen().operaciones }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Cantidad</span>
+            <span class="stat-card-value">{{ ventasResumen().operaciones }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Promedio</span>
-            <span class="metric-value">\${{ formatNumber(ventasResumen().promedio) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Promedio</span>
+            <span class="stat-card-value">\${{ formatNumber(ventasResumen().promedio) }}</span>
           </div>
         </div>
       </div>
 
-      <!-- Informacion de formas -->
-      <div class="summary-card card-orange">
-        <div class="card-header">
-          <h3 class="card-title">Informacion de descuentos</h3>
+      <!-- Informacion de descuentos -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <h3 class="stat-card-title">Informacion de descuentos</h3>
           <span
-            class="badge"
-            [class.badge-positive]="formasResumen().variacion >= 0"
-            [class.badge-negative]="formasResumen().variacion < 0"
+            class="trend-badge"
+            [class.trend-up]="formasResumen().variacion >= 0"
+            [class.trend-down]="formasResumen().variacion < 0"
           >
+            <span class="trend-arrow">{{ formasResumen().variacion >= 0 ? '\u2191' : '\u2193' }}</span>
             {{ formasResumen().variacion >= 0 ? '+' : '' }}{{ formasResumen().variacion }}%
           </span>
         </div>
-        <div class="card-metrics">
-          <div class="metric">
-            <span class="metric-label">Total</span>
-            <span class="metric-value">\${{ formatNumber(formasResumen().total) }}</span>
+        <div class="stat-card-body">
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Total</span>
+            <span class="stat-card-value">\${{ formatNumber(formasResumen().total) }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Operaciones</span>
-            <span class="metric-value">{{ formasResumen().operaciones }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Cantidad</span>
+            <span class="stat-card-value">{{ formasResumen().operaciones }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Promedio</span>
-            <span class="metric-value">\${{ formatNumber(formasResumen().promedio) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Promedio</span>
+            <span class="stat-card-value">\${{ formatNumber(formasResumen().promedio) }}</span>
           </div>
         </div>
       </div>
 
-      <!-- Otros -->
-      <div class="summary-card card-gray">
-        <div class="card-header">
-          <h3 class="card-title">Cubiertos</h3>
+      <!-- Cubiertos -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <h3 class="stat-card-title">Cubiertos</h3>
           <span
-            class="badge"
-            [class.badge-positive]="otrosResumen().variacion >= 0"
-            [class.badge-negative]="otrosResumen().variacion < 0"
+            class="trend-badge"
+            [class.trend-up]="otrosResumen().variacion >= 0"
+            [class.trend-down]="otrosResumen().variacion < 0"
           >
+            <span class="trend-arrow">{{ otrosResumen().variacion >= 0 ? '\u2191' : '\u2193' }}</span>
             {{ otrosResumen().variacion >= 0 ? '+' : '' }}{{ otrosResumen().variacion }}%
           </span>
         </div>
-        <div class="card-metrics">
-          <div class="metric">
-            <span class="metric-label">Total</span>
-            <span class="metric-value">\${{ formatNumber(otrosResumen().total) }}</span>
+        <div class="stat-card-body">
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Total</span>
+            <span class="stat-card-value">\${{ formatNumber(otrosResumen().total) }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Operaciones</span>
-            <span class="metric-value">{{ otrosResumen().operaciones }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Cantidad</span>
+            <span class="stat-card-value">{{ otrosResumen().operaciones }}</span>
           </div>
-          <div class="metric">
-            <span class="metric-label">Promedio</span>
-            <span class="metric-value">\${{ formatNumber(otrosResumen().promedio) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Promedio</span>
+            <span class="stat-card-value">\${{ formatNumber(otrosResumen().promedio) }}</span>
           </div>
         </div>
       </div>
@@ -102,88 +105,85 @@ import { VentaResumen } from '../../models';
       margin-bottom: 24px;
     }
 
-    .summary-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 12px 20px 20px;
-      border-left: 4px solid;
+    .stat-card {
+      background: var(--bg-primary, white);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      border: 1px solid var(--border-color, #E2E8F0);
+      overflow: hidden;
     }
 
-    .card-green {
-      border-left-color: #10B981;
-    }
-
-    .card-orange {
-      border-left-color: #F97316;
-    }
-
-    .card-gray {
-      border-left-color: #9CA3AF;
-    }
-
-    .card-header {
+    .stat-card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      padding: 16px 25px 0;
     }
 
-    .card-title {
+    .stat-card-title {
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-900, #0F172B);
       margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
 
-    .badge {
+    .trend-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 600;
       padding: 2px 8px;
-      border-radius: 12px;
+      border-radius: 4px;
     }
 
-    .badge-positive {
-      background: #D1FAE5;
-      color: #065F46;
+    .trend-up {
+      color: #059669;
+      background: #ECFDF5;
     }
 
-    .badge-negative {
-      background: #FEE2E2;
-      color: #991B1B;
+    .trend-down {
+      color: #DC2626;
+      background: #FEF2F2;
     }
 
-    .card-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      padding-top: 8px;
+    .trend-arrow {
+      font-size: 11px;
     }
 
-    .metric {
+    .stat-card-body {
+      display: flex;
+      gap: 0;
+      padding: 16px 25px 25px;
+    }
+
+    .stat-card-metric {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .metric-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      color: #9CA3AF;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .stat-card-metric + .stat-card-metric {
+      padding-left: 25px;
+      border-left: 1px solid var(--divider-color, #F1F5F9);
     }
 
-    .metric-value {
+    .stat-card-label {
       font-family: 'Inter', sans-serif;
-      font-size: 22px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--slate-400, #90A1B9);
+    }
+
+    .stat-card-value {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px;
       font-weight: 700;
-      color: #111827;
+      color: var(--slate-900, #0F172B);
+      line-height: 1.1;
     }
 
     @media (max-width: 1024px) {

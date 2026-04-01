@@ -34,8 +34,8 @@ import { AiSummary, AiHighlight } from '../../models';
             >
               <defs>
                 <linearGradient id="sparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#a78bfa" />
-                  <stop offset="100%" stop-color="#7c3aed" />
+                  <stop offset="0%" stop-color="#FFD6A7" />
+                  <stop offset="100%" stop-color="#F27920" />
                 </linearGradient>
               </defs>
               <path
@@ -115,23 +115,23 @@ import { AiSummary, AiHighlight } from '../../models';
 
     /* ── Banner Base ── */
     .ai-banner {
-      background: linear-gradient(135deg, #f0fdf4 0%, #faf5ff 40%, #ffffff 100%);
-      border: 1px solid var(--gray-200, #E5E7EB);
-      border-radius: var(--radius-lg, 12px);
-      box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+      background: linear-gradient(135deg, var(--slate-50, #F8FAFC) 0%, var(--primary-orange-light, #FFF7ED) 50%, var(--bg-primary, #FFFFFF) 100%);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm);
       overflow: hidden;
       transition: box-shadow 0.2s ease;
     }
 
     .ai-banner:hover {
-      box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+      box-shadow: var(--shadow-md);
     }
 
     /* ── Main Layout ── */
     .ai-banner__main {
       display: flex;
       align-items: flex-start;
-      gap: 16px;
+      gap: var(--spacing-md, 16px);
       padding: 20px 24px;
     }
 
@@ -141,7 +141,7 @@ import { AiSummary, AiHighlight } from '../../models';
       width: 48px;
       height: 48px;
       border-radius: var(--radius-full, 9999px);
-      background: linear-gradient(135deg, #c4b5fd 0%, #7c3aed 100%);
+      background: linear-gradient(135deg, var(--primary-orange-lighter, #FFD6A7) 0%, var(--primary-orange, #F27920) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -149,15 +149,15 @@ import { AiSummary, AiHighlight } from '../../models';
     }
 
     .sparkle-svg {
-      filter: drop-shadow(0 0 3px rgba(167, 139, 250, 0.4));
+      filter: drop-shadow(0 0 3px rgba(242, 121, 32, 0.4));
     }
 
     @keyframes pulse-glow {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.15);
+        box-shadow: 0 0 0 0 rgba(242, 121, 32, 0.15);
       }
       50% {
-        box-shadow: 0 0 12px 4px rgba(124, 58, 237, 0.2);
+        box-shadow: 0 0 12px 4px rgba(242, 121, 32, 0.2);
       }
     }
 
@@ -170,14 +170,14 @@ import { AiSummary, AiHighlight } from '../../models';
     .ai-banner__title {
       font-size: 18px;
       font-weight: 600;
-      color: var(--gray-900, #111827);
+      color: var(--slate-900, #0F172B);
       margin: 0 0 6px 0;
       line-height: 1.3;
     }
 
     .ai-banner__text {
       font-size: 14px;
-      color: var(--gray-600, #4B5563);
+      color: var(--slate-600, #45556C);
       margin: 0 0 10px 0;
       line-height: 1.55;
     }
@@ -186,8 +186,8 @@ import { AiSummary, AiHighlight } from '../../models';
     .ai-banner__highlights {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
+      gap: var(--spacing-sm, 8px);
+      margin-top: var(--spacing-xs, 4px);
     }
 
     .highlight-tag {
@@ -209,27 +209,27 @@ import { AiSummary, AiHighlight } from '../../models';
     }
 
     .highlight-tag--positivo {
-      background: var(--success-bg, #D1FAE5);
-      color: var(--success-text, #065F46);
+      background: var(--success-bg, #ECFDF5);
+      color: var(--success-text, #00A43D);
     }
     .highlight-dot--positivo {
-      background: var(--success-color, #10B981);
+      background: var(--success-color, #00A43D);
     }
 
     .highlight-tag--negativo {
-      background: var(--danger-bg, #FEE2E2);
-      color: var(--danger-text, #991B1B);
+      background: var(--danger-bg, #FEF2F2);
+      color: var(--danger-text, #DC2626);
     }
     .highlight-dot--negativo {
       background: var(--danger-color, #EF4444);
     }
 
     .highlight-tag--neutro {
-      background: var(--gray-100, #F3F4F6);
-      color: var(--gray-600, #4B5563);
+      background: var(--slate-100, #F1F5F9);
+      color: var(--slate-600, #45556C);
     }
     .highlight-dot--neutro {
-      background: var(--gray-400, #9CA3AF);
+      background: var(--slate-400, #90A1B9);
     }
 
     /* ── Toggle Button ── */
@@ -242,10 +242,10 @@ import { AiSummary, AiHighlight } from '../../models';
       border: none;
       font-size: 14px;
       font-weight: 500;
-      color: var(--primary-color, #F97316);
+      color: var(--primary-orange, #F27920);
       cursor: pointer;
       padding: 4px 8px;
-      border-radius: var(--radius-sm, 6px);
+      border-radius: var(--radius-sm, 8px);
       transition: background 0.15s ease, color 0.15s ease;
       white-space: nowrap;
       margin-top: 2px;
@@ -253,7 +253,7 @@ import { AiSummary, AiHighlight } from '../../models';
 
     .ai-banner__toggle:hover {
       background: var(--primary-orange-light, #FFF7ED);
-      color: var(--primary-hover, #EA580C);
+      color: var(--primary-orange-hover, #E06A10);
     }
 
     .toggle-chevron {
@@ -272,13 +272,13 @@ import { AiSummary, AiHighlight } from '../../models';
 
     .details-separator {
       height: 1px;
-      background: var(--gray-200, #E5E7EB);
-      margin-bottom: 16px;
+      background: var(--border-color, #E2E8F0);
+      margin-bottom: var(--spacing-md, 16px);
     }
 
     .details-text {
       font-size: 14px;
-      color: var(--gray-600, #4B5563);
+      color: var(--slate-600, #45556C);
       line-height: 1.65;
       margin: 0;
     }
@@ -298,11 +298,11 @@ import { AiSummary, AiHighlight } from '../../models';
     .ai-banner--loading {
       display: flex;
       align-items: flex-start;
-      gap: 16px;
+      gap: var(--spacing-md, 16px);
       padding: 20px 24px;
-      background: linear-gradient(135deg, #f0fdf4 0%, #faf5ff 40%, #ffffff 100%);
-      border: 1px solid var(--gray-200, #E5E7EB);
-      border-radius: var(--radius-lg, 12px);
+      background: linear-gradient(135deg, var(--slate-50, #F8FAFC) 0%, var(--primary-orange-light, #FFF7ED) 50%, var(--bg-primary, #FFFFFF) 100%);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
     }
 
     .skeleton-icon {
@@ -310,7 +310,7 @@ import { AiSummary, AiHighlight } from '../../models';
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: var(--gray-200, #E5E7EB);
+      background: var(--slate-200, #E2E8F0);
       animation: shimmer 1.5s ease-in-out infinite;
     }
 
@@ -329,13 +329,13 @@ import { AiSummary, AiHighlight } from '../../models';
     .skeleton-title {
       width: 240px;
       height: 20px;
-      background: var(--gray-200, #E5E7EB);
+      background: var(--slate-200, #E2E8F0);
     }
 
     .skeleton-text {
       width: 100%;
       height: 14px;
-      background: var(--gray-100, #F3F4F6);
+      background: var(--slate-100, #F1F5F9);
     }
 
     .skeleton-text.short {
@@ -355,7 +355,7 @@ import { AiSummary, AiHighlight } from '../../models';
     @media (max-width: 768px) {
       .ai-banner__main {
         flex-wrap: wrap;
-        padding: 16px;
+        padding: var(--spacing-md, 16px);
         gap: 12px;
       }
 

@@ -29,8 +29,7 @@ interface TabItem {
   styles: [`
     .tab-nav {
       display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
+      gap: 4px;
       flex-wrap: wrap;
     }
 
@@ -38,25 +37,25 @@ interface TabItem {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 500;
-      padding: 8px 20px;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
-      background: white;
-      color: #6B7280;
+      padding: 10px 16px;
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: var(--radius-sm, 8px) var(--radius-sm, 8px) 0 0;
+      background: transparent;
+      color: var(--slate-400, #90A1B9);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
 
     .tab-btn:hover:not(.tab-active) {
-      background: #F9FAFB;
-      color: #374151;
+      color: var(--slate-700, #314158);
+      background-color: var(--slate-100, #F1F5F9);
     }
 
     .tab-active {
-      background: #1F2937;
-      color: white;
-      border-color: #1F2937;
+      color: var(--primary-orange, #F27920);
+      border-bottom-color: var(--primary-orange, #F27920);
     }
   `],
 })

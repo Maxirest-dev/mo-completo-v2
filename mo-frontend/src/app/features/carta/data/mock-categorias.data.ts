@@ -2,7 +2,7 @@ import { CategoriaGridRow } from '../models/categoria-grid.model';
 
 // Icon colors for different categories
 const ICON_COLORS = {
-  naranja: '#F97316',
+  naranja: 'var(--primary-orange)',
   morado: '#A855F7',
   azul: '#3B82F6',
   verde: '#22C55E',

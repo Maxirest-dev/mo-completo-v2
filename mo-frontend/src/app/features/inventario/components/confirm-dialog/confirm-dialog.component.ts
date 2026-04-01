@@ -126,12 +126,12 @@ export type ConfirmDialogType = 'desactivar' | 'activar' | 'eliminar';
     }
 
     .dialog-icon-warning {
-      background: #FEF3C7;
+      background: var(--warning-bg);
       color: #D97706;
     }
 
     .dialog-icon-success {
-      background: #D1FAE5;
+      background: var(--success-bg);
       color: #059669;
     }
 

@@ -66,9 +66,9 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 8px 0;
+      padding: 10px 0;
       min-height: 40px;
-      border-bottom: 1px solid var(--gray-100, #F3F4F6);
+      border-bottom: 1px solid var(--divider-color, #F1F5F9);
     }
 
     .venta-item:last-child {
@@ -79,7 +79,7 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
       flex-shrink: 0;
       width: 28px;
       height: 28px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm, 8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -104,7 +104,7 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
     .venta-nombre {
       font-size: 13px;
       font-weight: 600;
-      color: var(--gray-800, #1F2937);
+      color: var(--slate-700, #314158);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -115,7 +115,7 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
       flex-shrink: 0;
       font-size: 12px;
       font-weight: 500;
-      color: var(--gray-500, #6B7280);
+      color: var(--slate-400, #90A1B9);
       white-space: nowrap;
     }
   `],
@@ -136,7 +136,7 @@ export class TopVentaItemComponent {
 
   protected medalColor = computed(() => {
     const pos = this.venta().posicion;
-    return MEDAL_COLORS[pos] ?? 'var(--gray-400, #9CA3AF)';
+    return MEDAL_COLORS[pos] ?? 'var(--slate-400, #90A1B9)';
   });
 
   protected trendDirection = computed(

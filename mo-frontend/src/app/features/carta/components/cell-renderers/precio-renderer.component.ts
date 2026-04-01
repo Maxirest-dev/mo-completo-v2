@@ -22,7 +22,7 @@ import { ICellRendererParams } from 'ag-grid-community';
     .precio {
       font-weight: 500;
       font-size: 14px;
-      color: #374151;
+      color: var(--text-primary);
       font-variant-numeric: tabular-nums;
     }
   `]

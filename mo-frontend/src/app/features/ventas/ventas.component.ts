@@ -48,17 +48,18 @@ import {
         <p class="loading-text">Cargando datos...</p>
       </div>
     } @else {
-      <!-- Header: Titulo + Tabs -->
+      <!-- Header: Titulo + Date range subtitle -->
       <header class="page-header">
         <div class="page-header-left">
-          <h1 class="page-title">Estadisticas de Ventas</h1>
-          <p class="page-subtitle">Analisis detallado de las estadisticas</p>
+          <h1 class="page-title">Ventas</h1>
+          <p class="page-subtitle">{{ filtro().fechaDesde }} — {{ filtro().fechaHasta }}</p>
         </div>
         <app-tab-nav
           [tabActivo]="tabActivo()"
           (tabChange)="tabActivo.set($event)"
         />
       </header>
+      <div class="page-divider"></div>
 
       <!-- Filtros -->
       <app-ventas-header
@@ -114,14 +115,26 @@ import {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 20px;
       gap: 24px;
     }
     .page-title {
-      font-size: 26px; font-weight: 600; color: var(--gray-900);
-      margin: 0 0 6px; letter-spacing: -0.01em;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--slate-900, #0F172B);
+      margin: 0 0 4px;
+      letter-spacing: -0.01em;
     }
-    .page-subtitle { font-size: 14px; color: var(--gray-500); margin: 0; }
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--slate-400, #90A1B9);
+      margin: 0;
+    }
+
+    .page-divider {
+      height: 1px;
+      background: var(--slate-200, #E2E8F0);
+      margin: 16px 0 20px;
+    }
 
     .loading-overlay {
       display: flex;
@@ -135,8 +148,8 @@ import {
     .loading-spinner {
       width: 40px;
       height: 40px;
-      border: 3px solid #E5E7EB;
-      border-top-color: #F97316;
+      border: 3px solid var(--slate-200, #E2E8F0);
+      border-top-color: var(--primary-orange, #F27920);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -148,7 +161,7 @@ import {
     .loading-text {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-400, #90A1B9);
       margin: 0;
     }
   `],

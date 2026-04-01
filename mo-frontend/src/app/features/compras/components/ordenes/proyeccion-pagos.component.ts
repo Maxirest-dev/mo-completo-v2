@@ -55,8 +55,8 @@ export class ProyeccionPagosComponent {
       legendItemKey: 'label',
       innerRadiusRatio: 0.6,
       outerRadiusRatio: 0.95,
-      fills: ['#3B82F6', '#F59E0B', '#8B5CF6'],
-      strokes: ['#3B82F6', '#F59E0B', '#8B5CF6'],
+      fills: ['#3B82F6', 'var(--warning-color)', '#8B5CF6'],
+      strokes: ['#3B82F6', 'var(--warning-color)', '#8B5CF6'],
       calloutLabel: { enabled: false },
       sectorLabel: { enabled: false },
       tooltip: {

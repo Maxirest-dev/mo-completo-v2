@@ -50,7 +50,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
             @if (ins.imagen) {
               <img [src]="ins.imagen" [alt]="ins.nombre" class="product-image"/>
             } @else {
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.5">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--slate-300)" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z"/>
               </svg>
               <span class="image-text">Sin imagen</span>
@@ -252,11 +252,11 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
                 @for (t of ins.transformaciones; track t.id) {
                   <div class="transformacion-row">
                     <span class="t-origen">{{ t.origenCantidad }} {{ t.origen }}</span>
-                    <svg class="t-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2">
+                    <svg class="t-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
                     </svg>
                     <span class="t-tipo-badge">{{ t.tipoTransformacion }}</span>
-                    <svg class="t-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2">
+                    <svg class="t-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
                     </svg>
                     <span class="t-resultado">{{ t.resultado }}</span>
@@ -407,7 +407,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       gap: 6px;
       margin-bottom: 24px;
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .breadcrumb-back {
@@ -418,25 +418,25 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       height: 36px;
       background: transparent;
       border: none;
-      color: #374151;
+      color: var(--text-primary);
       cursor: pointer;
       transition: color 0.15s;
       margin-right: 4px;
       padding: 0;
     }
 
-    .breadcrumb-back:hover { color: #F97316; }
+    .breadcrumb-back:hover { color: var(--primary-orange); }
 
     .breadcrumb-item {
       cursor: pointer;
       transition: color 0.15s;
     }
 
-    .breadcrumb-item:hover { color: #F97316; }
-    .breadcrumb-sep { color: #D1D5DB; }
+    .breadcrumb-item:hover { color: var(--primary-orange); }
+    .breadcrumb-sep { color: var(--slate-300); }
 
     .breadcrumb-current {
-      color: #1F2937;
+      color: var(--text-heading);
       font-weight: 600;
       margin-left: 4px;
     }
@@ -451,8 +451,8 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .spinner {
       width: 36px;
       height: 36px;
-      border: 3px solid #E5E7EB;
-      border-top-color: #F97316;
+      border: 3px solid var(--slate-200);
+      border-top-color: var(--primary-orange);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -472,7 +472,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     /* Col 1: Image card */
     .image-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 14px;
       display: flex;
       flex-direction: column;
@@ -485,14 +485,14 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .product-image { width: 100%; height: 100%; object-fit: cover; }
     .image-text {
       font-size: 14px;
-      color: #D1D5DB;
+      color: var(--slate-300);
       font-weight: 500;
     }
 
     /* Col 2: Info card */
     .info-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 14px;
       padding: 24px;
       display: flex;
@@ -514,37 +514,37 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       font-size: 13px;
       font-weight: 600;
       border-radius: 20px;
-      background: #D1FAE5;
-      color: #065F46;
+      background: var(--success-bg);
+      color: var(--success-text);
       flex-shrink: 0;
     }
 
     .status-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: #10B981;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--success-color);
     }
 
-    .status-inactive { background: #F3F4F6; color: #6B7280; }
-    .status-inactive .status-dot { background: #9CA3AF; }
+    .status-inactive { background: var(--slate-100); color: var(--slate-500); }
+    .status-inactive .status-dot { background: var(--slate-400); }
 
     .info-nombre {
-      font-size: 22px; font-weight: 700; color: #1F2937; margin: 0; flex: 1;
+      font-size: 22px; font-weight: 700; color: var(--text-heading); margin: 0; flex: 1;
     }
 
     .btn-edit-icon {
       display: inline-flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; padding: 0; background: transparent;
-      border: none; color: #9CA3AF; cursor: pointer; border-radius: 6px;
+      border: none; color: var(--slate-400); cursor: pointer; border-radius: 6px;
       transition: all 0.15s; flex-shrink: 0;
     }
-    .btn-edit-icon:hover { color: #6B7280; background: #F3F4F6; }
+    .btn-edit-icon:hover { color: var(--slate-500); background: var(--slate-100); }
 
-    .info-desc-section { border-top: 1px solid #F3F4F6; padding-top: 16px; }
+    .info-desc-section { border-top: 1px solid var(--slate-100); padding-top: 16px; }
     .info-desc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
     .section-label {
-      font-size: 11px; font-weight: 600; color: #9CA3AF;
+      font-size: 11px; font-weight: 600; color: var(--slate-400);
       letter-spacing: 0.04em; text-transform: uppercase;
     }
-    .info-description { font-size: 14px; color: #6B7280; margin: 0; line-height: 1.5; }
+    .info-description { font-size: 14px; color: var(--slate-500); margin: 0; line-height: 1.5; }
 
     /* Col 3: CTA grid */
     .cta-grid {
@@ -556,7 +556,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
 
     .cta-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 14px 16px;
       cursor: pointer;
@@ -565,24 +565,24 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       flex-direction: column;
       gap: 8px;
     }
-    .cta-card:hover { border-color: #D1D5DB; background: #FAFAFA; }
+    .cta-card:hover { border-color: var(--slate-300); background: #FAFAFA; }
 
     .cta-header {
       display: flex; align-items: center; justify-content: space-between;
     }
     .cta-icon-label { display: flex; align-items: center; gap: 6px; }
     .cta-icon { flex-shrink: 0; }
-    .cta-label { font-size: 12px; font-weight: 600; color: #6B7280; }
-    .cta-edit-icon { color: #D1D5DB; transition: color 0.15s; }
-    .cta-card:hover .cta-edit-icon { color: #9CA3AF; }
+    .cta-label { font-size: 12px; font-weight: 600; color: var(--slate-500); }
+    .cta-edit-icon { color: var(--slate-300); transition: color 0.15s; }
+    .cta-card:hover .cta-edit-icon { color: var(--slate-400); }
 
     .cta-value {
-      font-size: 16px; font-weight: 700; color: #1F2937;
+      font-size: 16px; font-weight: 700; color: var(--text-heading);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .cta-value-price { color: #059669; }
     .cta-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .cta-card-editing { border-color: #F97316; background: #FFFBF5; }
+    .cta-card-editing { border-color: var(--primary-orange); background: #FFFBF5; }
     .cta-save-btn {
       display: flex; align-items: center; justify-content: center;
       width: 24px; height: 24px; padding: 0;
@@ -594,10 +594,10 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .inline-input-with-btn { flex: 1; min-width: 0; }
     .inline-input {
       width: 100%; padding: 6px 10px; font-size: 14px; font-weight: 600;
-      font-family: inherit; color: #1F2937; background: white;
-      border: 1px solid #E5E7EB; border-radius: 6px; transition: all 0.15s;
+      font-family: inherit; color: var(--text-heading); background: white;
+      border: 1px solid var(--slate-200); border-radius: 6px; transition: all 0.15s;
     }
-    .inline-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 2px rgba(249,115,22,0.1); }
+    .inline-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 2px rgba(249,115,22,0.1); }
     select.inline-input { cursor: pointer; appearance: auto; }
 
     /* Edit dialog */
@@ -612,23 +612,23 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       width: 100%; max-width: 400px;
     }
     .edit-header { padding: 24px 24px 0; }
-    .edit-title { font-size: 18px; font-weight: 600; color: #1F2937; margin: 0; }
+    .edit-title { font-size: 18px; font-weight: 600; color: var(--text-heading); margin: 0; }
     .edit-body { padding: 20px 24px; }
     .edit-input {
       width: 100%; padding: 12px 14px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; transition: all 0.15s;
     }
-    .edit-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+    .edit-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
     .edit-input-prefix-wrap { position: relative; display: flex; align-items: center; }
     .edit-prefix {
-      position: absolute; left: 14px; color: #6B7280;
+      position: absolute; left: 14px; color: var(--slate-500);
       font-size: 14px; font-weight: 500; pointer-events: none;
     }
     .edit-input.has-prefix { padding-left: 30px; }
     .edit-stock-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .edit-stock-field { display: flex; flex-direction: column; gap: 6px; }
-    .edit-stock-label { font-size: 13px; font-weight: 600; color: #374151; }
+    .edit-stock-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .edit-actions {
       display: flex; justify-content: flex-end; gap: 12px; padding: 0 24px 24px;
     }
@@ -637,10 +637,10 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: inherit;
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s;
     }
-    .btn-primary { background: #1F2937; color: white; }
-    .btn-primary:hover { background: #374151; }
-    .btn-secondary { background: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover { background: #F9FAFB; }
+    .btn-primary { background: var(--text-heading); color: white; }
+    .btn-primary:hover { background: var(--text-primary); }
+    .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover { background: var(--slate-50); }
 
     .data-card-header {
       display: flex;
@@ -652,33 +652,33 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       flex-shrink: 0;
     }
 
-    .icon-green { color: #10B981; }
-    .icon-orange { color: #F97316; }
+    .icon-green { color: var(--success-color); }
+    .icon-orange { color: var(--primary-orange); }
     .icon-blue { color: #3B82F6; }
     .icon-purple { color: #7C3AED; }
-    .icon-red { color: #EF4444; }
+    .icon-red { color: var(--danger-color); }
 
     .data-card-label {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-weight: 500;
     }
 
     .data-card-value {
       font-size: 16px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
       padding-left: 22px;
     }
 
-    .stock-normal { color: #1F2937; }
-    .stock-bajo { color: #F59E0B; }
-    .stock-critico { color: #EF4444; }
+    .stock-normal { color: var(--text-heading); }
+    .stock-bajo { color: var(--warning-color); }
+    .stock-critico { color: var(--danger-color); }
 
     /* ===== Section Card ===== */
     .section-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 14px;
       overflow: hidden;
     }
@@ -704,28 +704,28 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     }
 
     .section-icon {
-      color: #374151;
+      color: var(--text-primary);
       flex-shrink: 0;
     }
 
     .section-title {
       font-size: 15px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0;
       letter-spacing: 0.02em;
     }
 
     .section-subtitle {
       font-size: 14px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-weight: 400;
     }
 
     .section-meta {
       font-size: 16px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
     }
 
     .btn-add {
@@ -762,7 +762,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       align-items: center;
       gap: 12px;
       padding: 14px 20px;
-      background: #F3F4F6;
+      background: var(--slate-100);
       border-radius: 10px;
       font-size: 14px;
     }
@@ -777,47 +777,47 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
 
     .t-origen {
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
     }
 
     .t-arrow {
-      color: #9CA3AF;
+      color: var(--slate-400);
       flex-shrink: 0;
     }
 
     .t-resultado {
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
     }
 
     .t-cantidad {
-      color: #F97316;
+      color: var(--primary-orange);
       font-weight: 500;
     }
 
     .t-tipo-badge {
       display: inline-flex; padding: 3px 10px; font-size: 12px; font-weight: 600;
-      background: #FFF7ED; color: #EA580C; border: 1px solid #FDBA74;
+      background: #FFF7ED; color: var(--primary-orange-hover); border: 1px solid #FDBA74;
       border-radius: 6px; text-transform: capitalize;
     }
 
     .t-edit, .t-remove {
       display: flex; align-items: center; justify-content: center;
       width: 28px; height: 28px; padding: 0;
-      background: white; border: 1px solid #E5E7EB; color: #6B7280; cursor: pointer;
+      background: white; border: 1px solid var(--slate-200); color: var(--slate-500); cursor: pointer;
       border-radius: 6px; transition: all 0.15s; flex-shrink: 0;
     }
-    .t-edit:hover { color: #374151; border-color: #D1D5DB; background: #F9FAFB; }
-    .t-remove:hover { color: #EF4444; border-color: #FECACA; background: #FEF2F2; }
+    .t-edit:hover { color: var(--text-primary); border-color: var(--slate-300); background: var(--slate-50); }
+    .t-remove:hover { color: var(--danger-color); border-color: #FECACA; background: #FEF2F2; }
 
     /* Dialog extra fields */
-    .edit-subtitle { font-size: 13px; color: #6B7280; margin: 6px 0 0; }
+    .edit-subtitle { font-size: 13px; color: var(--slate-500); margin: 6px 0 0; }
     .edit-field { margin-bottom: 16px; }
     .edit-field:last-child { margin-bottom: 0; }
-    .edit-field-label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+    .edit-field-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
     .edit-field-row { display: flex; align-items: center; gap: 10px; }
     .edit-input-short { width: 80px; }
-    .edit-field-hint { font-size: 13px; color: #9CA3AF; }
+    .edit-field-hint { font-size: 13px; color: var(--slate-400); }
     .edit-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     /* ===== Bottom Grid (2 columns) ===== */
@@ -830,7 +830,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
 
     .detail-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 24px;
     }
@@ -843,7 +843,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .detail-card-title {
       font-size: 13px;
       font-weight: 700;
-      color: #374151;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin: 0;
@@ -851,7 +851,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .detail-card-extra {
       font-size: 15px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
     }
     .detail-card-actions {
       display: flex;
@@ -861,10 +861,10 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     .icon-btn {
       display: inline-flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; padding: 0;
-      background: transparent; border: none; color: #9CA3AF;
+      background: transparent; border: none; color: var(--slate-400);
       cursor: pointer; border-radius: 6px; transition: all 0.15s;
     }
-    .icon-btn:hover { color: #6B7280; background: #F3F4F6; }
+    .icon-btn:hover { color: var(--slate-500); background: var(--slate-100); }
 
     /* Ingredientes list */
     .ingredientes-list-elab {
@@ -875,24 +875,24 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     }
     .ingrediente-dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: #F97316; flex-shrink: 0;
+      background: var(--primary-orange); flex-shrink: 0;
     }
     .ingrediente-name {
-      font-size: 14px; font-weight: 500; color: #1F2937;
+      font-size: 14px; font-weight: 500; color: var(--text-heading);
     }
     .peso-total {
-      margin-top: 12px; padding-top: 12px; border-top: 1px solid #F3F4F6;
-      font-size: 14px; font-weight: 600; color: #6B7280;
+      margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--slate-100);
+      font-size: 14px; font-weight: 600; color: var(--slate-500);
     }
     .ver-mas-row {
       display: flex; justify-content: flex-end; margin-top: 12px;
     }
     .ver-mas-btn {
       padding: 0; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: #F97316; background: none; border: none;
+      color: var(--primary-orange); background: none; border: none;
       cursor: pointer; transition: color 0.15s;
     }
-    .ver-mas-btn:hover { color: #EA580C; }
+    .ver-mas-btn:hover { color: var(--primary-orange-hover); }
 
     /* Elaboracion list */
     .elaboracion-list {
@@ -902,11 +902,11 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       padding: 8px 0;
     }
     .elaboracion-desc {
-      font-size: 14px; color: #374151; line-height: 1.6;
+      font-size: 14px; color: var(--text-primary); line-height: 1.6;
     }
 
     .paso-desc {
-      color: #374151;
+      color: var(--text-primary);
       line-height: 1.6;
     }
 
@@ -918,7 +918,7 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
 
     .empty-section p {
       font-size: 14px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       margin: 0;
     }
 
@@ -948,18 +948,18 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     }
 
     .btn-primary {
-      background-color: #1F2937;
+      background-color: var(--text-heading);
       color: white;
     }
 
     .btn-primary:hover {
-      background-color: #374151;
+      background-color: var(--text-primary);
     }
 
     /* ===== Not Found ===== */
     .not-found-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 80px 40px;
       text-align: center;
@@ -969,18 +969,18 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
       gap: 12px;
     }
 
-    .nf-icon { color: #F97316; margin-bottom: 8px; }
+    .nf-icon { color: var(--primary-orange); margin-bottom: 8px; }
 
     .nf-title {
       font-size: 22px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0;
     }
 
     .nf-desc {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0 0 16px;
     }
 
@@ -1083,12 +1083,12 @@ export class InsumoPerfilComponent implements OnInit {
     const ins = this.insumo();
     if (!ins) return [];
     return [
-      { field: 'tipoInsumo' as EditField, label: 'Tipo insumo', color: '#F97316', value: ins.tipoInsumo },
+      { field: 'tipoInsumo' as EditField, label: 'Tipo insumo', color: 'var(--primary-orange)', value: ins.tipoInsumo },
       { field: 'deposito' as EditField, label: 'Deposito', color: '#3B82F6', value: ins.depositoNombre },
       { field: 'unidad' as EditField, label: 'Unidad', color: '#8B5CF6', value: ins.unidadMedida },
-      { field: 'codigo' as EditField, label: 'Codigo', color: '#F97316', value: ins.codigo || '-' },
-      { field: 'precio' as EditField, label: 'Precio', color: '#10B981', value: this.formatPrice(ins.precio) },
-      { field: 'stock' as EditField, label: 'Stock', color: '#EF4444', value: `${ins.stockActual} / ${ins.stockMinimo} min` },
+      { field: 'codigo' as EditField, label: 'Codigo', color: 'var(--primary-orange)', value: ins.codigo || '-' },
+      { field: 'precio' as EditField, label: 'Precio', color: 'var(--success-color)', value: this.formatPrice(ins.precio) },
+      { field: 'stock' as EditField, label: 'Stock', color: 'var(--danger-color)', value: `${ins.stockActual} / ${ins.stockMinimo} min` },
     ];
   });
 

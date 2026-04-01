@@ -182,16 +182,16 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
             <!-- Legend -->
             <div class="legend">
               <div class="legend-item"><span class="legend-swatch" style="background:#22C55E"></span><span>3 turnos</span></div>
-              <div class="legend-item"><span class="legend-swatch" style="background:#F97316"></span><span>2 turnos</span></div>
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--primary-orange)"></span><span>2 turnos</span></div>
               <div class="legend-item"><span class="legend-swatch" style="background:#EAB308"></span><span>1 turno</span></div>
-              <div class="legend-item"><span class="legend-swatch" style="background:#D1D5DB"></span><span>Inactivo</span></div>
+              <div class="legend-item"><span class="legend-swatch" style="background:var(--slate-300)"></span><span>Inactivo</span></div>
             </div>
           </div>
 
           <!-- Footer -->
           <div class="em-footer">
             <div class="em-summary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
               </svg>
               <span>Se aplicara a <strong>{{ selectedCount() }} productos</strong></span>
@@ -216,10 +216,10 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     }
     .btn-back {
       display: flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 10px; border: 1px solid #E5E7EB;
-      background: white; cursor: pointer; color: #374151; transition: all 0.15s;
+      width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--slate-200);
+      background: white; cursor: pointer; color: var(--text-primary); transition: all 0.15s;
     }
-    .btn-back:hover { background: #F9FAFB; border-color: #D1D5DB; }
+    .btn-back:hover { background: var(--slate-50); border-color: var(--slate-300); }
     .page-title { font-size: 26px; font-weight: 600; color: var(--gray-900); margin: 0; }
     .page-subtitle { font-size: 14px; color: var(--gray-500); margin: 4px 0 0; }
 
@@ -233,42 +233,42 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
       box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 20px;
     }
 
-    .section-title { font-size: 16px; font-weight: 600; color: #1F2937; margin: 0 0 4px; }
-    .section-desc { font-size: 13px; color: #6B7280; margin: 0 0 16px; }
+    .section-title { font-size: 16px; font-weight: 600; color: var(--text-heading); margin: 0 0 4px; }
+    .section-desc { font-size: 13px; color: var(--slate-500); margin: 0 0 16px; }
 
     /* Left: Selection */
     .select-all {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 0; border-bottom: 1px solid #E5E7EB; margin-bottom: 4px;
+      padding: 10px 0; border-bottom: 1px solid var(--slate-200); margin-bottom: 4px;
     }
     .select-all-text { font-weight: 600; }
-    .selected-count { font-size: 12px; color: #9CA3AF; }
+    .selected-count { font-size: 12px; color: var(--slate-400); }
 
     .checkbox-label {
       display: flex; align-items: center; gap: 8px;
-      font-size: 14px; color: #374151; cursor: pointer;
+      font-size: 14px; color: var(--text-primary); cursor: pointer;
     }
     .checkbox-label input[type="checkbox"] {
-      width: 16px; height: 16px; accent-color: #F97316; cursor: pointer; flex-shrink: 0;
+      width: 16px; height: 16px; accent-color: var(--primary-orange); cursor: pointer; flex-shrink: 0;
     }
 
     .cat-list { max-height: 500px; overflow-y: auto; margin-top: 4px; }
-    .cat-group { border-bottom: 1px solid #F3F4F6; }
+    .cat-group { border-bottom: 1px solid var(--slate-100); }
     .cat-group:last-child { border-bottom: none; }
     .cat-header { padding: 8px 0; }
-    .cat-header:hover { background: #F9FAFB; border-radius: 6px; padding: 8px 6px; margin: 0 -6px; }
+    .cat-header:hover { background: var(--slate-50); border-radius: 6px; padding: 8px 6px; margin: 0 -6px; }
     .cat-icon {
       width: 24px; height: 24px; border-radius: 6px; display: flex;
       align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0;
     }
     .cat-name { flex: 1; font-weight: 500; }
-    .cat-count { font-size: 12px; color: #9CA3AF; }
+    .cat-count { font-size: 12px; color: var(--slate-400); }
     .expand-btn {
-      background: none; border: none; cursor: pointer; color: #9CA3AF;
+      background: none; border: none; cursor: pointer; color: var(--slate-400);
       display: flex; padding: 2px; transition: transform 0.2s;
     }
     .prod-list { padding: 0 0 6px 32px; }
-    .prod-item { padding: 4px 0; font-size: 13px; color: #6B7280; }
+    .prod-item { padding: 4px 0; font-size: 13px; color: var(--slate-500); }
 
     /* Right */
     .em-right { display: flex; flex-direction: column; gap: 24px; }
@@ -279,73 +279,73 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     .estacion-card {
       position: relative; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 10px;
-      width: 120px; height: 120px; border: 2px solid #E5E7EB;
+      width: 120px; height: 120px; border: 2px solid var(--slate-200);
       border-radius: 14px; cursor: pointer; transition: all 0.2s; background: white;
     }
-    .estacion-card:hover { border-color: #F97316; background: #FFF7ED; }
-    .estacion-selected { border-color: #F97316; background: #FFF7ED; box-shadow: 0 0 0 3px rgba(249,115,22,0.15); }
-    .estacion-selected .estacion-icon { color: #F97316; }
-    .estacion-selected .estacion-name { color: #EA580C; font-weight: 600; }
+    .estacion-card:hover { border-color: var(--primary-orange); background: #FFF7ED; }
+    .estacion-selected { border-color: var(--primary-orange); background: #FFF7ED; box-shadow: 0 0 0 3px rgba(249,115,22,0.15); }
+    .estacion-selected .estacion-icon { color: var(--primary-orange); }
+    .estacion-selected .estacion-name { color: var(--primary-orange-hover); font-weight: 600; }
     .estacion-check {
       position: absolute; top: 8px; right: 8px;
       width: 10px; height: 10px; border-radius: 50%; background: #22C55E;
     }
-    .estacion-icon { color: #6B7280; transition: color 0.2s; }
-    .estacion-name { font-size: 13px; font-weight: 500; color: #374151; transition: all 0.2s; }
+    .estacion-icon { color: var(--slate-500); transition: color 0.2s; }
+    .estacion-name { font-size: 13px; font-weight: 500; color: var(--text-primary); transition: all 0.2s; }
 
     /* Calendario */
     .cal-header { display: flex; justify-content: space-between; align-items: flex-start; }
     .canal-tabs {
       display: flex; gap: 4px; margin-bottom: 16px;
-      border-bottom: 1px solid #E5E7EB; padding-bottom: 0;
+      border-bottom: 1px solid var(--slate-200); padding-bottom: 0;
     }
     .canal-tab {
       padding: 10px 18px; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: #6B7280; background: transparent; border: none;
+      color: var(--slate-500); background: transparent; border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer; transition: all 0.15s; margin-bottom: -1px;
     }
-    .canal-tab:hover { color: #374151; }
-    .canal-tab-active { color: #F97316; border-bottom-color: #F97316; font-weight: 600; }
+    .canal-tab:hover { color: var(--text-primary); }
+    .canal-tab-active { color: var(--primary-orange); border-bottom-color: var(--primary-orange); font-weight: 600; }
     .quick-actions { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
     .quick-btn {
       padding: 6px 14px; font-size: 12px; font-weight: 500; font-family: inherit;
-      color: #374151; background: #F3F4F6; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: var(--slate-100); border: 1px solid var(--slate-200);
       border-radius: 8px; cursor: pointer; transition: all 0.15s;
     }
-    .quick-btn:hover { background: #E5E7EB; }
-    .quick-btn-clear { color: #EF4444; border-color: #FECACA; background: #FEF2F2; }
-    .quick-btn-clear:hover { background: #FEE2E2; }
+    .quick-btn:hover { background: var(--slate-200); }
+    .quick-btn-clear { color: var(--danger-color); border-color: #FECACA; background: #FEF2F2; }
+    .quick-btn-clear:hover { background: var(--danger-bg); }
 
     .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
     .day-card {
-      background: #FAFAFA; border: 1px solid #E5E7EB;
-      border-left: 3px solid #D1D5DB; border-radius: 10px; overflow: hidden;
+      background: #FAFAFA; border: 1px solid var(--slate-200);
+      border-left: 3px solid var(--slate-300); border-radius: 10px; overflow: hidden;
     }
     .day-header {
       padding: 10px 12px 6px; font-size: 12px; font-weight: 700;
-      color: #374151; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.04em;
     }
     .turnos-list { display: flex; flex-direction: column; gap: 4px; padding: 4px 8px 10px; }
     .turno-toggle {
       display: flex; align-items: center; gap: 6px;
       padding: 6px 8px; font-size: 12px; font-family: inherit;
-      color: #9CA3AF; background: white; border: 1px solid #E5E7EB;
+      color: var(--slate-400); background: white; border: 1px solid var(--slate-200);
       border-radius: 6px; cursor: pointer; transition: all 0.15s; font-weight: 500;
     }
-    .turno-toggle:hover { border-color: #F97316; }
-    .turno-active { color: #374151; background: #FFF7ED; border-color: #FDBA74; }
+    .turno-toggle:hover { border-color: var(--primary-orange); }
+    .turno-active { color: var(--text-primary); background: #FFF7ED; border-color: #FDBA74; }
     .turno-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: #D1D5DB; flex-shrink: 0; transition: background 0.15s;
+      background: var(--slate-300); flex-shrink: 0; transition: background 0.15s;
     }
     .turno-dot-active { background: #22C55E; }
 
     .legend {
       display: flex; gap: 20px; margin-top: 16px;
-      padding-top: 12px; border-top: 1px solid #F3F4F6;
+      padding-top: 12px; border-top: 1px solid var(--slate-100);
     }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--slate-500); }
     .legend-swatch { width: 10px; height: 10px; border-radius: 3px; }
 
     /* Footer */
@@ -365,10 +365,10 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s;
     }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-primary { background: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background: #374151; }
-    .btn-secondary { background: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover { background: #F9FAFB; }
+    .btn-primary { background: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background: var(--text-primary); }
+    .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover { background: var(--slate-50); }
 
     @media (max-width: 1024px) {
       .em-layout { grid-template-columns: 1fr; }
@@ -506,12 +506,12 @@ export class EdicionMasivaComponent {
 
   getDayBorderColor(diaIdx: number): string {
     const row = this.calViewData()[diaIdx];
-    if (!row) return '#D1D5DB';
+    if (!row) return 'var(--slate-300)';
     const count = row.filter(v => v).length;
     if (count === 3) return '#22C55E';
-    if (count === 2) return '#F97316';
+    if (count === 2) return 'var(--primary-orange)';
     if (count === 1) return '#EAB308';
-    return '#D1D5DB';
+    return 'var(--slate-300)';
   }
 
   toggleTurno(diaIdx: number, turnoIdx: number): void {

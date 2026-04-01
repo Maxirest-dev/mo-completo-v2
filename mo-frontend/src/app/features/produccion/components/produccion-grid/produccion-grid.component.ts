@@ -168,9 +168,9 @@ import { EstacionProduccionRow, ProduccionGridRow, GridActionEvent, EstacionTipo
 
     .master-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
     .master-table thead th {
-      padding: 14px 16px; font-size: 12px; font-weight: 600; color: #6B7280;
+      padding: 14px 16px; font-size: 12px; font-weight: 600; color: var(--slate-500);
       text-transform: uppercase; letter-spacing: 0.05em; text-align: left;
-      border-bottom: 1px solid #E5E7EB; background: white;
+      border-bottom: 1px solid var(--slate-200); background: white;
     }
     .col-nombre { width: 40%; }
     .col-tipo { width: 15%; }
@@ -181,28 +181,28 @@ import { EstacionProduccionRow, ProduccionGridRow, GridActionEvent, EstacionTipo
     .master-row:hover { background: #FAFAFA; }
     .master-row.expanded { background: #FAFAFA; }
     .master-row td {
-      padding: 12px 16px; border-bottom: 1px solid #F3F4F6;
+      padding: 12px 16px; border-bottom: 1px solid var(--slate-100);
       vertical-align: middle; font-size: 14px; color: var(--gray-700);
     }
 
-    .chevron { display: inline-flex; align-items: center; color: #9CA3AF; transition: transform 0.2s; flex-shrink: 0; }
+    .chevron { display: inline-flex; align-items: center; color: var(--slate-400); transition: transform 0.2s; flex-shrink: 0; }
     .chevron-open { transform: rotate(90deg); }
     .nombre-cell { display: flex; align-items: center; gap: 12px; }
     .dep-icon {
       width: 40px; height: 40px; border-radius: 10px; display: flex;
       align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
     }
-    .dep-name { font-weight: 600; color: #1F2937; }
+    .dep-name { font-weight: 600; color: var(--text-heading); }
 
     .badge-tipo { display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: 500; border-radius: 6px; }
-    .tipo-cocina { background: #FEE2E2; color: #991B1B; }
-    .tipo-parrilla { background: #FEF3C7; color: #92400E; }
-    .tipo-mostrador { background: #D1FAE5; color: #065F46; }
+    .tipo-cocina { background: var(--danger-bg); color: var(--danger-text); }
+    .tipo-parrilla { background: var(--warning-bg); color: #92400E; }
+    .tipo-mostrador { background: var(--success-bg); color: var(--success-text); }
     .tipo-barra { background: #DBEAFE; color: #1E40AF; }
 
     .items-count { display: flex; flex-direction: column; }
-    .count-number { font-weight: 600; font-size: 14px; color: #F97316; }
-    .count-label { font-size: 12px; color: #9CA3AF; }
+    .count-number { font-weight: 600; font-size: 14px; color: var(--primary-orange); }
+    .count-label { font-size: 12px; color: var(--slate-400); }
 
     .master-acciones { display: flex; justify-content: flex-end; gap: 8px; }
     .btn-nuevo-item {
@@ -214,66 +214,66 @@ import { EstacionProduccionRow, ProduccionGridRow, GridActionEvent, EstacionTipo
     .btn-cocinar-todos {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 12px; font-size: 13px; font-weight: 500;
-      color: white; background: #1F2937; border: none;
+      color: white; background: var(--text-heading); border: none;
       border-radius: 6px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
     }
-    .btn-cocinar-todos:hover { background: #374151; }
+    .btn-cocinar-todos:hover { background: var(--text-primary); }
     .btn-nuevo-item:hover { background: #FFF7ED; }
     .btn-edit {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 12px; font-size: 13px; font-weight: 500;
-      color: var(--gray-700); background: white; border: 1px solid #E5E7EB;
+      color: var(--gray-700); background: white; border: 1px solid var(--slate-200);
       border-radius: 6px; cursor: pointer; transition: all 0.15s;
     }
     .btn-edit:hover { background: var(--gray-50); border-color: var(--gray-300); }
     .btn-edit svg { width: 16px; height: 16px; }
 
     /* Detail */
-    .detail-row td { padding: 0; border-bottom: 1px solid #F3F4F6; }
+    .detail-row td { padding: 0; border-bottom: 1px solid var(--slate-100); }
     .detail-wrapper { padding: 0 16px 16px 16px; background: #FAFAFA; }
     .detail-table {
       width: 100%; border-collapse: collapse; background: white;
-      border: 1px solid #E5E7EB; border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--slate-200); border-radius: 8px; overflow: hidden;
     }
     .detail-table thead th {
-      padding: 10px 16px; font-size: 11px; font-weight: 600; color: #6B7280;
+      padding: 10px 16px; font-size: 11px; font-weight: 600; color: var(--slate-500);
       text-transform: uppercase; letter-spacing: 0.05em; text-align: left;
-      background: #F3F4F6; border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-100); border-bottom: 1px solid var(--slate-200);
     }
     .detail-table thead th:last-child { text-align: right; }
     .item-row td {
       padding: 12px 16px; font-size: 14px; color: var(--gray-700);
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .item-row:last-child td { border-bottom: none; }
 
     .item-name-cell { display: flex; flex-direction: column; gap: 2px; }
-    .item-name { font-weight: 500; color: #1F2937; }
-    .item-formula { font-size: 12px; color: #9CA3AF; }
+    .item-name { font-weight: 500; color: var(--text-heading); }
+    .item-formula { font-size: 12px; color: var(--slate-400); }
 
     .badge-item-tipo { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 500; border-radius: 4px; }
     .item-tipo-transformacion { background: #DBEAFE; color: #1E40AF; }
-    .item-tipo-elaborado { background: #FEF3C7; color: #92400E; }
+    .item-tipo-elaborado { background: var(--warning-bg); color: #92400E; }
 
     .badge-estado { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 500; border-radius: 4px; }
-    .estado-disponible { background: #D1FAE5; color: #065F46; }
-    .estado-sin-stock { background: #FEE2E2; color: #991B1B; }
-    .estado-bajo { background: #FEF3C7; color: #92400E; }
+    .estado-disponible { background: var(--success-bg); color: var(--success-text); }
+    .estado-sin-stock { background: var(--danger-bg); color: var(--danger-text); }
+    .estado-bajo { background: var(--warning-bg); color: #92400E; }
 
     .stock-prod { font-weight: 700; color: #059669; }
     .stock-zero { color: #DC2626; }
-    .stock-inv { color: #6B7280; }
+    .stock-inv { color: var(--slate-500); }
 
     .vencimiento { font-size: 13px; }
     .venc-ok { color: #059669; }
-    .venc-pronto { color: #F59E0B; }
+    .venc-pronto { color: var(--warning-color); }
     .venc-vencido { color: #DC2626; }
 
     .acciones-cell { display: flex; justify-content: flex-end; gap: 8px; }
     .btn-edit-item {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 12px; font-size: 13px; font-weight: 500;
-      color: var(--gray-700); background: white; border: 1px solid #E5E7EB;
+      color: var(--gray-700); background: white; border: 1px solid var(--slate-200);
       border-radius: 6px; cursor: pointer; transition: all 0.15s;
     }
     .btn-edit-item:hover { background: var(--gray-50); border-color: var(--gray-300); }
@@ -285,14 +285,14 @@ import { EstacionProduccionRow, ProduccionGridRow, GridActionEvent, EstacionTipo
     }
     .btn-cocinar:hover { background: #FFF7ED; }
 
-    .empty-items { padding: 24px 16px; text-align: center; color: #9CA3AF; font-size: 13px; }
+    .empty-items { padding: 24px 16px; text-align: center; color: var(--slate-400); font-size: 13px; }
     .empty-state-row td { padding: 0; }
-    .empty-state { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 16px; color: #9CA3AF; }
-    .empty-state-title { font-size: 16px; font-weight: 600; color: #6B7280; }
+    .empty-state { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 16px; color: var(--slate-400); }
+    .empty-state-title { font-size: 16px; font-weight: 600; color: var(--slate-500); }
     .empty-state-description { font-size: 14px; }
 
     @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner { width: 32px; height: 32px; border: 3px solid #E5E7EB; border-top-color: #F97316; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .spinner { width: 32px; height: 32px; border: 3px solid var(--slate-200); border-top-color: var(--primary-orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -322,14 +322,14 @@ export class ProduccionGridComponent {
   }
 
   private readonly iconMap: Record<string, { emoji: string; color: string }> = {
-    COCINA: { emoji: '🔥', color: '#FEE2E2' },
-    PARRILLA: { emoji: '🥩', color: '#FEF3C7' },
-    MOSTRADOR: { emoji: '🏪', color: '#D1FAE5' },
+    COCINA: { emoji: '🔥', color: 'var(--danger-bg)' },
+    PARRILLA: { emoji: '🥩', color: 'var(--warning-bg)' },
+    MOSTRADOR: { emoji: '🏪', color: 'var(--success-bg)' },
     BARRA: { emoji: '🍸', color: '#DBEAFE' },
   };
 
   getIconEmoji(tipo: string): string { return this.iconMap[tipo]?.emoji ?? '📦'; }
-  getIconColor(tipo: string): string { return this.iconMap[tipo]?.color ?? '#F3F4F6'; }
+  getIconColor(tipo: string): string { return this.iconMap[tipo]?.color ?? 'var(--slate-100)'; }
 
   getEstadoLabel(item: ProduccionGridRow): string {
     if (item.stockProduccion === 0) return 'Sin stock';

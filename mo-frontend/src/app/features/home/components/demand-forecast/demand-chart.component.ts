@@ -54,7 +54,7 @@ export class DemandChartComponent {
           xKey: 'hora',
           yKey: 'semanaPasada',
           yName: 'Semana Pasada',
-          stroke: '#9CA3AF',
+          stroke: '#90A1B9',
           strokeWidth: 2,
           lineDash: [5, 5],
           fill: 'transparent',
@@ -72,9 +72,9 @@ export class DemandChartComponent {
           xKey: 'hora',
           yKey: 'ventasHoy',
           yName: 'Ventas Hoy',
-          stroke: '#3B82F6',
+          stroke: '#F27920',
           strokeWidth: 2.5,
-          fill: '#3B82F6',
+          fill: '#F27920',
           fillOpacity: 0.08,
           marker: { enabled: false },
           tooltip: {
@@ -90,10 +90,10 @@ export class DemandChartComponent {
           xKey: 'hora',
           yKey: 'prediccionIA',
           yName: 'Prediccion IA',
-          stroke: '#8B5CF6',
+          stroke: '#314158',
           strokeWidth: 2,
-          fill: '#8B5CF6',
-          fillOpacity: 0.12,
+          fill: '#314158',
+          fillOpacity: 0.08,
           marker: { enabled: false },
           tooltip: {
             renderer: (params: any) => ({
@@ -108,17 +108,17 @@ export class DemandChartComponent {
           type: 'category',
           position: 'bottom',
           label: {
-            color: '#9CA3AF',
+            color: '#90A1B9',
             fontSize: 11,
           },
-          line: { color: '#E5E7EB' },
+          line: { color: '#E2E8F0' },
           gridLine: { enabled: false },
         },
         {
           type: 'number',
           position: 'left',
           label: {
-            color: '#9CA3AF',
+            color: '#90A1B9',
             fontSize: 11,
             formatter: (params: any) => {
               const val = params.value;
@@ -130,7 +130,7 @@ export class DemandChartComponent {
           },
           line: { enabled: false },
           gridLine: {
-            style: [{ stroke: '#F3F4F6', lineDash: [4, 4] }],
+            style: [{ stroke: '#F1F5F9', lineDash: [4, 4] }],
           },
         },
       ],
@@ -140,7 +140,7 @@ export class DemandChartComponent {
         item: {
           marker: { size: 8 },
           label: {
-            color: '#6B7280',
+            color: '#64748B',
             fontSize: 12,
           },
         },

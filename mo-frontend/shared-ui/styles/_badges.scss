@@ -1,20 +1,24 @@
-// Status badges - matching reference design
+// Status badges — v2 Pencil design (rounded 8px, border, dot)
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
-  font-size: 13px;
+  padding: 5px 12px;
+  font-size: 12px;
   font-weight: 500;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
+  border: 1px solid transparent;
+  line-height: 1.333;
 }
 
-// Disponible - Green badge with dot
+// Activo — Green
 .badge-success,
+.badge-activo,
 .badge-disponible {
   background-color: var(--success-bg);
-  color: var(--success-text);
+  color: var(--success-color);
+  border-color: var(--success-border);
 
   &::before {
     content: '';
@@ -22,14 +26,17 @@
     height: 6px;
     background-color: var(--success-color);
     border-radius: 50%;
+    flex-shrink: 0;
   }
 }
 
-// Stock medio - Yellow/Amber badge with dot
+// Pendiente — Yellow/Amber
 .badge-warning,
+.badge-pendiente,
 .badge-stock-medio {
   background-color: var(--warning-bg);
   color: var(--warning-text);
+  border-color: var(--warning-border);
 
   &::before {
     content: '';
@@ -37,14 +44,17 @@
     height: 6px;
     background-color: var(--warning-color);
     border-radius: 50%;
+    flex-shrink: 0;
   }
 }
 
-// Sin stock - Red badge with dot
+// Vencida / Negativo — Red
 .badge-danger,
+.badge-vencida,
 .badge-sin-stock {
   background-color: var(--danger-bg);
   color: var(--danger-text);
+  border-color: var(--danger-border);
 
   &::before {
     content: '';
@@ -52,13 +62,15 @@
     height: 6px;
     background-color: var(--danger-color);
     border-radius: 50%;
+    flex-shrink: 0;
   }
 }
 
-// Info - Blue badge with dot
+// Info — Blue
 .badge-info {
   background-color: var(--info-bg);
   color: var(--info-text);
+  border-color: var(--info-border);
 
   &::before {
     content: '';
@@ -66,27 +78,42 @@
     height: 6px;
     background-color: var(--info-color);
     border-radius: 50%;
+    flex-shrink: 0;
   }
 }
 
-// Inactivo - Gray badge
+// Inactivo — Slate
 .badge-neutral,
 .badge-inactivo {
   background-color: var(--inactive-bg);
   color: var(--inactive-text);
+  border-color: var(--inactive-border);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: var(--inactive-color);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
 }
 
-// Activo badge for products
-.badge-activo {
-  background-color: var(--success-bg);
-  color: var(--success-color);
+// Disponible / Suscripcion — Orange
+.badge-available {
+  background-color: var(--status-available-bg);
+  color: var(--status-available-color);
+  border-color: var(--status-available-border);
+  border-radius: var(--radius-full);
+  font-weight: 600;
 }
 
 // Status indicator dot
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
+  flex-shrink: 0;
 
   &.status-active {
     background-color: var(--success-color);
@@ -97,6 +124,6 @@
   }
 
   &.status-inactive {
-    background-color: var(--gray-400);
+    background-color: var(--inactive-color);
   }
 }

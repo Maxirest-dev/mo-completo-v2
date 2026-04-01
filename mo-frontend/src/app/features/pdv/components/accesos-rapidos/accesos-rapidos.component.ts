@@ -53,9 +53,10 @@ import {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: white;
+      background: var(--bg-primary);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
       padding: 20px;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -65,7 +66,7 @@ import {
     }
 
     .acceso-card:hover {
-      border-color: var(--gray-300);
+      border-color: var(--slate-300);
       box-shadow: var(--shadow-md);
     }
 
@@ -75,12 +76,12 @@ import {
       justify-content: center;
       width: 48px;
       height: 48px;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       flex-shrink: 0;
     }
 
     .acceso-icon.facturacion {
-      background: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
       color: var(--primary-orange);
     }
 
@@ -96,17 +97,17 @@ import {
     .acceso-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--gray-900);
+      color: var(--text-heading);
       margin: 0 0 4px 0;
     }
 
     .acceso-subtitle {
       font-size: 13px;
-      color: var(--gray-500);
+      color: var(--text-secondary);
     }
 
     .acceso-arrow {
-      color: var(--gray-400);
+      color: var(--slate-400);
       flex-shrink: 0;
     }
   `],

@@ -122,10 +122,10 @@ import { MOCK_PRODUCCION } from './data/mock-produccion.data';
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 18px; font-size: 14px; font-weight: 500; font-family: inherit;
-      color: var(--gray-700); background: white; border: 1px solid #E5E7EB;
+      color: var(--gray-700); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
     }
-    .btn-secondary:hover { background: #F9FAFB; border-color: #D1D5DB; }
+    .btn-secondary:hover { background: var(--slate-50); border-color: var(--slate-300); }
     .btn-secondary svg { width: 18px; height: 18px; }
 
     .produccion-content { margin-top: 20px; }

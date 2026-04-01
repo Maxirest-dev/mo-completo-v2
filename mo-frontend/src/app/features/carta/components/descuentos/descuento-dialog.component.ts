@@ -142,29 +142,29 @@ import { Descuento, DescuentoFormData, TipoDescuento } from '../../models/descue
     }
 
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px 0; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .dialog-form { padding: 24px 28px 28px; }
     .form-group { margin-bottom: 20px; }
-    .form-label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
 
     .form-input {
       width: 100%;
       padding: 12px 14px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       transition: all 0.15s ease;
       box-sizing: border-box;
     }
-    .form-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
-    .form-input::placeholder { color: #9CA3AF; }
-    .form-input-error { border-color: #EF4444 !important; }
-    .form-error { display: block; margin-top: 6px; font-size: 12px; color: #EF4444; }
+    .form-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+    .form-input::placeholder { color: var(--slate-400); }
+    .form-input-error { border-color: var(--danger-color) !important; }
+    .form-error { display: block; margin-top: 6px; font-size: 12px; color: var(--danger-color); }
 
     /* Tipo toggle */
     .tipo-toggle {
@@ -182,44 +182,44 @@ import { Descuento, DescuentoFormData, TipoDescuento } from '../../models/descue
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7280;
+      color: var(--slate-500);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .tipo-btn:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
     .tipo-btn-active {
-      color: #F97316;
-      border-color: #F97316;
+      color: var(--primary-orange);
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
     .tipo-btn-active:hover {
       background: #FFF7ED;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     /* Input with prefix */
     .input-with-prefix {
       display: flex;
       align-items: center;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       overflow: hidden;
       transition: all 0.15s ease;
     }
     .input-with-prefix:focus-within {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
     .input-prefix {
       padding: 12px 0 12px 14px;
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       font-weight: 500;
     }
     .form-input-prefixed {
@@ -238,10 +238,10 @@ import { Descuento, DescuentoFormData, TipoDescuento } from '../../models/descue
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
     .spinner-sm { width: 14px; height: 14px; }

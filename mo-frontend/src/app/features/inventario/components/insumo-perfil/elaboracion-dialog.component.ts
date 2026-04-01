@@ -56,7 +56,7 @@ interface EditablePaso extends PasoElaboracion {
               <div class="step-row">
                 <!-- Drag handle -->
                 <div class="drag-handle">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--slate-300)" stroke-width="2">
                     <circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/>
                     <circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/>
                   </svg>
@@ -162,27 +162,27 @@ interface EditablePaso extends PasoElaboracion {
       padding: 28px 28px 20px;
     }
     .dialog-title {
-      font-size: 18px; font-weight: 700; color: #1F2937;
+      font-size: 18px; font-weight: 700; color: var(--text-heading);
       text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 4px 0;
     }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .add-btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 10px 20px; font-size: 14px; font-weight: 500; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; cursor: pointer; transition: all 0.15s;
       flex-shrink: 0;
     }
-    .add-btn:hover { border-color: #F97316; color: #F97316; }
+    .add-btn:hover { border-color: var(--primary-orange); color: var(--primary-orange); }
 
     .dialog-body { padding: 0 28px 16px; }
 
     /* Table header */
     .table-header {
       display: flex; align-items: center; gap: 12px;
-      padding: 12px 0; border-bottom: 1px solid #E5E7EB;
-      font-size: 11px; font-weight: 700; color: #9CA3AF;
+      padding: 12px 0; border-bottom: 1px solid var(--slate-200);
+      font-size: 11px; font-weight: 700; color: var(--slate-400);
       text-transform: uppercase; letter-spacing: 0.05em;
     }
     .th-paso { width: 70px; padding-left: 36px; }
@@ -194,7 +194,7 @@ interface EditablePaso extends PasoElaboracion {
     .step-row {
       display: flex; align-items: center; gap: 12px;
       padding: 16px 0;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .step-row:last-child { border-bottom: none; }
 
@@ -206,20 +206,20 @@ interface EditablePaso extends PasoElaboracion {
     .step-number {
       width: 32px; height: 32px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: #374151;
-      background: #F3F4F6; border-radius: 8px;
+      font-size: 14px; font-weight: 700; color: var(--text-primary);
+      background: var(--slate-100); border-radius: 8px;
     }
 
     .step-desc {
       flex: 1; min-width: 0;
     }
     .step-text {
-      font-size: 14px; color: #374151; line-height: 1.5;
+      font-size: 14px; color: var(--text-primary); line-height: 1.5;
     }
     .step-desc-editing { }
     .step-input {
       width: 100%; padding: 10px 14px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 2px solid #10B981;
+      color: var(--text-primary); background: white; border: 2px solid var(--success-color);
       border-radius: 10px; transition: all 0.15s;
     }
     .step-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); }
@@ -231,25 +231,25 @@ interface EditablePaso extends PasoElaboracion {
     .action-btn {
       display: inline-flex; align-items: center; gap: 4px;
       padding: 6px 12px; font-size: 12px; font-weight: 500; font-family: inherit;
-      border-radius: 8px; border: 1px solid #E5E7EB; cursor: pointer;
-      transition: all 0.15s; background: white; color: #374151;
+      border-radius: 8px; border: 1px solid var(--slate-200); cursor: pointer;
+      transition: all 0.15s; background: white; color: var(--text-primary);
     }
-    .action-multimedia { color: #6B7280; }
-    .action-multimedia:hover { border-color: #9CA3AF; }
-    .action-edit { color: #374151; }
-    .action-edit:hover { border-color: #F97316; color: #F97316; }
+    .action-multimedia { color: var(--slate-500); }
+    .action-multimedia:hover { border-color: var(--slate-400); }
+    .action-edit { color: var(--text-primary); }
+    .action-edit:hover { border-color: var(--primary-orange); color: var(--primary-orange); }
     .action-save {
-      background: #10B981; color: white; border-color: #10B981;
+      background: var(--success-color); color: white; border-color: var(--success-color);
     }
     .action-save:hover { background: #059669; border-color: #059669; }
-    .action-delete { color: #6B7280; }
-    .action-delete:hover { border-color: #EF4444; color: #EF4444; }
-    .action-cancel { color: #6B7280; }
-    .action-cancel:hover { border-color: #EF4444; color: #EF4444; }
+    .action-delete { color: var(--slate-500); }
+    .action-delete:hover { border-color: var(--danger-color); color: var(--danger-color); }
+    .action-cancel { color: var(--slate-500); }
+    .action-cancel:hover { border-color: var(--danger-color); color: var(--danger-color); }
 
     .empty-state {
       padding: 40px; text-align: center;
-      font-size: 14px; color: #9CA3AF;
+      font-size: 14px; color: var(--slate-400);
     }
 
     .dialog-actions {
@@ -263,10 +263,10 @@ interface EditablePaso extends PasoElaboracion {
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     @media (max-width: 800px) {
       .step-actions { flex-wrap: wrap; }

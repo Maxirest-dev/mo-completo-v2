@@ -440,7 +440,7 @@ import { CurrencyArsPipe } from '@mro/shared-ui';
       transition: all 0.15s ease;
 
       &:hover {
-        background: #FEE2E2;
+        background: var(--danger-bg);
         color: #DC2626;
       }
     }

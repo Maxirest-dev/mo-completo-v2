@@ -49,30 +49,30 @@ import { ICellRendererParams } from 'ag-grid-community';
       height: 28px;
       padding: 0;
       background: transparent;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
-      color: #6B7280;
+      color: var(--slate-500);
       cursor: pointer;
       transition: all 0.15s;
     }
 
     .btn-action-edit:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .btn-action-toggle:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .btn-action-activate {
-      color: #10B981;
-      border-color: #D1FAE5;
+      color: var(--success-color);
+      border-color: var(--success-bg);
     }
 
     .btn-action-activate:hover {
-      background: #D1FAE5;
+      background: var(--success-bg);
       color: #059669;
     }
   `],

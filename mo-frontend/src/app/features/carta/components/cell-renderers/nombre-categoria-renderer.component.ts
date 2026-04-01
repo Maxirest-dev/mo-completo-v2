@@ -52,7 +52,7 @@ import { CategoriaGridRow } from '../../models/categoria-grid.model';
 
     .nombre {
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       font-size: 14px;
       white-space: nowrap;
       overflow: hidden;
@@ -61,7 +61,7 @@ import { CategoriaGridRow } from '../../models/categoria-grid.model';
 
     .descripcion {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -72,7 +72,7 @@ export class NombreCategoriaRendererComponent implements ICellRendererAngularCom
   nombre = '';
   descripcion = '';
   icono = '';
-  iconoColor = '#F97316';
+  iconoColor = 'var(--primary-orange)';
 
   agInit(params: ICellRendererParams<CategoriaGridRow>): void {
     this.updateValues(params);
@@ -88,7 +88,7 @@ export class NombreCategoriaRendererComponent implements ICellRendererAngularCom
       this.nombre = params.data.nombre || '';
       this.descripcion = params.data.descripcion || '';
       this.icono = params.data.icono || '📦';
-      this.iconoColor = params.data.iconoColor || '#F97316';
+      this.iconoColor = params.data.iconoColor || 'var(--primary-orange)';
     }
   }
 }

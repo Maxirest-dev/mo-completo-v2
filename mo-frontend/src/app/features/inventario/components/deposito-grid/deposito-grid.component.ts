@@ -172,9 +172,9 @@ import {
     /* Master table */
     .master-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
     .master-table thead th {
-      padding: 14px 16px; font-size: 12px; font-weight: 600; color: #6B7280;
+      padding: 14px 16px; font-size: 12px; font-weight: 600; color: var(--slate-500);
       text-transform: uppercase; letter-spacing: 0.05em; text-align: left;
-      border-bottom: 1px solid #E5E7EB; background: white;
+      border-bottom: 1px solid var(--slate-200); background: white;
     }
 
     .col-nombre { width: 30%; }
@@ -188,14 +188,14 @@ import {
     .master-row:hover { background: #FAFAFA; }
     .master-row.expanded { background: #FAFAFA; }
     .master-row td {
-      padding: 12px 16px; border-bottom: 1px solid #F3F4F6;
+      padding: 12px 16px; border-bottom: 1px solid var(--slate-100);
       vertical-align: middle; font-size: 14px; color: var(--gray-700);
     }
 
     /* Chevron */
     .chevron {
       display: inline-flex; align-items: center; justify-content: center;
-      color: #9CA3AF; transition: transform 0.2s ease; flex-shrink: 0;
+      color: var(--slate-400); transition: transform 0.2s ease; flex-shrink: 0;
     }
     .chevron-open { transform: rotate(90deg); }
 
@@ -207,26 +207,26 @@ import {
       font-size: 18px; flex-shrink: 0;
     }
     .dep-info { display: flex; flex-direction: column; }
-    .dep-name { font-weight: 600; color: #1F2937; }
-    .dep-desc { font-size: 12px; color: #9CA3AF; margin-top: 2px; }
+    .dep-name { font-weight: 600; color: var(--text-heading); }
+    .dep-desc { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
 
     /* Tipo badges */
     .badge-tipo {
       display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: 500;
       border-radius: 6px;
     }
-    .tipo-verduras { background: #D1FAE5; color: #065F46; }
-    .tipo-carnes { background: #FEE2E2; color: #991B1B; }
+    .tipo-verduras { background: var(--success-bg); color: var(--success-text); }
+    .tipo-carnes { background: var(--danger-bg); color: var(--danger-text); }
     .tipo-lacteos { background: #DBEAFE; color: #1E40AF; }
     .tipo-bebidas { background: #E0E7FF; color: #3730A3; }
-    .tipo-secos { background: #FEF3C7; color: #92400E; }
+    .tipo-secos { background: var(--warning-bg); color: #92400E; }
     .tipo-congelados { background: #CFFAFE; color: #155E75; }
-    .tipo-otros { background: #F3F4F6; color: #4B5563; }
+    .tipo-otros { background: var(--slate-100); color: var(--slate-600); }
 
     /* Insumos count */
     .insumos-count { display: flex; flex-direction: column; }
-    .count-number { font-weight: 600; font-size: 14px; color: #F97316; }
-    .count-label { font-size: 12px; color: #9CA3AF; }
+    .count-number { font-weight: 600; font-size: 14px; color: var(--primary-orange); }
+    .count-label { font-size: 12px; color: var(--slate-400); }
 
     /* Acciones */
     .acciones-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
@@ -242,7 +242,7 @@ import {
     .btn-edit, .btn-edit-sm {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 12px; font-size: 13px; font-weight: 500;
-      color: var(--gray-700); background: white; border: 1px solid #E5E7EB;
+      color: var(--gray-700); background: white; border: 1px solid var(--slate-200);
       border-radius: 6px; cursor: pointer; transition: all 0.15s;
     }
     .btn-edit:hover, .btn-edit-sm:hover { background: var(--gray-50); border-color: var(--gray-300); }
@@ -270,22 +270,22 @@ import {
     .btn-activate:hover { background: #ECFDF5; }
 
     /* Detail row */
-    .detail-row td { padding: 0; border-bottom: 1px solid #F3F4F6; }
+    .detail-row td { padding: 0; border-bottom: 1px solid var(--slate-100); }
     .detail-wrapper { padding: 0 16px 16px 16px; background: #FAFAFA; }
     .detail-table {
       width: 100%; border-collapse: collapse;
-      background: white; border: 1px solid #E5E7EB;
+      background: white; border: 1px solid var(--slate-200);
       border-radius: 8px; overflow: hidden;
     }
     .detail-table thead th {
-      padding: 10px 16px; font-size: 11px; font-weight: 600; color: #6B7280;
+      padding: 10px 16px; font-size: 11px; font-weight: 600; color: var(--slate-500);
       text-transform: uppercase; letter-spacing: 0.05em; text-align: left;
-      background: #F3F4F6; border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-100); border-bottom: 1px solid var(--slate-200);
     }
     .detail-table thead th:last-child { text-align: right; }
     .insumo-row td {
       padding: 12px 16px; font-size: 14px; color: var(--gray-700);
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .insumo-row:last-child td { border-bottom: none; }
 
@@ -295,35 +295,35 @@ import {
       font-weight: 500; border-radius: 4px;
     }
     .insumo-tipo-comprado { background: #DBEAFE; color: #1E40AF; }
-    .insumo-tipo-elaborado { background: #FEF3C7; color: #92400E; }
+    .insumo-tipo-elaborado { background: var(--warning-bg); color: #92400E; }
 
     /* Estado badges */
     .badge-estado {
       display: inline-block; padding: 2px 8px; font-size: 11px;
       font-weight: 500; border-radius: 4px;
     }
-    .estado-normal { background: #D1FAE5; color: #065F46; }
-    .estado-bajo { background: #FEF3C7; color: #92400E; }
-    .estado-critico { background: #FEE2E2; color: #991B1B; }
+    .estado-normal { background: var(--success-bg); color: var(--success-text); }
+    .estado-bajo { background: var(--warning-bg); color: #92400E; }
+    .estado-critico { background: var(--danger-bg); color: var(--danger-text); }
 
     .stock-cell { font-weight: 600; }
 
     .empty-insumos {
-      padding: 24px 16px; text-align: center; color: #9CA3AF; font-size: 13px;
+      padding: 24px 16px; text-align: center; color: var(--slate-400); font-size: 13px;
     }
 
     .empty-state-row td { padding: 0; }
     .empty-state {
       display: flex; flex-direction: column; align-items: center;
-      gap: 8px; padding: 48px 16px; color: #9CA3AF;
+      gap: 8px; padding: 48px 16px; color: var(--slate-400);
     }
-    .empty-state-title { font-size: 16px; font-weight: 600; color: #6B7280; }
+    .empty-state-title { font-size: 16px; font-weight: 600; color: var(--slate-500); }
     .empty-state-description { font-size: 14px; }
 
     @keyframes spin { to { transform: rotate(360deg); } }
     .spinner {
-      width: 32px; height: 32px; border: 3px solid #E5E7EB;
-      border-top-color: #F97316; border-radius: 50%; animation: spin 0.8s linear infinite;
+      width: 32px; height: 32px; border: 3px solid var(--slate-200);
+      border-top-color: var(--primary-orange); border-radius: 50%; animation: spin 0.8s linear infinite;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -357,13 +357,13 @@ export class DepositoGridComponent {
   }
 
   private readonly iconMap: Record<string, { emoji: string; color: string }> = {
-    VERDURAS: { emoji: '🥬', color: '#D1FAE5' },
-    CARNES: { emoji: '🥩', color: '#FEE2E2' },
+    VERDURAS: { emoji: '🥬', color: 'var(--success-bg)' },
+    CARNES: { emoji: '🥩', color: 'var(--danger-bg)' },
     LACTEOS: { emoji: '🧀', color: '#DBEAFE' },
     BEBIDAS: { emoji: '🥤', color: '#E0E7FF' },
-    SECOS: { emoji: '🌾', color: '#FEF3C7' },
+    SECOS: { emoji: '🌾', color: 'var(--warning-bg)' },
     CONGELADOS: { emoji: '🧊', color: '#CFFAFE' },
-    OTROS: { emoji: '📦', color: '#F3F4F6' },
+    OTROS: { emoji: '📦', color: 'var(--slate-100)' },
   };
 
   getIconEmoji(tipo: string): string {
@@ -371,6 +371,6 @@ export class DepositoGridComponent {
   }
 
   getIconColor(tipo: string): string {
-    return this.iconMap[tipo]?.color ?? '#F3F4F6';
+    return this.iconMap[tipo]?.color ?? 'var(--slate-100)';
   }
 }

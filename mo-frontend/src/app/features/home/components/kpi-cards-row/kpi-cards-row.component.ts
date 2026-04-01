@@ -45,7 +45,7 @@ const GAUGE_STRATEGY = new GaugeKpiStrategy();
 
     .kpi-row {
       display: flex;
-      gap: 16px;
+      gap: var(--spacing-md, 16px);
       align-items: stretch;
     }
 

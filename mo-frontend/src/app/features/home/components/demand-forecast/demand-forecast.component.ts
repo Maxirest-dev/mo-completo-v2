@@ -56,14 +56,14 @@ import { PrepItem } from '../../models/prep-list.model';
 
     .section-divider {
       border: none;
-      border-top: 1px solid var(--gray-100, #F3F4F6);
+      border-top: 1px solid var(--divider-color, #F1F5F9);
       margin: 12px 0;
     }
 
     .prep-section-title {
       font-size: 13px;
       font-weight: 600;
-      color: var(--gray-600, #4B5563);
+      color: var(--slate-600, #45556C);
       margin: 0 0 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;

@@ -117,26 +117,26 @@ import { RentabilityAlertsComponent } from '../rentability-alerts';
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: var(--spacing-lg, 24px);
     }
 
     .page-header-left {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: var(--spacing-xs, 4px);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: var(--gray-900, #111827);
+      color: var(--slate-900, #0F172B);
       margin: 0;
       line-height: 1.2;
     }
 
     .page-subtitle {
       font-size: 14px;
-      color: var(--gray-500, #6B7280);
+      color: var(--slate-400, #90A1B9);
       margin: 0;
     }
 
@@ -147,30 +147,30 @@ import { RentabilityAlertsComponent } from '../rentability-alerts';
 
     app-ai-summary-banner {
       display: block;
-      margin-bottom: 16px;
+      margin-bottom: var(--spacing-md, 16px);
     }
 
     app-kpi-cards-row {
       display: block;
-      margin-bottom: 16px;
+      margin-bottom: var(--spacing-md, 16px);
     }
 
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: var(--spacing-md, 16px);
     }
 
     .grid-col-left,
     .grid-col-right {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: var(--spacing-md, 16px);
     }
 
     @media (max-width: 1024px) {
       :host {
-        padding: 16px;
+        padding: var(--spacing-md, 16px);
       }
 
       .page-header {

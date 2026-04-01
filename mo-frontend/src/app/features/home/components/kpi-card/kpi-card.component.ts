@@ -60,10 +60,10 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
             <svg class="gauge-svg" viewBox="0 0 100 100">
               <defs>
                 <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#10B981"/>
-                  <stop offset="40%" stop-color="#FBBF24"/>
-                  <stop offset="70%" stop-color="#F97316"/>
-                  <stop offset="100%" stop-color="#7C3AED"/>
+                  <stop offset="0%" stop-color="var(--success-color, #00A43D)"/>
+                  <stop offset="40%" stop-color="var(--warning-color, #F59E0B)"/>
+                  <stop offset="70%" stop-color="var(--primary-orange, #F27920)"/>
+                  <stop offset="100%" stop-color="var(--danger-color, #EF4444)"/>
                 </linearGradient>
               </defs>
               <!-- Background track -->
@@ -71,7 +71,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
                 class="gauge-bg"
                 cx="50" cy="50" r="40"
                 fill="none"
-                stroke="#E5E7EB"
+                stroke="var(--slate-200, #E2E8F0)"
                 stroke-width="8"
                 stroke-dasharray="226.2 251.3"
                 stroke-dashoffset="-12.6"
@@ -97,7 +97,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
                 class="gauge-text"
                 font-size="18"
                 font-weight="700"
-                fill="#1F2937"
+                fill="var(--slate-900, #0F172B)"
               >
                 {{ formattedValue() }}
               </text>
@@ -128,10 +128,11 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
     }
 
     .kpi-card {
-      background: #FFFFFF;
-      border-radius: 12px;
+      background: var(--bg-primary, #FFFFFF);
+      border-radius: var(--radius-lg, 14px);
+      border: 1px solid var(--border-color, #E2E8F0);
       padding: 20px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -139,15 +140,15 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
       transition: box-shadow 0.2s ease;
 
       &:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        box-shadow: var(--shadow-md);
       }
     }
 
     .kpi-title {
       margin: 0;
       font-size: 13px;
-      font-weight: 500;
-      color: #6B7280;
+      font-weight: 400;
+      color: var(--slate-400, #90A1B9);
       letter-spacing: 0.01em;
       line-height: 1.2;
     }
@@ -155,7 +156,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
     .kpi-value {
       font-size: 28px;
       font-weight: 700;
-      color: #111827;
+      color: var(--slate-900, #0F172B);
       line-height: 1.2;
       letter-spacing: -0.02em;
     }
@@ -182,7 +183,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
       position: relative;
       height: 10px;
       border-radius: 5px;
-      background: #F3F4F6;
+      background: var(--slate-100, #F1F5F9);
       overflow: hidden;
     }
 
@@ -192,7 +193,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
       left: 0;
       height: 100%;
       border-radius: 5px;
-      background: linear-gradient(90deg, #10B981 0%, #FBBF24 50%, #EF4444 100%);
+      background: linear-gradient(90deg, var(--success-color, #00A43D) 0%, var(--warning-color, #F59E0B) 50%, var(--danger-color, #EF4444) 100%);
       transition: width 0.6s ease;
     }
 
@@ -246,24 +247,24 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
       font-size: 12px;
       font-weight: 500;
       padding: 2px 8px;
-      border-radius: 4px;
+      border-radius: var(--radius-sm, 8px);
       margin-top: auto;
       width: fit-content;
     }
 
     .badge-positive {
-      color: #059669;
-      background: #ECFDF5;
+      color: var(--success-text, #00A43D);
+      background: var(--success-bg, #ECFDF5);
     }
 
     .badge-negative {
-      color: #DC2626;
-      background: #FEF2F2;
+      color: var(--danger-text, #DC2626);
+      background: var(--danger-bg, #FEF2F2);
     }
 
     .badge-warning {
-      color: #D97706;
-      background: #FFFBEB;
+      color: var(--warning-text, #92400E);
+      background: var(--warning-bg, #FFFBEB);
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -21,7 +21,7 @@ import { ICellRendererParams } from 'ag-grid-community';
       padding: 3px 10px;
       font-size: 12px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
     }
 
@@ -31,14 +31,14 @@ import { ICellRendererParams } from 'ag-grid-community';
       border-radius: 50%;
     }
 
-    .estado-normal { background: #D1FAE5; color: #065F46; }
-    .estado-normal .estado-dot { background: #10B981; }
+    .estado-normal { background: var(--success-bg); color: var(--success-text); }
+    .estado-normal .estado-dot { background: var(--success-color); }
 
-    .estado-bajo { background: #FEF3C7; color: #92400E; }
-    .estado-bajo .estado-dot { background: #F59E0B; }
+    .estado-bajo { background: var(--warning-bg); color: #92400E; }
+    .estado-bajo .estado-dot { background: var(--warning-color); }
 
-    .estado-critico { background: #FEE2E2; color: #991B1B; }
-    .estado-critico .estado-dot { background: #EF4444; }
+    .estado-critico { background: var(--danger-bg); color: var(--danger-text); }
+    .estado-critico .estado-dot { background: var(--danger-color); }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

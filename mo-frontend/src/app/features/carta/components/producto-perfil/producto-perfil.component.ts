@@ -122,7 +122,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             <div class="cta-card" (click)="openDialog('precios')">
               <div class="cta-header">
                 <div class="cta-icon-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" class="cta-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                   <span class="cta-label">Salon</span>
@@ -139,7 +139,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             <div class="cta-card" (click)="openDialog('codigos')">
               <div class="cta-header">
                 <div class="cta-icon-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" class="cta-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z"/>
                   </svg>
@@ -170,7 +170,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             <div class="cta-card" (click)="openDialog('estacion')">
               <div class="cta-header">
                 <div class="cta-icon-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" class="cta-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger-color)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5"/>
                   </svg>
                   <span class="cta-label">Estacion</span>
@@ -187,7 +187,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             <div class="cta-card" (click)="openDialog('calendario')">
               <div class="cta-header">
                 <div class="cta-icon-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" class="cta-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success-color)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
                   </svg>
                   <span class="cta-label">Calendario</span>
@@ -204,7 +204,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             <div class="cta-card" (click)="openDialog('extras')">
               <div class="cta-header">
                 <div class="cta-icon-label">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" class="cta-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success-color)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                   </svg>
                   <span class="cta-label">+ Extras</span>
@@ -390,7 +390,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       gap: 6px;
       margin-bottom: 24px;
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
     .breadcrumb-back {
       display: inline-flex;
@@ -400,17 +400,17 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       height: 36px;
       background: transparent;
       border: none;
-      color: #374151;
+      color: var(--text-primary);
       cursor: pointer;
       transition: color 0.15s;
       margin-right: 4px;
       padding: 0;
     }
-    .breadcrumb-back:hover { color: #F97316; }
+    .breadcrumb-back:hover { color: var(--primary-orange); }
     .breadcrumb-item { cursor: pointer; transition: color 0.15s; }
-    .breadcrumb-item:hover { color: #F97316; }
-    .breadcrumb-sep { color: #D1D5DB; }
-    .breadcrumb-current { color: #1F2937; font-weight: 600; margin-left: 4px; }
+    .breadcrumb-item:hover { color: var(--primary-orange); }
+    .breadcrumb-sep { color: var(--slate-300); }
+    .breadcrumb-current { color: var(--text-heading); font-weight: 600; margin-left: 4px; }
 
     /* ---- Top Row: 3 columns ---- */
     .top-row {
@@ -424,7 +424,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     /* Col 1: Image */
     .image-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       overflow: hidden;
       width: 220px;
@@ -460,14 +460,14 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      color: #D1D5DB;
+      color: var(--slate-300);
       font-size: 13px;
     }
 
     /* Col 2: Info card */
     .info-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 24px;
       min-height: 200px;
@@ -481,7 +481,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       gap: 12px;
       margin-bottom: 20px;
       padding-bottom: 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .status-badge {
       display: inline-flex;
@@ -490,20 +490,20 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       padding: 4px 12px;
       font-size: 13px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
       flex-shrink: 0;
     }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .status-active { background: #D1FAE5; color: #065F46; }
-    .status-active .status-dot { background: #10B981; }
-    .status-inactive { background: #F3F4F6; color: #4B5563; }
-    .status-inactive .status-dot { background: #6B7280; }
+    .status-active { background: var(--success-bg); color: var(--success-text); }
+    .status-active .status-dot { background: var(--success-color); }
+    .status-inactive { background: var(--slate-100); color: var(--slate-600); }
+    .status-inactive .status-dot { background: var(--slate-500); }
 
     .product-name {
       font-size: 22px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0;
       flex: 1;
       min-width: 0;
@@ -521,13 +521,13 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       padding: 0;
       background: transparent;
       border: none;
-      color: #D1D5DB;
+      color: var(--slate-300);
       cursor: pointer;
       border-radius: 6px;
       transition: all 0.15s;
       flex-shrink: 0;
     }
-    .icon-btn:hover { color: #374151; background: #F3F4F6; }
+    .icon-btn:hover { color: var(--text-primary); background: var(--slate-100); }
 
     .info-desc-section { flex: 1; }
     .info-desc-header {
@@ -539,14 +539,14 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     .section-label {
       font-size: 12px;
       font-weight: 700;
-      color: #374151;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin: 0;
     }
     .product-description {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       line-height: 1.6;
       margin: 0;
     }
@@ -561,17 +561,17 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
 
     .cta-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 14px 16px;
       cursor: pointer;
       transition: all 0.15s;
     }
     .cta-card:hover {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
     }
-    .cta-card-placeholder:hover { border-color: #E5E7EB; box-shadow: none; }
+    .cta-card-placeholder:hover { border-color: var(--slate-200); box-shadow: none; }
 
     .cta-header {
       display: flex;
@@ -585,22 +585,22 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       gap: 6px;
     }
     .cta-icon { flex-shrink: 0; }
-    .cta-label { font-size: 13px; font-weight: 600; color: #6B7280; }
-    .cta-edit-icon { color: #D1D5DB; transition: color 0.15s; flex-shrink: 0; }
-    .cta-card:hover .cta-edit-icon { color: #F97316; }
+    .cta-label { font-size: 13px; font-weight: 600; color: var(--slate-500); }
+    .cta-edit-icon { color: var(--slate-300); transition: color 0.15s; flex-shrink: 0; }
+    .cta-card:hover .cta-edit-icon { color: var(--primary-orange); }
 
     .cta-value {
       display: block;
       font-size: 16px;
       font-weight: 700;
-      color: #1F2937;
+      color: var(--text-heading);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .cta-value-price { color: #1F2937; }
+    .cta-value-price { color: var(--text-heading); }
     .cta-value-small { font-size: 14px; font-weight: 600; }
-    .cta-value-muted { color: #9CA3AF; font-weight: 500; font-size: 13px; }
+    .cta-value-muted { color: var(--slate-400); font-weight: 500; font-size: 13px; }
 
     /* ---- Bottom Grid ---- */
     .bottom-grid {
@@ -612,7 +612,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
 
     .detail-card {
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       padding: 24px;
     }
@@ -625,7 +625,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     .detail-card-title {
       font-size: 13px;
       font-weight: 700;
-      color: #374151;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin: 0;
@@ -633,7 +633,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     .detail-card-extra {
       font-size: 15px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
     }
     .detail-card-actions {
       display: flex;
@@ -657,20 +657,20 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #F97316;
+      background: var(--primary-orange);
       flex-shrink: 0;
     }
     .ingrediente-name {
       font-size: 14px;
-      color: #374151;
+      color: var(--text-primary);
     }
     .peso-total {
       margin-top: 16px;
       padding-top: 12px;
-      border-top: 1px solid #F3F4F6;
+      border-top: 1px solid var(--slate-100);
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
     }
 
     /* Elaboracion */
@@ -684,7 +684,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     }
     .elaboracion-desc {
       font-size: 14px;
-      color: #374151;
+      color: var(--text-primary);
       line-height: 1.6;
     }
 
@@ -697,13 +697,13 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       padding: 0;
       font-size: 13px;
       font-weight: 500;
-      color: #F97316;
+      color: var(--primary-orange);
       background: transparent;
       border: none;
       cursor: pointer;
       transition: color 0.15s;
     }
-    .ver-mas-btn:hover { color: #EA580C; }
+    .ver-mas-btn:hover { color: var(--primary-orange-hover); }
 
     /* ---- Footer ---- */
     .perfil-footer {
@@ -728,10 +728,10 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
     .spinner-sm { width: 14px; height: 14px; }
@@ -742,8 +742,8 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       text-align: center;
       padding: 80px 24px;
     }
-    .not-found h2 { font-size: 22px; color: #1F2937; margin: 0 0 8px 0; }
-    .not-found p { font-size: 14px; color: #6B7280; margin: 0 0 24px 0; }
+    .not-found h2 { font-size: 22px; color: var(--text-heading); margin: 0 0 8px 0; }
+    .not-found p { font-size: 14px; color: var(--slate-500); margin: 0 0 24px 0; }
 
     /* ---- Responsive ---- */
     @media (max-width: 1100px) {

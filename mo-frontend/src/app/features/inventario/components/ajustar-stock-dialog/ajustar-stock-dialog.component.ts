@@ -200,7 +200,7 @@ export interface AjusteStockData {
     .dialog-title {
       font-size: 22px;
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0 0 12px 0;
     }
 
@@ -209,24 +209,24 @@ export interface AjusteStockData {
       align-items: center;
       justify-content: space-between;
       padding: 12px 16px;
-      background: #F9FAFB;
+      background: var(--slate-50);
       border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
     }
 
     .insumo-name {
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
     }
 
     .insumo-stock {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .insumo-stock strong {
-      color: #F97316;
+      color: var(--primary-orange);
       font-weight: 600;
     }
 
@@ -243,13 +243,13 @@ export interface AjusteStockData {
       display: block;
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
     .label-optional {
       font-weight: 400;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 12px;
     }
 
@@ -265,7 +265,7 @@ export interface AjusteStockData {
       align-items: center;
       gap: 8px;
       padding: 10px 12px;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -273,8 +273,8 @@ export interface AjusteStockData {
     }
 
     .radio-option:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
 
     .radio-option input[type="radio"] {
@@ -285,14 +285,14 @@ export interface AjusteStockData {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      border: 2px solid #D1D5DB;
+      border: 2px solid var(--slate-300);
       flex-shrink: 0;
       transition: all 0.15s ease;
       position: relative;
     }
 
     .radio-selected .radio-dot {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     .radio-selected .radio-dot::after {
@@ -303,11 +303,11 @@ export interface AjusteStockData {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #F97316;
+      background: var(--primary-orange);
     }
 
     .radio-selected {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
 
@@ -320,17 +320,17 @@ export interface AjusteStockData {
     .radio-label {
       font-size: 13px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
     }
 
     .radio-desc {
       font-size: 11px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       white-space: nowrap;
     }
 
     .radio-selected .radio-label {
-      color: #EA580C;
+      color: var(--primary-orange-hover);
     }
 
     /* Inputs */
@@ -340,9 +340,9 @@ export interface AjusteStockData {
       padding: 12px 14px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       transition: all 0.15s ease;
     }
@@ -350,20 +350,20 @@ export interface AjusteStockData {
     .form-input:focus,
     .form-select:focus {
       outline: none;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
     .form-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .form-input-error {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
     }
 
     .form-input-error:focus {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
 
@@ -381,7 +381,7 @@ export interface AjusteStockData {
       display: block;
       margin-top: 6px;
       font-size: 12px;
-      color: #EF4444;
+      color: var(--danger-color);
     }
 
     /* Actions */
@@ -413,22 +413,22 @@ export interface AjusteStockData {
     }
 
     .btn-primary {
-      background-color: #1F2937;
+      background-color: var(--text-heading);
       color: white;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: #374151;
+      background-color: var(--text-primary);
     }
 
     .btn-secondary {
       background-color: white;
-      color: #374151;
-      border: 1px solid #E5E7EB;
+      color: var(--text-primary);
+      border: 1px solid var(--slate-200);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background-color: #F9FAFB;
+      background-color: var(--slate-50);
     }
 
     /* Spinner */

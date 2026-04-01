@@ -56,7 +56,7 @@ const METODOS_PAGO: MetodoPago[] = [
   { id: 'rappipay', nombre: 'RappiPay', descripcion: 'Paga con tu billetera RappiPay', icon: 'RP' },
   { id: 'tarjeta', nombre: 'Tarjeta', descripcion: 'Ingresa los datos de una nueva tarjeta', icon: 'TC' },
   { id: 'modoanticipo', nombre: 'ModoAnticipo', descripcion: 'Paga con anticipos acumulados en Modo', icon: 'MA' },
-  { id: 'efectivo', nombre: 'Efectivo', descripcion: 'Genera un cupón para pagar en efectivo', icon: 'EF' },
+  { id: 'efectivo', nombre: 'Efectivo', descripcion: 'Genera un cupon para pagar en efectivo', icon: 'EF' },
 ];
 
 @Component({
@@ -194,7 +194,7 @@ const METODOS_PAGO: MetodoPago[] = [
         <!-- Adherirse Card -->
         <div class="sidebar-card">
           <h4 class="sidebar-card-label">ADHERIRSE</h4>
-          <p class="adherirse-text">Adherite al servicio de facturacion electronica y recibí tus comprobantes de forma automatica.</p>
+          <p class="adherirse-text">Adherite al servicio de facturacion electronica y recibi tus comprobantes de forma automatica.</p>
           <a class="ver-mas-link" href="javascript:void(0)">Ver mas</a>
         </div>
       </div>
@@ -355,30 +355,30 @@ const METODOS_PAGO: MetodoPago[] = [
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #374151;
+      color: var(--slate-700);
       cursor: pointer;
       transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
     .back-btn:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
 
     .page-title {
       font-size: 26px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
       letter-spacing: -0.01em;
     }
     .page-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -395,33 +395,33 @@ const METODOS_PAGO: MetodoPago[] = [
       align-items: center;
       gap: 6px;
       padding: 8px 16px;
-      border-radius: 9999px;
-      border: 1px solid #E5E7EB;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--slate-200);
       background: white;
-      color: #6B7280;
+      color: var(--slate-500);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
     }
     .filter-tab:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
     .filter-tab--active {
-      background: #111827;
+      background: var(--slate-900);
       color: white;
-      border-color: #111827;
+      border-color: var(--slate-900);
     }
     .filter-tab--active:hover {
-      background: #1F2937;
-      border-color: #1F2937;
+      background: var(--slate-800);
+      border-color: var(--slate-800);
     }
 
     .filter-tab-count {
       background: rgba(0, 0, 0, 0.08);
       padding: 1px 7px;
-      border-radius: 9999px;
+      border-radius: var(--radius-full);
       font-size: 11px;
       font-weight: 600;
     }
@@ -432,10 +432,10 @@ const METODOS_PAGO: MetodoPago[] = [
     /* ───── Table Card ───── */
     .table-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-sm);
     }
 
     .table-wrapper {
@@ -448,31 +448,31 @@ const METODOS_PAGO: MetodoPago[] = [
     }
 
     .data-table thead tr {
-      background: #F3F4F6;
+      background: var(--slate-100);
     }
 
     .data-table th {
       padding: 12px 16px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-align: left;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
       white-space: nowrap;
     }
 
     .data-table td {
       padding: 14px 16px;
       font-size: 14px;
-      color: #374151;
-      border-bottom: 1px solid #F3F4F6;
+      color: var(--slate-700);
+      border-bottom: 1px solid var(--slate-100);
       vertical-align: middle;
     }
 
     .data-table tbody tr:hover {
-      background: #F9FAFB;
+      background: var(--slate-50);
     }
 
     .data-table tbody tr:last-child td {
@@ -487,18 +487,18 @@ const METODOS_PAGO: MetodoPago[] = [
     }
     .nombre-text {
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       font-size: 14px;
     }
     .nombre-fecha {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .estado-badge {
       display: inline-flex;
       padding: 4px 12px;
-      border-radius: 9999px;
+      border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 600;
     }
@@ -508,9 +508,9 @@ const METODOS_PAGO: MetodoPago[] = [
       border: 1px solid #BBF7D0;
     }
     .estado-badge--orange {
-      background: #FFF7ED;
-      color: #EA580C;
-      border: 1px solid #FED7AA;
+      background: var(--primary-orange-light);
+      color: var(--primary-orange-hover);
+      border: 1px solid var(--primary-orange-lighter);
     }
     .estado-badge--red {
       background: #FEF2F2;
@@ -520,12 +520,12 @@ const METODOS_PAGO: MetodoPago[] = [
 
     .cell-fecha {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .cell-total {
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
     }
 
     .cell-actions {
@@ -537,7 +537,7 @@ const METODOS_PAGO: MetodoPago[] = [
       padding: 6px 14px;
       font-size: 12px;
       font-weight: 500;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       transition: all 0.15s ease;
       display: inline-flex;
@@ -547,27 +547,27 @@ const METODOS_PAGO: MetodoPago[] = [
     }
     .action-btn--outline {
       background: white;
-      border: 1px solid #E5E7EB;
-      color: #374151;
+      border: 1px solid var(--slate-200);
+      color: var(--slate-700);
     }
     .action-btn--outline:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
     .action-btn--ghost {
       background: transparent;
       border: 1px solid transparent;
-      color: #6B7280;
+      color: var(--slate-500);
     }
     .action-btn--ghost:hover {
-      background: #F3F4F6;
-      color: #374151;
+      background: var(--slate-100);
+      color: var(--slate-700);
     }
 
     .empty-row {
       text-align: center;
       padding: 40px 16px !important;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 14px;
     }
 
@@ -580,16 +580,16 @@ const METODOS_PAGO: MetodoPago[] = [
 
     .sidebar-card {
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
       padding: 20px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-sm);
     }
 
     .sidebar-card-label {
       font-size: 11px;
       font-weight: 600;
-      color: #9CA3AF;
+      color: var(--slate-400);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin: 0 0 12px;
@@ -598,7 +598,7 @@ const METODOS_PAGO: MetodoPago[] = [
     .saldo-amount {
       font-size: 32px;
       font-weight: 700;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 16px;
       letter-spacing: -0.02em;
     }
@@ -606,7 +606,7 @@ const METODOS_PAGO: MetodoPago[] = [
     .btn-pagar {
       width: 100%;
       padding: 12px;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       border: none;
       background: #22C55E;
       color: white;
@@ -628,7 +628,7 @@ const METODOS_PAGO: MetodoPago[] = [
     }
     .debito-toggle-text {
       font-size: 13px;
-      color: #374151;
+      color: var(--slate-700);
       font-weight: 500;
     }
 
@@ -643,7 +643,7 @@ const METODOS_PAGO: MetodoPago[] = [
       position: absolute;
       cursor: pointer;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: #D1D5DB;
+      background: var(--slate-300);
       border-radius: 24px;
       transition: 0.2s;
     }
@@ -677,11 +677,11 @@ const METODOS_PAGO: MetodoPago[] = [
       gap: 10px;
       cursor: pointer;
       padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #F3F4F6;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--slate-100);
       transition: background 0.15s;
     }
-    .debito-option:hover { background: #F9FAFB; }
+    .debito-option:hover { background: var(--slate-50); }
     .debito-option input[type="radio"] {
       margin-top: 3px;
       accent-color: #22C55E;
@@ -694,17 +694,17 @@ const METODOS_PAGO: MetodoPago[] = [
     .debito-option-name {
       font-size: 13px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
     }
     .debito-option-detail {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* Adherirse */
     .adherirse-text {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       line-height: 1.6;
       margin: 0 0 12px;
     }
@@ -733,13 +733,13 @@ const METODOS_PAGO: MetodoPago[] = [
 
     .dialog-panel {
       background: white;
-      border-radius: 16px;
+      border-radius: var(--radius-xl);
       width: 100%;
       max-width: 540px;
       max-height: 90vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-lg);
     }
     .dialog-panel--pago {
       max-width: 480px;
@@ -755,12 +755,12 @@ const METODOS_PAGO: MetodoPago[] = [
     .dialog-title {
       font-size: 20px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       margin: 0 0 4px;
     }
     .dialog-subtitle {
       font-size: 13px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -770,16 +770,16 @@ const METODOS_PAGO: MetodoPago[] = [
       justify-content: center;
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       border: none;
       background: transparent;
-      color: #9CA3AF;
+      color: var(--slate-400);
       cursor: pointer;
       transition: all 0.15s;
     }
     .dialog-close:hover {
-      background: #F3F4F6;
-      color: #374151;
+      background: var(--slate-100);
+      color: var(--slate-700);
     }
 
     .dialog-body {
@@ -793,12 +793,12 @@ const METODOS_PAGO: MetodoPago[] = [
       justify-content: flex-end;
       gap: 10px;
       padding: 16px 24px;
-      border-top: 1px solid #F3F4F6;
+      border-top: 1px solid var(--slate-100);
     }
 
     .btn-dialog {
       padding: 10px 24px;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
@@ -807,23 +807,23 @@ const METODOS_PAGO: MetodoPago[] = [
     }
     .btn-dialog--secondary {
       background: white;
-      border: 1px solid #E5E7EB;
-      color: #374151;
+      border: 1px solid var(--slate-200);
+      color: var(--slate-700);
     }
     .btn-dialog--secondary:hover {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
+      background: var(--slate-50);
+      border-color: var(--slate-300);
     }
     .btn-dialog--primary {
-      background: #111827;
+      background: var(--slate-900);
       color: white;
     }
     .btn-dialog--primary:hover {
-      background: #1F2937;
+      background: var(--slate-800);
     }
     .btn-dialog--primary:disabled {
-      background: #D1D5DB;
-      color: #9CA3AF;
+      background: var(--slate-300);
+      color: var(--slate-400);
       cursor: not-allowed;
     }
 
@@ -839,48 +839,48 @@ const METODOS_PAGO: MetodoPago[] = [
       align-items: center;
       gap: 12px;
       padding: 14px 12px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       transition: background 0.15s;
     }
-    .line-item:hover { background: #F9FAFB; }
+    .line-item:hover { background: var(--slate-50); }
     .line-item input[type="checkbox"] {
       width: 18px;
       height: 18px;
-      accent-color: #F97316;
+      accent-color: var(--primary-orange);
       flex-shrink: 0;
     }
     .line-item-desc {
       flex: 1;
       font-size: 14px;
-      color: #374151;
+      color: var(--slate-700);
     }
     .line-item--readonly {
-      cursor: default; padding: 10px 0; border-bottom: 1px solid #F3F4F6;
+      cursor: default; padding: 10px 0; border-bottom: 1px solid var(--slate-100);
       display: flex; align-items: center; gap: 10px;
     }
     .line-item--readonly:last-child { border-bottom: none; }
     .line-item-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #F97316; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--primary-orange); flex-shrink: 0;
     }
     .factura-detail-info {
-      padding: 16px; background: #F9FAFB; border-radius: 8px; margin-bottom: 16px;
+      padding: 16px; background: var(--slate-50); border-radius: var(--radius-sm); margin-bottom: 16px;
       display: flex; flex-direction: column; gap: 10px;
     }
     .factura-detail-row { display: flex; justify-content: space-between; align-items: center; }
-    .factura-detail-label { font-size: 13px; color: #6B7280; }
-    .factura-detail-value { font-size: 13px; font-weight: 500; color: #1F2937; }
+    .factura-detail-label { font-size: 13px; color: var(--slate-500); }
+    .factura-detail-value { font-size: 13px; font-weight: 500; color: var(--slate-800); }
     .factura-detail-badge {
-      font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 9999px;
+      font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: var(--radius-full);
     }
     .badge--paga { background: #D1FAE5; color: #065F46; }
-    .badge--emitida { background: #FFF7ED; color: #EA580C; }
+    .badge--emitida { background: var(--primary-orange-light); color: var(--primary-orange-hover); }
     .badge--vencida { background: #FEE2E2; color: #991B1B; }
 
     .line-item-amount {
       font-size: 14px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
       white-space: nowrap;
     }
 
@@ -890,19 +890,19 @@ const METODOS_PAGO: MetodoPago[] = [
       align-items: center;
       padding: 16px 12px;
       margin-top: 8px;
-      background: #FFF7ED;
-      border-radius: 10px;
-      border: 1px solid #FED7AA;
+      background: var(--primary-orange-light);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--primary-orange-lighter);
     }
     .dialog-total-label {
       font-size: 14px;
       font-weight: 600;
-      color: #EA580C;
+      color: var(--primary-orange-hover);
     }
     .dialog-total-amount {
       font-size: 18px;
       font-weight: 700;
-      color: #EA580C;
+      color: var(--primary-orange-hover);
     }
 
     /* ───── Dialog 2: Metodos de Pago ───── */
@@ -917,14 +917,14 @@ const METODOS_PAGO: MetodoPago[] = [
       align-items: center;
       gap: 12px;
       padding: 14px;
-      border-radius: 10px;
-      border: 1px solid #F3F4F6;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-100);
       cursor: pointer;
       transition: all 0.15s;
     }
     .metodo-item:hover {
-      background: #F9FAFB;
-      border-color: #E5E7EB;
+      background: var(--slate-50);
+      border-color: var(--slate-200);
     }
     .metodo-item--selected {
       background: #F0FDF4;
@@ -938,14 +938,14 @@ const METODOS_PAGO: MetodoPago[] = [
     .metodo-icon {
       width: 40px;
       height: 40px;
-      border-radius: 10px;
-      background: #F3F4F6;
+      border-radius: var(--radius-md);
+      background: var(--slate-100);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 12px;
       font-weight: 700;
-      color: #374151;
+      color: var(--slate-700);
       flex-shrink: 0;
     }
 
@@ -958,11 +958,11 @@ const METODOS_PAGO: MetodoPago[] = [
     .metodo-nombre {
       font-size: 14px;
       font-weight: 600;
-      color: #111827;
+      color: var(--slate-900);
     }
     .metodo-desc {
       font-size: 12px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

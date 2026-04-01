@@ -224,13 +224,13 @@ const TIPO_OPTIONS: TipoCategoria[] = [
     .dialog-title {
       font-size: 22px;
       font-weight: 600;
-      color: #1F2937;
+      color: var(--text-heading);
       margin: 0 0 6px 0;
     }
 
     .dialog-subtitle {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-500);
       margin: 0;
     }
 
@@ -247,7 +247,7 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       display: block;
       font-size: 14px;
       font-weight: 600;
-      color: #374151;
+      color: var(--text-primary);
       margin-bottom: 8px;
     }
 
@@ -257,9 +257,9 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       padding: 12px 14px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       transition: all 0.15s ease;
     }
@@ -267,20 +267,20 @@ const TIPO_OPTIONS: TipoCategoria[] = [
     .form-input:focus,
     .form-select:focus {
       outline: none;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
     .form-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .form-input-error {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
     }
 
     .form-input-error:focus {
-      border-color: #EF4444;
+      border-color: var(--danger-color);
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
 
@@ -298,12 +298,12 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       display: block;
       margin-top: 6px;
       font-size: 12px;
-      color: #EF4444;
+      color: var(--danger-color);
     }
 
     /* Icon Gallery - Matching reference exactly */
     .icon-gallery-container {
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 12px;
       overflow: hidden;
     }
@@ -313,13 +313,13 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       justify-content: space-between;
       align-items: center;
       padding: 12px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
 
     .gallery-title {
       font-size: 13px;
       font-weight: 500;
-      color: #6B7280;
+      color: var(--slate-500);
     }
 
     .gallery-action-btn {
@@ -331,14 +331,14 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       background: transparent;
       border: none;
       border-radius: 6px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .gallery-action-btn:hover {
-      background: #F3F4F6;
-      color: #6B7280;
+      background: var(--slate-100);
+      color: var(--slate-500);
     }
 
     .gallery-action-btn svg {
@@ -358,7 +358,7 @@ const TIPO_OPTIONS: TipoCategoria[] = [
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #F9FAFB;
+      background: var(--slate-50);
       border: 2px solid transparent;
       border-radius: 12px;
       cursor: pointer;
@@ -366,12 +366,12 @@ const TIPO_OPTIONS: TipoCategoria[] = [
     }
 
     .icon-option:hover {
-      background: #F3F4F6;
+      background: var(--slate-100);
       transform: scale(1.05);
     }
 
     .icon-option-selected {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
 
@@ -386,19 +386,19 @@ const TIPO_OPTIONS: TipoCategoria[] = [
 
     .icon-option-add {
       background: white;
-      border: 2px dashed #D1D5DB;
+      border: 2px dashed var(--slate-300);
     }
 
     .icon-option-add:hover {
-      border-color: #9CA3AF;
-      background: #F9FAFB;
+      border-color: var(--slate-400);
+      background: var(--slate-50);
       transform: scale(1.05);
     }
 
     .icon-option-add svg {
       width: 24px;
       height: 24px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* Actions - Matching reference button style */
@@ -431,23 +431,23 @@ const TIPO_OPTIONS: TipoCategoria[] = [
 
     /* Primary button - Dark blue like reference */
     .btn-primary {
-      background-color: #1F2937;
+      background-color: var(--text-heading);
       color: white;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: #374151;
+      background-color: var(--text-primary);
     }
 
     /* Secondary button */
     .btn-secondary {
       background-color: white;
-      color: #374151;
-      border: 1px solid #E5E7EB;
+      color: var(--text-primary);
+      border: 1px solid var(--slate-200);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background-color: #F9FAFB;
+      background-color: var(--slate-50);
     }
 
     /* Spinner */

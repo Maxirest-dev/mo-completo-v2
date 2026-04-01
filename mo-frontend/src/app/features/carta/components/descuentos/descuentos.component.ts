@@ -37,7 +37,7 @@ import {
         <div class="header-info">
           <div class="header-title-row">
             <h1 class="page-title">Descuentos</h1>
-            <svg class="title-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.5">
+            <svg class="title-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
             </svg>
@@ -234,26 +234,26 @@ import {
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7280;
+      color: var(--slate-500);
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 9999px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
     .filter-tab:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
     .filter-tab-active {
-      color: #F97316;
-      border-color: #F97316;
+      color: var(--primary-orange);
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
     .filter-tab-active:hover {
       background: #FFF7ED;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     .toolbar-right {
@@ -268,20 +268,20 @@ import {
       display: flex;
       align-items: center;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       padding: 0 12px;
       min-width: 220px;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .search-box:focus-within {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
     .search-icon {
       width: 18px;
       height: 18px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       flex-shrink: 0;
     }
     .search-input {
@@ -291,11 +291,11 @@ import {
       padding: 10px 10px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: transparent;
       min-width: 140px;
     }
-    .search-input::placeholder { color: #9CA3AF; }
+    .search-input::placeholder { color: var(--slate-400); }
     .search-clear {
       display: flex;
       align-items: center;
@@ -303,14 +303,14 @@ import {
       width: 20px;
       height: 20px;
       padding: 0;
-      background: #F3F4F6;
+      background: var(--slate-100);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      color: #6B7280;
+      color: var(--slate-500);
       transition: all 0.15s ease;
     }
-    .search-clear:hover { background: #E5E7EB; color: #374151; }
+    .search-clear:hover { background: var(--slate-200); color: var(--text-primary); }
     .search-clear svg { width: 12px; height: 12px; }
 
     /* Nueva descuento button */
@@ -323,7 +323,7 @@ import {
       font-weight: 500;
       font-family: inherit;
       color: white;
-      background: #F97316;
+      background: var(--primary-orange);
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -331,7 +331,7 @@ import {
       white-space: nowrap;
       box-shadow: 0 1px 2px rgba(249, 115, 22, 0.2);
     }
-    .btn-nueva:hover { background: #EA580C; }
+    .btn-nueva:hover { background: var(--primary-orange-hover); }
     .btn-nueva:active { background: #C2410C; }
     .btn-nueva svg { width: 18px; height: 18px; }
 
@@ -360,11 +360,11 @@ import {
       padding: 14px 16px;
       font-size: 12px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
       background: white;
     }
 
@@ -386,7 +386,7 @@ import {
 
     .master-row td {
       padding: 14px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
       vertical-align: middle;
       font-size: 14px;
       color: var(--gray-700);
@@ -397,7 +397,7 @@ import {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       transition: transform 0.2s ease;
     }
     .chevron-open { transform: rotate(90deg); }
@@ -410,7 +410,7 @@ import {
       padding: 4px 12px;
       font-size: 13px;
       font-weight: 500;
-      border-radius: 9999px;
+      border-radius: var(--radius-md);
       white-space: nowrap;
     }
     .badge::before {
@@ -419,10 +419,10 @@ import {
       height: 6px;
       border-radius: 50%;
     }
-    .badge-activa { background: #D1FAE5; color: #065F46; }
-    .badge-activa::before { background: #10B981; }
-    .badge-onhold { background: #F3F4F6; color: #4B5563; }
-    .badge-onhold::before { background: #6B7280; }
+    .badge-activa { background: var(--success-bg); color: var(--success-text); }
+    .badge-activa::before { background: var(--success-color); }
+    .badge-onhold { background: var(--slate-100); color: var(--slate-600); }
+    .badge-onhold::before { background: var(--slate-500); }
 
     /* Acciones */
     .acciones-cell {
@@ -439,12 +439,12 @@ import {
       font-family: inherit;
       color: var(--gray-700);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-deactivate:hover, .btn-activate:hover { background: #F9FAFB; border-color: #D1D5DB; }
+    .btn-deactivate:hover, .btn-activate:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .btn-edit {
       display: inline-flex;
@@ -456,17 +456,17 @@ import {
       font-family: inherit;
       color: var(--gray-700);
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-edit:hover { background: #F9FAFB; border-color: #D1D5DB; }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     /* ---- Detail row ---- */
     .detail-row td {
       padding: 0;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
 
     .detail-wrapper {
@@ -478,7 +478,7 @@ import {
       width: 100%;
       border-collapse: collapse;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       overflow: hidden;
     }
@@ -487,31 +487,31 @@ import {
       padding: 10px 16px;
       font-size: 11px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-500);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       text-align: left;
-      background: #F3F4F6;
-      border-bottom: 1px solid #E5E7EB;
+      background: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
     }
 
     .producto-row td {
       padding: 12px 16px;
       font-size: 14px;
       color: var(--gray-700);
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid var(--slate-100);
     }
     .producto-row:last-child td { border-bottom: none; }
 
     .precio-descuento {
-      color: #10B981;
+      color: var(--success-color);
       font-weight: 600;
     }
 
     .empty-productos {
       padding: 24px 16px;
       text-align: center;
-      color: #9CA3AF;
+      color: var(--slate-400);
       font-size: 13px;
     }
 
@@ -536,7 +536,7 @@ import {
 
     .empty-state-description {
       font-size: 14px;
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     /* ---- Responsive ---- */

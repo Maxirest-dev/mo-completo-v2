@@ -59,7 +59,7 @@ interface EditableExtraItem extends ExtraItem {
                   @for (item of extrasItems(); track item.id; let i = $index) {
                     <tr>
                       <td class="col-handle">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="2">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--slate-300)" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                         </svg>
                       </td>
@@ -144,7 +144,7 @@ interface EditableExtraItem extends ExtraItem {
                   @for (item of adicionalesItems(); track item.id; let i = $index) {
                     <tr>
                       <td class="col-handle">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="2">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--slate-300)" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                         </svg>
                       </td>
@@ -226,8 +226,8 @@ interface EditableExtraItem extends ExtraItem {
     }
 
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px 0; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .dialog-body { padding: 24px 28px; }
 
@@ -244,23 +244,23 @@ interface EditableExtraItem extends ExtraItem {
 
     .section-title-row { display: flex; align-items: center; gap: 10px; }
     .section-title {
-      font-size: 13px; font-weight: 700; color: #374151;
+      font-size: 13px; font-weight: 700; color: var(--text-primary);
       text-transform: uppercase; letter-spacing: 0.04em; margin: 0;
     }
     .section-count {
       display: inline-flex; align-items: center; justify-content: center;
       width: 22px; height: 22px; font-size: 12px; font-weight: 600;
-      color: #6B7280; background: white; border-radius: 6px;
-      border: 1px solid #E5E7EB;
+      color: var(--slate-500); background: white; border-radius: 6px;
+      border: 1px solid var(--slate-200);
     }
 
     .add-btn {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 14px; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 8px; cursor: pointer; transition: all 0.15s;
     }
-    .add-btn:hover { border-color: #F97316; color: #F97316; }
+    .add-btn:hover { border-color: var(--primary-orange); color: var(--primary-orange); }
 
     /* Table */
     .items-table {
@@ -268,17 +268,17 @@ interface EditableExtraItem extends ExtraItem {
     }
     .items-table th {
       padding: 8px 10px; font-size: 11px; font-weight: 700;
-      color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.05em;
-      text-align: left; border-bottom: 1px solid #E5E7EB;
+      color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em;
+      text-align: left; border-bottom: 1px solid var(--slate-200);
     }
     .items-table td {
-      padding: 10px 10px; font-size: 14px; color: #374151;
-      border-bottom: 1px solid #F3F4F6; vertical-align: middle;
+      padding: 10px 10px; font-size: 14px; color: var(--text-primary);
+      border-bottom: 1px solid var(--slate-100); vertical-align: middle;
     }
     .items-table tr:last-child td { border-bottom: none; }
 
     .col-handle { width: 30px; cursor: grab; }
-    .col-num { width: 30px; color: #9CA3AF; font-size: 13px; }
+    .col-num { width: 30px; color: var(--slate-400); font-size: 13px; }
     .col-name { min-width: 180px; }
     .col-price { width: 120px; }
     .col-qty { width: 90px; text-align: center; }
@@ -286,10 +286,10 @@ interface EditableExtraItem extends ExtraItem {
 
     .inline-input {
       width: 100%; padding: 6px 10px; font-size: 13px; font-family: inherit;
-      color: #374151; background: #FAFAFA; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: #FAFAFA; border: 1px solid var(--slate-200);
       border-radius: 6px; transition: all 0.15s;
     }
-    .inline-input:focus { outline: none; border-color: #F97316; background: white; }
+    .inline-input:focus { outline: none; border-color: var(--primary-orange); background: white; }
     .inline-input-sm { width: 90px; }
     .inline-input-xs { width: 60px; text-align: center; }
 
@@ -301,17 +301,17 @@ interface EditableExtraItem extends ExtraItem {
       border: none; border-radius: 6px; cursor: pointer; transition: all 0.15s;
       background: transparent;
     }
-    .action-edit { color: #9CA3AF; }
-    .action-edit:hover { color: #F97316; background: #FFF7ED; }
+    .action-edit { color: var(--slate-400); }
+    .action-edit:hover { color: var(--primary-orange); background: #FFF7ED; }
     .action-save { color: #22C55E; }
     .action-save:hover { background: #F0FDF4; }
-    .action-delete { color: #9CA3AF; }
-    .action-delete:hover { color: #EF4444; background: #FEF2F2; }
+    .action-delete { color: var(--slate-400); }
+    .action-delete:hover { color: var(--danger-color); background: #FEF2F2; }
 
     .empty-state {
       padding: 24px; text-align: center;
-      font-size: 14px; color: #9CA3AF;
-      border: 1px dashed #E5E7EB; border-radius: 10px;
+      font-size: 14px; color: var(--slate-400);
+      border: 1px dashed var(--slate-200); border-radius: 10px;
     }
 
     .dialog-actions {
@@ -325,10 +325,10 @@ interface EditableExtraItem extends ExtraItem {
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

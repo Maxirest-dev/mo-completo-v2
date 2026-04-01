@@ -86,18 +86,19 @@ Chart.register(...registerables);
 
     .chart-card,
     .table-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 20px 24px;
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
+      padding: 20px 25px;
     }
 
     .chart-title,
     .table-title {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      color: #374151;
+      color: var(--slate-900, #0F172B);
       margin: 0 0 16px;
     }
 
@@ -119,38 +120,38 @@ Chart.register(...registerables);
     }
 
     .data-table thead tr {
-      background: #F3F4F6;
+      background: var(--slate-50, #F8FAFC);
     }
 
     .data-table th {
       padding: 10px 12px;
       font-weight: 600;
-      color: #6B7280;
+      color: var(--slate-400, #90A1B9);
       text-align: left;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       white-space: nowrap;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
     }
 
     .data-table th:first-child {
-      border-top-left-radius: 8px;
+      border-top-left-radius: var(--radius-sm, 8px);
     }
 
     .data-table th:last-child {
-      border-top-right-radius: 8px;
+      border-top-right-radius: var(--radius-sm, 8px);
     }
 
     .data-table td {
       padding: 10px 12px;
-      color: #374151;
-      border-bottom: 1px solid #F3F4F6;
+      color: var(--slate-700, #314158);
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
       white-space: nowrap;
     }
 
     .data-table tbody tr:hover {
-      background: #FAFAFA;
+      background: var(--slate-50, #F8FAFC);
     }
 
     .text-right {
@@ -164,29 +165,36 @@ Chart.register(...registerables);
     .cell-code {
       font-family: 'Inter', monospace;
       font-size: 12px;
-      color: #6B7280;
+      color: var(--slate-400, #90A1B9);
     }
 
     .adherencia-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 12px;
       font-weight: 500;
-      padding: 2px 10px;
-      border-radius: 12px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm, 8px);
+      border: 1px solid transparent;
     }
 
     .adherencia-alto {
-      background: #D1FAE5;
-      color: #065F46;
+      background: var(--success-bg, #ECFDF5);
+      color: var(--success-color, #00A43D);
+      border-color: var(--success-border, #A4F4CF);
     }
 
     .adherencia-normal {
-      background: #DBEAFE;
-      color: #1E40AF;
+      background: var(--info-bg, #EFF6FF);
+      color: var(--info-text, #1E40AF);
+      border-color: var(--info-border, #BFDBFE);
     }
 
     .adherencia-bajo {
-      background: #FEE2E2;
-      color: #991B1B;
+      background: var(--danger-bg, #FEF2F2);
+      color: var(--danger-text, #DC2626);
+      border-color: var(--danger-border, #FECACA);
     }
   `],
 })
@@ -201,6 +209,7 @@ export class ConceptosComponent {
         position: 'top',
         labels: {
           font: { family: 'Inter', size: 12 },
+          color: '#314158',
           usePointStyle: true,
           pointStyleWidth: 8,
           padding: 16,
@@ -211,12 +220,12 @@ export class ConceptosComponent {
       y: {
         stacked: true,
         beginAtZero: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
-        grid: { color: '#F3F4F6' },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
+        grid: { color: '#F1F5F9' },
       },
       x: {
         stacked: true,
-        ticks: { font: { family: 'Inter', size: 11 } },
+        ticks: { font: { family: 'Inter', size: 11 }, color: '#90A1B9' },
         grid: { display: false },
       },
     },
@@ -224,14 +233,13 @@ export class ConceptosComponent {
 
   readonly conceptosBarData = computed<ChartData<'bar'>>(() => {
     const conceptos = this.conceptos();
-    const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
     return {
       labels: conceptos.map(c => c.forma),
       datasets: [
         {
           label: 'Subtotal',
           data: conceptos.map(c => c.subtotal),
-          backgroundColor: '#3B82F6',
+          backgroundColor: '#F27920',
           borderRadius: 4,
         },
         {
@@ -243,7 +251,7 @@ export class ConceptosComponent {
         {
           label: 'Total',
           data: conceptos.map(c => c.total),
-          backgroundColor: '#10B981',
+          backgroundColor: '#314158',
           borderRadius: 4,
         },
       ],

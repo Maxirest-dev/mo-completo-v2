@@ -42,15 +42,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     }
     .placeholder-card {
       display: flex; flex-direction: column; align-items: center; gap: 16px;
-      background: white; border: 1px solid #E5E7EB; border-radius: 16px;
+      background: white; border: 1px solid var(--slate-200); border-radius: 16px;
       padding: 48px 64px; text-align: center; max-width: 440px;
     }
-    .placeholder-icon { color: #D1D5DB; }
+    .placeholder-icon { color: var(--slate-300); }
     .placeholder-title {
-      font-size: 24px; font-weight: 700; color: #1F2937; margin: 0;
+      font-size: 24px; font-weight: 700; color: var(--text-heading); margin: 0;
     }
     .placeholder-subtitle {
-      font-size: 14px; color: #9CA3AF; margin: 0;
+      font-size: 14px; color: var(--slate-400); margin: 0;
     }
     .placeholder-features {
       display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
@@ -58,15 +58,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     }
     .feature-item {
       display: flex; align-items: center; gap: 10px;
-      font-size: 14px; color: #6B7280;
+      font-size: 14px; color: var(--slate-500);
     }
     .feature-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #F97316; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--primary-orange); flex-shrink: 0;
     }
     .placeholder-badge {
       display: inline-flex; padding: 6px 20px; font-size: 13px; font-weight: 600;
-      color: #F97316; background: #FFF7ED; border: 1px solid #FDBA74;
-      border-radius: 9999px;
+      color: var(--primary-orange); background: #FFF7ED; border: 1px solid #FDBA74;
+      border-radius: var(--radius-md);
     }
   `],
 })

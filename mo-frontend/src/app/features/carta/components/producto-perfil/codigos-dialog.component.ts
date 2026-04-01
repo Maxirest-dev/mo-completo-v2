@@ -123,32 +123,32 @@ import { CodigosFormData } from '../../models/producto-perfil.model';
     }
 
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px 0; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .dialog-form { padding: 24px 28px 28px; }
     .form-group { margin-bottom: 20px; }
-    .form-label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
 
     .form-input {
       width: 100%; padding: 12px 14px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200);
       border-radius: 10px; transition: all 0.15s ease;
     }
-    .form-input:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
-    .form-input::placeholder { color: #9CA3AF; }
-    .form-input-error { border-color: #EF4444; }
-    .form-error { display: block; margin-top: 6px; font-size: 12px; color: #EF4444; }
+    .form-input:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1); }
+    .form-input::placeholder { color: var(--slate-400); }
+    .form-input-error { border-color: var(--danger-color); }
+    .form-error { display: block; margin-top: 6px; font-size: 12px; color: var(--danger-color); }
 
     /* Tags */
     .tags-container {
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 10px;
       padding: 8px 10px;
       transition: all 0.15s ease;
     }
     .tags-container:focus-within {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
     .tags-list {
@@ -164,8 +164,8 @@ import { CodigosFormData } from '../../models/producto-perfil.model';
       padding: 4px 10px;
       font-size: 13px;
       font-weight: 500;
-      color: #374151;
-      background: #F3F4F6;
+      color: var(--text-primary);
+      background: var(--slate-100);
       border-radius: 6px;
     }
     .tag-remove {
@@ -177,22 +177,22 @@ import { CodigosFormData } from '../../models/producto-perfil.model';
       padding: 0;
       border: none;
       background: transparent;
-      color: #9CA3AF;
+      color: var(--slate-400);
       cursor: pointer;
       border-radius: 3px;
       transition: all 0.15s;
     }
-    .tag-remove:hover { color: #EF4444; background: #FEE2E2; }
+    .tag-remove:hover { color: var(--danger-color); background: var(--danger-bg); }
     .tag-input {
       width: 100%;
       border: none;
       outline: none;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       padding: 4px 4px;
     }
-    .tag-input::placeholder { color: #9CA3AF; }
+    .tag-input::placeholder { color: var(--slate-400); }
 
     .dialog-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 12px; }
 
@@ -202,10 +202,10 @@ import { CodigosFormData } from '../../models/producto-perfil.model';
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
     .spinner-sm { width: 14px; height: 14px; }

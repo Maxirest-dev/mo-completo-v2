@@ -24,18 +24,18 @@ import { Component, ChangeDetectionStrategy, input, computed } from '@angular/co
     }
 
     .trend-up {
-      color: #059669;
-      background: #ECFDF5;
+      color: var(--success-color, #00A43D);
+      background: var(--success-bg, #ECFDF5);
     }
 
     .trend-down {
-      color: #DC2626;
-      background: #FEF2F2;
+      color: var(--danger-text, #DC2626);
+      background: var(--danger-bg, #FEF2F2);
     }
 
     .trend-neutral {
-      color: #6B7280;
-      background: #F3F4F6;
+      color: var(--slate-500, #64748B);
+      background: var(--slate-100, #F1F5F9);
     }
 
     .trend-arrow {
@@ -43,7 +43,7 @@ import { Component, ChangeDetectionStrategy, input, computed } from '@angular/co
     }
 
     .trend-periodo {
-      color: #9CA3AF;
+      color: var(--text-secondary, #90A1B9);
       font-weight: 400;
     }
   `],

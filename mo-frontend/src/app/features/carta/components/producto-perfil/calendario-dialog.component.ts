@@ -85,7 +85,7 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
               <span>3 turnos</span>
             </div>
             <div class="legend-item">
-              <span class="legend-swatch" style="background: #F97316;"></span>
+              <span class="legend-swatch" style="background: var(--primary-orange);"></span>
               <span>2 turnos</span>
             </div>
             <div class="legend-item">
@@ -93,7 +93,7 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
               <span>1 turno</span>
             </div>
             <div class="legend-item">
-              <span class="legend-swatch" style="background: #D1D5DB;"></span>
+              <span class="legend-swatch" style="background: var(--slate-300);"></span>
               <span>Inactivo</span>
             </div>
           </div>
@@ -129,32 +129,32 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     .dialog-header-row {
       display: flex; justify-content: space-between; align-items: flex-start;
     }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px 0; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px 0; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
 
     .turnos-counter {
       display: flex; align-items: baseline; gap: 4px;
-      background: #F3F4F6; padding: 8px 16px; border-radius: 10px;
+      background: var(--slate-100); padding: 8px 16px; border-radius: 10px;
       white-space: nowrap; flex-shrink: 0;
     }
-    .counter-value { font-size: 20px; font-weight: 700; color: #1F2937; }
-    .counter-label { font-size: 13px; color: #6B7280; }
+    .counter-value { font-size: 20px; font-weight: 700; color: var(--text-heading); }
+    .counter-label { font-size: 13px; color: var(--slate-500); }
 
     /* Canal tabs */
     .canal-tabs {
       display: flex; gap: 4px; padding: 20px 28px 0;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--slate-200);
     }
     .canal-tab {
       padding: 10px 18px; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: #6B7280; background: transparent; border: none;
+      color: var(--slate-500); background: transparent; border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer; transition: all 0.15s;
       margin-bottom: -1px;
     }
-    .canal-tab:hover { color: #374151; }
+    .canal-tab:hover { color: var(--text-primary); }
     .canal-tab-active {
-      color: #F97316; border-bottom-color: #F97316; font-weight: 600;
+      color: var(--primary-orange); border-bottom-color: var(--primary-orange); font-weight: 600;
     }
 
     /* Quick actions */
@@ -164,12 +164,12 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     }
     .quick-btn {
       padding: 6px 14px; font-size: 12px; font-weight: 500; font-family: inherit;
-      color: #374151; background: #F3F4F6; border: 1px solid #E5E7EB;
+      color: var(--text-primary); background: var(--slate-100); border: 1px solid var(--slate-200);
       border-radius: 8px; cursor: pointer; transition: all 0.15s;
     }
-    .quick-btn:hover { background: #E5E7EB; }
-    .quick-btn-clear { color: #EF4444; border-color: #FECACA; background: #FEF2F2; }
-    .quick-btn-clear:hover { background: #FEE2E2; }
+    .quick-btn:hover { background: var(--slate-200); }
+    .quick-btn-clear { color: var(--danger-color); border-color: #FECACA; background: #FEF2F2; }
+    .quick-btn-clear:hover { background: var(--danger-bg); }
 
     .dialog-body { padding: 0 28px 16px; }
 
@@ -182,8 +182,8 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
 
     .day-card {
       background: #FAFAFA;
-      border: 1px solid #E5E7EB;
-      border-left: 3px solid #D1D5DB;
+      border: 1px solid var(--slate-200);
+      border-left: 3px solid var(--slate-300);
       border-radius: 10px;
       overflow: hidden;
     }
@@ -192,7 +192,7 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
       padding: 10px 12px 6px;
       font-size: 12px;
       font-weight: 700;
-      color: #374151;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -205,29 +205,29 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     .turno-toggle {
       display: flex; align-items: center; gap: 6px;
       padding: 6px 8px; font-size: 12px; font-family: inherit;
-      color: #9CA3AF; background: white; border: 1px solid #E5E7EB;
+      color: var(--slate-400); background: white; border: 1px solid var(--slate-200);
       border-radius: 6px; cursor: pointer; transition: all 0.15s;
       font-weight: 500;
     }
-    .turno-toggle:hover { border-color: #F97316; }
+    .turno-toggle:hover { border-color: var(--primary-orange); }
     .turno-active {
-      color: #374151; background: #FFF7ED; border-color: #FDBA74;
+      color: var(--text-primary); background: #FFF7ED; border-color: #FDBA74;
     }
 
     .turno-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: #D1D5DB; flex-shrink: 0; transition: background 0.15s;
+      background: var(--slate-300); flex-shrink: 0; transition: background 0.15s;
     }
     .turno-dot-active { background: #22C55E; }
 
     /* Legend */
     .legend {
       display: flex; gap: 20px; margin-top: 16px;
-      padding-top: 12px; border-top: 1px solid #F3F4F6;
+      padding-top: 12px; border-top: 1px solid var(--slate-100);
     }
     .legend-item {
       display: flex; align-items: center; gap: 6px;
-      font-size: 12px; color: #6B7280;
+      font-size: 12px; color: var(--slate-500);
     }
     .legend-swatch {
       width: 10px; height: 10px; border-radius: 3px;
@@ -244,10 +244,10 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
       border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s ease;
     }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background-color: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background-color: #374151; }
-    .btn-secondary { background-color: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover:not(:disabled) { background-color: #F9FAFB; }
+    .btn-primary { background-color: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background-color: var(--text-primary); }
+    .btn-secondary { background-color: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover:not(:disabled) { background-color: var(--slate-50); }
 
     @media (max-width: 900px) {
       .days-grid { grid-template-columns: repeat(4, 1fr); }
@@ -332,9 +332,9 @@ export class CalendarioDialogComponent implements OnInit {
     const vd = this.viewData();
     const activeCount = vd[diaIdx]?.turnos.filter(t => t.activo).length ?? 0;
     if (activeCount === 3) return '#22C55E';
-    if (activeCount === 2) return '#F97316';
+    if (activeCount === 2) return 'var(--primary-orange)';
     if (activeCount === 1) return '#EAB308';
-    return '#D1D5DB';
+    return 'var(--slate-300)';
   }
 
   toggleTurno(diaIdx: number, turnoIdx: number): void {

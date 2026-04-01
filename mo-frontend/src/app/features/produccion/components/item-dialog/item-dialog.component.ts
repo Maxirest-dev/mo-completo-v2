@@ -120,20 +120,20 @@ export interface ItemFormData {
     .dialog-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px; }
     .dialog-container { background: white; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
     .dialog-header { padding: 28px 28px 0; }
-    .dialog-title { font-size: 22px; font-weight: 600; color: #1F2937; margin: 0 0 6px; }
-    .dialog-subtitle { font-size: 14px; color: #6B7280; margin: 0; }
+    .dialog-title { font-size: 22px; font-weight: 600; color: var(--text-heading); margin: 0 0 6px; }
+    .dialog-subtitle { font-size: 14px; color: var(--slate-500); margin: 0; }
     .dialog-form { padding: 24px 28px 28px; }
     .form-group { margin-bottom: 16px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px; }
-    .required { color: #EF4444; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .required { color: var(--danger-color); }
     .form-input, .form-select {
       width: 100%; padding: 10px 12px; font-size: 14px; font-family: inherit;
-      color: #374151; background: white; border: 1px solid #E5E7EB; border-radius: 10px; transition: all 0.15s;
+      color: var(--text-primary); background: white; border: 1px solid var(--slate-200); border-radius: 10px; transition: all 0.15s;
     }
-    .form-input:focus, .form-select:focus { outline: none; border-color: #F97316; box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
-    .form-input-error { border-color: #EF4444; }
-    .form-error { display: block; margin-top: 4px; font-size: 12px; color: #EF4444; }
+    .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary-orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
+    .form-input-error { border-color: var(--danger-color); }
+    .form-error { display: block; margin-top: 4px; font-size: 12px; color: var(--danger-color); }
     .form-select { cursor: pointer; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px;
@@ -141,10 +141,10 @@ export interface ItemFormData {
     .dialog-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 8px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; font-size: 14px; font-weight: 500; font-family: inherit; border-radius: 10px; border: none; cursor: pointer; transition: all 0.15s; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-primary { background: #1F2937; color: white; }
-    .btn-primary:hover:not(:disabled) { background: #374151; }
-    .btn-secondary { background: white; color: #374151; border: 1px solid #E5E7EB; }
-    .btn-secondary:hover { background: #F9FAFB; }
+    .btn-primary { background: var(--text-heading); color: white; }
+    .btn-primary:hover:not(:disabled) { background: var(--text-primary); }
+    .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--slate-200); }
+    .btn-secondary:hover { background: var(--slate-50); }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

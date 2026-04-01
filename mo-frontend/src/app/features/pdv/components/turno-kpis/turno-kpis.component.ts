@@ -12,200 +12,222 @@ import { TurnoActual, ViewMode } from '../../models';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="kpi-card">
-      <div class="kpi-header">
-        <div class="kpi-header-left">
-          <span class="badge-success badge-pill">Turno abierto</span>
+    <div class="stat-card">
+      <div class="stat-card-header">
+        <div class="stat-card-header-left">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="header-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+          </svg>
+          <span class="stat-card-title">Turno Actual</span>
+          <span class="badge badge-success">Turno abierto</span>
         </div>
         <div class="kpi-toggle">
           <button
-            class="toggle-btn"
+            class="toggle-pill"
             [class.active]="viewMode() === 'pesos'"
             (click)="viewModeChange.emit('pesos')"
             title="Ver en pesos"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
+            Pesos
           </button>
           <button
-            class="toggle-btn"
+            class="toggle-pill"
             [class.active]="viewMode() === 'cubiertos'"
             (click)="viewModeChange.emit('cubiertos')"
             title="Ver en cubiertos"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
             </svg>
+            Cubiertos
           </button>
         </div>
       </div>
 
-      <div class="kpi-body">
+      <div class="stat-card-body">
         @if (viewMode() === 'pesos') {
-          <div class="kpi-item">
-            <span class="kpi-label">Cobrado</span>
-            <span class="kpi-value">\${{ formatNumber(turno().ventas) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Cobrado</span>
+            <span class="stat-card-value">\${{ formatNumber(turno().ventas) }}</span>
           </div>
-          <div class="kpi-divider"></div>
-          <div class="kpi-item">
-            <span class="kpi-label">A cobrar</span>
-            <span class="kpi-value">\${{ formatNumber(turno().regulaciones) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">A cobrar</span>
+            <span class="stat-card-value">\${{ formatNumber(turno().regulaciones) }}</span>
           </div>
-          <div class="kpi-divider"></div>
-          <div class="kpi-item">
-            <span class="kpi-label">Proyeccion</span>
-            <span class="kpi-value kpi-value-highlight">\${{ formatNumber(turno().promedio) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Proyeccion</span>
+            <span class="stat-card-value stat-card-value--highlight">\${{ formatNumber(turno().promedio) }}</span>
           </div>
         } @else {
-          <div class="kpi-item">
-            <span class="kpi-label">Tickets</span>
-            <span class="kpi-value">#{{ formatNumber(turno().cantTickets) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Tickets</span>
+            <span class="stat-card-value">#{{ formatNumber(turno().cantTickets) }}</span>
           </div>
-          <div class="kpi-divider"></div>
-          <div class="kpi-item">
-            <span class="kpi-label">Regulaciones</span>
-            <span class="kpi-value">#{{ formatNumber(turno().cantRegulaciones) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Regulaciones</span>
+            <span class="stat-card-value">#{{ formatNumber(turno().cantRegulaciones) }}</span>
           </div>
-          <div class="kpi-divider"></div>
-          <div class="kpi-item">
-            <span class="kpi-label">Cubiertos</span>
-            <span class="kpi-value kpi-value-highlight">#{{ formatNumber(turno().cantCubiertos) }}</span>
+          <div class="stat-card-metric">
+            <span class="stat-card-label">Cubiertos</span>
+            <span class="stat-card-value stat-card-value--highlight">#{{ formatNumber(turno().cantCubiertos) }}</span>
           </div>
         }
       </div>
     </div>
   `,
   styles: [`
-    .kpi-card {
-      background: white;
+    .stat-card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
-      border-left: 4px solid var(--success-color);
-      border-radius: 12px;
-      padding: 20px 24px;
+      overflow: hidden;
     }
 
-    .kpi-header {
+    .stat-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      padding: 16px 25px;
+      border-bottom: 1px solid var(--divider-color);
     }
 
-    .badge-pill {
+    .stat-card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--slate-400);
+    }
+
+    .stat-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 14px;
-      font-size: 13px;
+      padding: 5px 12px;
+      font-size: 12px;
       font-weight: 500;
-      border-radius: 9999px;
-      background: var(--success-bg);
-      color: var(--success-text);
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      border: 1px solid transparent;
+      line-height: 1.333;
     }
 
-    .badge-pill::before {
+    .badge-success {
+      background-color: var(--success-bg);
+      color: var(--success-color);
+      border-color: var(--success-border);
+    }
+
+    .badge-success::before {
       content: '';
       width: 6px;
       height: 6px;
-      background: var(--success-color);
+      background-color: var(--success-color);
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
     .kpi-toggle {
       display: flex;
-      background: var(--gray-100);
-      border-radius: 8px;
-      padding: 2px;
+      gap: 6px;
     }
 
-    .toggle-btn {
-      display: flex;
+    .toggle-pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 32px;
-      border: none;
-      border-radius: 6px;
-      background: transparent;
-      color: var(--gray-400);
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-secondary);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
-    .toggle-btn.active {
-      background: white;
-      color: var(--gray-800);
-      box-shadow: var(--shadow-sm);
+    .toggle-pill:hover:not(.active) {
+      border-color: var(--slate-300);
+      color: var(--text-primary);
     }
 
-    .toggle-btn:hover:not(.active) {
-      color: var(--gray-600);
+    .toggle-pill.active {
+      background: var(--slate-900);
+      color: white;
+      border-color: var(--slate-900);
     }
 
-    .kpi-body {
+    .stat-card-body {
       display: flex;
-      align-items: stretch;
       gap: 0;
+      padding: 20px 25px 25px;
     }
 
-    .kpi-item {
+    .stat-card-metric {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding: 0 20px;
+      gap: 8px;
     }
 
-    .kpi-item:first-child {
-      padding-left: 0;
+    .stat-card-metric + .stat-card-metric {
+      padding-left: 25px;
+      border-left: 1px solid var(--divider-color);
     }
 
-    .kpi-item:last-child {
-      padding-right: 0;
-    }
-
-    .kpi-divider {
-      width: 1px;
-      background: var(--border-color);
-      align-self: stretch;
-    }
-
-    .kpi-label {
+    .stat-card-label {
       font-size: 13px;
-      font-weight: 500;
-      color: var(--gray-500);
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+      font-weight: 400;
+      color: var(--text-secondary);
     }
 
-    .kpi-value {
+    .stat-card-value {
       font-size: 28px;
       font-weight: 700;
-      color: var(--gray-900);
+      color: var(--text-heading);
       line-height: 1.1;
     }
 
-    .kpi-value-highlight {
+    .stat-card-value--highlight {
       color: var(--success-color);
     }
 
     @media (max-width: 768px) {
-      .kpi-body {
+      .stat-card-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .stat-card-body {
         flex-direction: column;
         gap: 16px;
       }
 
-      .kpi-divider {
-        width: 100%;
-        height: 1px;
+      .stat-card-metric + .stat-card-metric {
+        padding-left: 0;
+        border-left: none;
+        padding-top: 16px;
+        border-top: 1px solid var(--divider-color);
       }
 
-      .kpi-item {
-        padding: 0;
-      }
-
-      .kpi-value {
+      .stat-card-value {
         font-size: 22px;
       }
     }

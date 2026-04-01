@@ -232,8 +232,8 @@ interface ConfirmDialogConfig {
     .spinner {
       width: 32px;
       height: 32px;
-      border: 3px solid #E5E7EB;
-      border-top-color: #F97316;
+      border: 3px solid var(--slate-200);
+      border-top-color: var(--primary-orange);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -256,7 +256,7 @@ interface ConfirmDialogConfig {
     .empty-icon {
       width: 48px;
       height: 48px;
-      color: #D1D5DB;
+      color: var(--slate-300);
     }
 
     .empty-title {

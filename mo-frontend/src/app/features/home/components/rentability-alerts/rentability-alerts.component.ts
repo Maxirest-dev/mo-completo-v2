@@ -84,16 +84,6 @@ import { DashboardPanelComponent } from '../dashboard-panel';
       display: block;
     }
 
-    /* ── Override panel background for warm theme ── */
-    :host ::ng-deep .rentability-panel {
-      background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 50%, #FFF8E1 100%);
-      border-color: #F5DEB3;
-    }
-
-    :host ::ng-deep .rentability-panel .panel-header {
-      border-bottom-color: rgba(217, 180, 113, 0.25);
-    }
-
     /* ── Alert List ── */
     .rentability-alerts {
       display: flex;
@@ -106,21 +96,21 @@ import { DashboardPanelComponent } from '../dashboard-panel';
       display: flex;
       gap: 12px;
       padding: 12px 0;
-      border-left: 4px solid transparent;
+      border-left: 3px solid transparent;
       padding-left: 12px;
       border-radius: 4px;
     }
 
     .alert-item--critical {
-      border-left-color: #EF4444;
+      border-left-color: var(--danger-color, #EF4444);
     }
 
     .alert-item--warning {
-      border-left-color: #F59E0B;
+      border-left-color: var(--warning-color, #F59E0B);
     }
 
     .alert-item--info {
-      border-left-color: #8B5CF6;
+      border-left-color: var(--primary-orange, #F27920);
     }
 
     /* ── Icon ── */
@@ -141,14 +131,14 @@ import { DashboardPanelComponent } from '../dashboard-panel';
     .alert-title {
       font-size: 15px;
       font-weight: 600;
-      color: #1F2937;
+      color: var(--slate-900, #0F172B);
       margin: 0 0 4px 0;
       line-height: 1.35;
     }
 
     .alert-description {
       font-size: 13px;
-      color: #4B5563;
+      color: var(--slate-600, #45556C);
       margin: 0 0 6px 0;
       line-height: 1.55;
     }
@@ -156,7 +146,7 @@ import { DashboardPanelComponent } from '../dashboard-panel';
     .alert-suggestion {
       font-size: 13px;
       font-style: italic;
-      color: #6B7280;
+      color: var(--slate-500, #64748B);
       margin: 0;
       line-height: 1.55;
     }
@@ -164,14 +154,14 @@ import { DashboardPanelComponent } from '../dashboard-panel';
     .suggestion-prefix {
       font-weight: 600;
       font-style: italic;
-      color: #EA580C;
+      color: var(--primary-orange, #F27920);
     }
 
     /* ── Separator ── */
     .alert-separator {
       border: none;
       height: 1px;
-      background: rgba(217, 180, 113, 0.3);
+      background: var(--divider-color, #F1F5F9);
       margin: 0;
     }
 
@@ -181,17 +171,17 @@ import { DashboardPanelComponent } from '../dashboard-panel';
       flex-direction: column;
       align-items: center;
       padding: 24px 16px;
-      gap: 8px;
+      gap: var(--spacing-sm, 8px);
     }
 
     .empty-icon {
       font-size: 28px;
-      color: #10B981;
+      color: var(--success-color, #00A43D);
     }
 
     .empty-text {
       font-size: 14px;
-      color: #6B7280;
+      color: var(--slate-400, #90A1B9);
       margin: 0;
     }
 
@@ -205,17 +195,17 @@ import { DashboardPanelComponent } from '../dashboard-panel';
       border: none;
       font-size: 13px;
       font-weight: 500;
-      color: #EA580C;
+      color: var(--primary-orange, #F27920);
       cursor: pointer;
       padding: 10px 8px 2px;
-      border-radius: 6px;
+      border-radius: var(--radius-sm, 8px);
       transition: background 0.15s ease, color 0.15s ease;
       width: 100%;
     }
 
     .ver-mas-btn:hover {
-      background: rgba(234, 88, 12, 0.06);
-      color: #C2410C;
+      background: var(--primary-orange-light, #FFF7ED);
+      color: var(--primary-orange-hover, #E06A10);
     }
 
     .ver-mas-chevron {

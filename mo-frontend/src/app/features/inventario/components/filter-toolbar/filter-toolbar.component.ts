@@ -142,29 +142,29 @@ interface TabConfig {
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: #6B7280;
+      color: var(--slate-500);
       background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 9999px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
     }
 
     .filter-tab:hover {
-      border-color: #D1D5DB;
-      background: #F9FAFB;
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
 
     .filter-tab-active {
-      color: #F97316;
-      border-color: #F97316;
+      color: var(--primary-orange);
+      border-color: var(--primary-orange);
       background: #FFF7ED;
     }
 
     .filter-tab-active:hover {
       background: #FFF7ED;
-      border-color: #F97316;
+      border-color: var(--primary-orange);
     }
 
     /* Toolbar Right */
@@ -180,7 +180,7 @@ interface TabConfig {
       display: flex;
       align-items: center;
       background: white;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--slate-200);
       border-radius: 8px;
       padding: 0 12px;
       min-width: 220px;
@@ -188,14 +188,14 @@ interface TabConfig {
     }
 
     .search-box:focus-within {
-      border-color: #F97316;
+      border-color: var(--primary-orange);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
     }
 
     .search-icon {
       width: 18px;
       height: 18px;
-      color: #9CA3AF;
+      color: var(--slate-400);
       flex-shrink: 0;
     }
 
@@ -206,13 +206,13 @@ interface TabConfig {
       padding: 10px 10px;
       font-size: 14px;
       font-family: inherit;
-      color: #374151;
+      color: var(--text-primary);
       background: transparent;
       min-width: 140px;
     }
 
     .search-input::placeholder {
-      color: #9CA3AF;
+      color: var(--slate-400);
     }
 
     .search-clear {
@@ -222,17 +222,17 @@ interface TabConfig {
       width: 20px;
       height: 20px;
       padding: 0;
-      background: #F3F4F6;
+      background: var(--slate-100);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      color: #6B7280;
+      color: var(--slate-500);
       transition: all 0.15s ease;
     }
 
     .search-clear:hover {
-      background: #E5E7EB;
-      color: #374151;
+      background: var(--slate-200);
+      color: var(--text-primary);
     }
 
     .search-clear svg {
@@ -250,7 +250,7 @@ interface TabConfig {
       font-weight: 500;
       font-family: inherit;
       color: white;
-      background: #F97316;
+      background: var(--primary-orange);
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -260,7 +260,7 @@ interface TabConfig {
     }
 
     .btn-nuevo-deposito:hover {
-      background: #EA580C;
+      background: var(--primary-orange-hover);
     }
 
     .btn-nuevo-deposito:active {
@@ -290,7 +290,7 @@ interface TabConfig {
       }
 
       .filter-tabs::-webkit-scrollbar-thumb {
-        background: #D1D5DB;
+        background: var(--slate-300);
         border-radius: 4px;
       }
 

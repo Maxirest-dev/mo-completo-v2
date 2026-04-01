@@ -67,22 +67,22 @@ export class ProveedoresGridComponent {
       width: 140,
       cellRenderer: (params: any) => {
         const colores: Record<string, string> = {
-          'Carnes': '#EF4444',
+          'Carnes': 'var(--danger-color)',
           'Lácteos': '#3B82F6',
           'Verduras': '#22C55E',
           'Bebidas': '#8B5CF6',
-          'Panadería': '#F59E0B',
+          'Panadería': 'var(--warning-color)',
           'Limpieza': '#06B6D4',
           'Pescados': '#0EA5E9',
           'Condimentos': '#EC4899',
           'Aceites': '#EAB308',
-          'Descartables': '#6B7280',
+          'Descartables': 'var(--slate-500)',
           'Harinas': '#A16207',
           'Congelados': '#0891B2',
           'Papelería': '#D946EF',
-          'Distribuidora': '#F97316'
+          'Distribuidora': 'var(--primary-orange)'
         };
-        const color = colores[params.value] || '#6B7280';
+        const color = colores[params.value] || 'var(--slate-500)';
         return `<span style="font-weight:500;color:${color};">${params.value}</span>`;
       }
     },

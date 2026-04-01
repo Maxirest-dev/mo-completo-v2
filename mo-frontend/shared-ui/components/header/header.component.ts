@@ -143,8 +143,8 @@ interface NavItem {
   `,
   styles: [`
     .header {
-      background: var(--surface-dark, #14161B);
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.46);
+      background: #14161B;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -153,19 +153,19 @@ interface NavItem {
     .header-top {
       display: flex;
       align-items: center;
-      padding: 10px 15px;
-      gap: 29px;
-      background: var(--surface-dark, #14161B);
-      height: 78px;
+      padding: 12px 24px;
+      gap: 16px;
+      background: #14161B;
     }
 
     .header-top-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      flex: 1;
     }
 
-    /* Logo — Pencil gradient m icon */
+    /* Logo */
     .logo {
       flex-shrink: 0;
     }
@@ -174,37 +174,25 @@ interface NavItem {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 48px;
-      height: 48px;
-      background: white;
-      border-radius: 12px;
-      color: transparent;
-      font-size: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-icon::after {
-      content: 'm';
-      position: absolute;
-      font-size: 30px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
+      border-radius: 10px;
+      color: white;
+      font-size: 24px;
       font-weight: 700;
       font-family: 'Georgia', serif;
-      background: linear-gradient(180deg, #F7A600 0%, #E74011 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
     }
 
-    /* Home Button — Pencil circle */
+    /* Home Button */
     .home-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #E8E5EF;
+      border: none;
       border-radius: 50%;
       color: white;
       cursor: pointer;
@@ -220,28 +208,28 @@ interface NavItem {
       height: 20px;
     }
 
-    /* Search — Pencil white pill in header */
+    /* Search */
     .search-container {
-      width: 416px;
+      width: 400px;
       display: flex;
       align-items: center;
-      background: white;
-      border: 2px solid #E8E5EF;
-      border-radius: 100px;
-      padding: 0 21px;
-      height: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 0 12px;
       margin: 0 auto;
-      transition: border-color 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .search-container:focus-within {
-      border-color: var(--primary-orange, #F27920);
+      border-color: #F97316;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
     }
 
     .search-icon {
-      width: 16px;
-      height: 16px;
-      color: #90A1B9;
+      width: 18px;
+      height: 18px;
+      color: rgba(255, 255, 255, 0.5);
       flex-shrink: 0;
     }
 
@@ -252,31 +240,31 @@ interface NavItem {
       padding: 10px 12px;
       font-size: 14px;
       font-family: inherit;
-      color: #314158;
+      color: #FFFFFF;
       background: transparent;
     }
 
     .search-input::placeholder {
-      color: #90A1B9;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .voice-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
-      background: white;
-      border: 2px solid #E8E5EF;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 50%;
-      color: #90A1B9;
+      color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .voice-btn:hover {
-      border-color: #CBD5E1;
-      color: #314158;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
     }
 
     .voice-btn svg {
@@ -288,7 +276,9 @@ interface NavItem {
     .header-right {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+      flex: 1;
+      justify-content: flex-end;
     }
 
     .notification-btn,
@@ -297,9 +287,8 @@ interface NavItem {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 34px;
-      height: 34px;
-      padding: 4px;
+      width: 40px;
+      height: 40px;
       background: transparent;
       border: none;
       border-radius: 50%;
@@ -316,17 +305,17 @@ interface NavItem {
 
     .notification-btn svg,
     .help-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
     }
 
     .notification-badge {
       position: absolute;
-      top: 2px;
-      right: 2px;
+      top: 6px;
+      right: 6px;
       min-width: 16px;
       height: 16px;
-      background: #00A43D;
+      background: #10B981;
       color: white;
       font-size: 10px;
       font-weight: 600;
@@ -337,64 +326,54 @@ interface NavItem {
       padding: 0 4px;
     }
 
-    /* User Section — Pencil selector perfil pill */
+    /* User Section */
     .user-section {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0 7px 0 16px;
-      margin-left: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 9999px;
-      height: 44px;
+      padding-left: 16px;
+      margin-left: 8px;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
       position: relative;
       cursor: pointer;
-      transition: background 0.15s;
     }
 
-    .user-section:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    /* User Dropdown — Pencil profile menu */
+    /* User Dropdown */
     .user-dropdown {
       position: absolute;
       top: calc(100% + 12px);
       right: 0;
-      width: 300px;
+      width: 280px;
       background: white;
-      border-radius: 16px;
+      border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.2);
       z-index: 1000;
       overflow: hidden;
-      padding: 8px 0;
     }
     .dropdown-header {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 20px;
+      padding: 16px;
     }
     .dropdown-avatar {
-      width: 48px; height: 48px; border-radius: 50%;
-      background: linear-gradient(180deg, #F7A600, #E74011);
-      color: white; display: flex;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #F97316; color: white; display: flex;
       align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 600; flex-shrink: 0;
+      font-size: 14px; font-weight: 600; flex-shrink: 0;
     }
-    .dropdown-user-info { display: flex; flex-direction: column; gap: 2px; }
-    .dropdown-user-name { font-size: 15px; font-weight: 600; color: #0F172B; }
-    .dropdown-user-detail { font-size: 12px; color: #90A1B9; }
-    .dropdown-divider { height: 1px; background: #F1F5F9; margin: 4px 0; }
+    .dropdown-user-info { display: flex; flex-direction: column; }
+    .dropdown-user-name { font-size: 14px; font-weight: 600; color: #1F2937; }
+    .dropdown-user-detail { font-size: 12px; color: #9CA3AF; }
+    .dropdown-divider { height: 1px; background: #F3F4F6; }
     .dropdown-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 20px; font-size: 14px; color: #314158;
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; font-size: 14px; color: #374151;
       text-decoration: none; cursor: pointer; transition: background 0.15s;
       border: none; background: none; width: 100%; font-family: inherit;
-      border-radius: 0;
     }
-    .dropdown-item:hover { background: #F8FAFC; }
-    .dropdown-item svg { color: #90A1B9; flex-shrink: 0; }
+    .dropdown-item:hover { background: #F9FAFB; }
+    .dropdown-item svg { color: #9CA3AF; flex-shrink: 0; }
     .dropdown-item-danger { color: #DC2626; }
     .dropdown-item-danger svg { color: #DC2626; }
 
@@ -406,7 +385,7 @@ interface NavItem {
     }
 
     .user-code {
-      font-size: 11px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.5);
     }
 
@@ -417,37 +396,32 @@ interface NavItem {
     }
 
     .user-avatar {
-      width: 32px;
-      height: 32px;
-      background: white;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
-      color: #314158;
-      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.7);
     }
 
-    /* Navigation — Pencil dark nav bar */
+    /* Navigation - Gray background like reference */
     .header-nav {
       display: flex;
       align-items: center;
-      padding: 0 16px 0 8px;
-      background: var(--surface-dark-nav, #383E47);
-      height: 60px;
-      clip-path: inset(0);
+      padding: 0 24px;
+      background: #383E47;
     }
     .nav-center {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex: 1;
-      gap: 0;
     }
     .nav-spacer {
-      width: 0;
+      flex: 1;
     }
     .nav-spacer-right {
       display: flex;
@@ -456,12 +430,12 @@ interface NavItem {
 
     .nav-item {
       position: relative;
-      padding: 18px 20px;
+      padding: 14px 20px;
       font-size: 14px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
-      transition: color 0.15s ease, background 0.15s ease;
+      transition: color 0.15s ease;
     }
 
     .nav-item:hover {
@@ -470,7 +444,7 @@ interface NavItem {
 
     .nav-item-active {
       color: white;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .nav-item-active::after {
@@ -479,28 +453,26 @@ interface NavItem {
       bottom: 0;
       left: 0;
       right: 0;
-      height: 2px;
-      background: #F27920;
+      height: 3px;
+      background: white;
     }
 
     .download-btn {
+      margin-left: auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 35px;
-      height: 35px;
+      width: 36px;
+      height: 36px;
       background: transparent;
       border: none;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.7);
       cursor: pointer;
-      border-radius: 50%;
-      transition: all 0.15s ease;
-      padding: 4px;
+      transition: color 0.15s ease;
     }
 
     .download-btn:hover {
       color: white;
-      background: rgba(255, 255, 255, 0.1);
     }
 
     .download-btn svg {
@@ -515,15 +487,14 @@ interface NavItem {
       }
 
       .nav-item {
-        padding: 18px 14px;
+        padding: 14px 14px;
         font-size: 13px;
       }
     }
 
     @media (max-width: 768px) {
       .header-top {
-        padding: 10px 16px;
-        gap: 12px;
+        padding: 12px 16px;
       }
 
       .search-container {
@@ -536,7 +507,7 @@ interface NavItem {
       }
 
       .nav-item {
-        padding: 16px 12px;
+        padding: 12px 12px;
         white-space: nowrap;
       }
     }

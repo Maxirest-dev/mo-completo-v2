@@ -48,3 +48,4 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 **Archivos modificados:**
   - `.ts`: header.component.ts
+  - `.scss`: _forms.scss, _tabs.scss, _variables.scss

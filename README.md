@@ -41,11 +41,10 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 ## 📝 Últimos cambios
 
-### 2026-04-01
+### 2026-04-02
 
 **Commits incluidos:**
-- (sin commits pendientes)
+- 8214e89 feat: agregar logo PNG de la empresa para uso en componentes
 
 **Archivos modificados:**
-  - `.ts`: header.component.ts
-  - `.scss`: _forms.scss, _tabs.scss, _variables.scss
+  - `.png`: logo.png

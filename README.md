@@ -44,7 +44,7 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 ### 2026-04-02
 
 **Commits incluidos:**
-- 8214e89 feat: agregar logo PNG de la empresa para uso en componentes
+- (sin commits pendientes)
 
 **Archivos modificados:**
-  - `.png`: logo.png
+  - `.md`: README.md

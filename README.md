@@ -41,10 +41,10 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 ## 📝 Últimos cambios
 
-### 2026-04-02
+### 2026-04-06
 
 **Commits incluidos:**
-- (sin commits pendientes)
+- 42c210e feat: add AI assistant CTA and resizable chat panel
 
 **Archivos modificados:**
-  - `.md`: README.md
+  - `.ts`: ai-panel.component.ts, header.component.ts, layout.component.ts, public-api.ts, ai-panel.service.ts

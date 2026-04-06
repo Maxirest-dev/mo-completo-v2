@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AiPanelService } from '../../services/ai-panel.service';
 
 interface NavItem {
   label: string;
@@ -15,14 +16,14 @@ interface NavItem {
   template: `
     <header class="header">
       <div class="header-top">
-        <!-- Left: Logo + Home -->
+        <!-- Left: Logo -->
         <div class="header-top-left">
           <div class="logo" routerLink="/home" title="Maxirest">
             <img src="/logo.png" alt="Maxirest" class="logo-img" />
           </div>
         </div>
 
-        <!-- Home button + Search Bar -->
+        <!-- Center: Home + Search -->
         <div class="search-group">
           <button class="home-btn" title="Inicio" routerLink="/home">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -30,39 +31,28 @@ interface NavItem {
             </svg>
           </button>
           <div class="search-container">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-          </svg>
-          <input
-            type="text"
-            placeholder="Buscar..."
-            class="search-input"
-            [value]="searchQuery()"
-            (input)="onSearchInput($event)"
-          />
-          <button class="voice-btn" title="Busqueda por voz">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
-          </button>
-        </div>
+            <input
+              type="text"
+              placeholder="Buscar..."
+              class="search-input"
+              [value]="searchQuery()"
+              (input)="onSearchInput($event)"
+            />
+          </div>
         </div>
 
-        <!-- Right Section -->
+        <!-- Right: AI CTA + User -->
         <div class="header-right">
-          <!-- Notifications -->
-          <button class="notification-btn" title="Notificaciones">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-            </svg>
-            <span class="notification-badge">2</span>
-          </button>
-
-          <!-- Help -->
-          <button class="help-btn" title="Ayuda">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
-            </svg>
+          <!-- AI Assistant CTA -->
+          <button class="ai-cta" (click)="aiPanel.toggle()" title="Asistente IA (⌘K)">
+            <div class="ai-cta-shimmer"></div>
+            <div class="ai-cta-inner">
+              <span class="ai-cta-emoji">🧠</span>
+              <span class="ai-cta-text">Habla con Maxi</span>
+            </div>
           </button>
 
           <!-- User Info -->
@@ -167,7 +157,6 @@ interface NavItem {
       flex: 1;
     }
 
-    /* Logo SVG */
     .logo {
       flex-shrink: 0;
       cursor: pointer;
@@ -181,7 +170,7 @@ interface NavItem {
       object-fit: contain;
     }
 
-    /* Search group: home btn + search bar together */
+    /* Search group */
     .search-group {
       display: flex;
       align-items: center;
@@ -189,7 +178,6 @@ interface NavItem {
       margin: 0 auto;
     }
 
-    /* Home Button */
     .home-btn {
       display: flex;
       align-items: center;
@@ -213,7 +201,6 @@ interface NavItem {
       height: 20px;
     }
 
-    /* Search */
     .search-container {
       width: 400px;
       display: flex;
@@ -252,82 +239,93 @@ interface NavItem {
       color: rgba(255, 255, 255, 0.4);
     }
 
-    .voice-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
-      color: rgba(255, 255, 255, 0.6);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .voice-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-
-    .voice-btn svg {
-      width: 18px;
-      height: 18px;
-    }
-
     /* Right Section */
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       flex: 1;
       justify-content: flex-end;
     }
 
-    .notification-btn,
-    .help-btn {
+    /* === AI CTA — subtle, header-native === */
+    .ai-cta {
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: transparent;
       border: none;
-      border-radius: 50%;
-      color: rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      padding: 0;
       cursor: pointer;
-      transition: all 0.15s ease;
+      background: transparent;
+      overflow: hidden;
     }
 
-    .notification-btn:hover,
-    .help-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-
-    .notification-btn svg,
-    .help-btn svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .notification-badge {
+    .ai-cta-shimmer {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      min-width: 16px;
-      height: 16px;
-      background: var(--accent-orange, #F18800);
-      color: white;
-      font-size: 10px;
-      font-weight: 600;
-      border-radius: 8px;
+      inset: 0;
+      border-radius: 10px;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.08) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 60%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      background-size: 250% 100%;
+      animation: shimmer 6s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .ai-cta-inner {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0 4px;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #1155CC, #01033E, #1155CC);
+      background-size: 200% 100%;
+      animation: ctaGradientShift 8s ease infinite;
+      transition: all 0.2s ease;
+    }
+
+    .ai-cta:hover .ai-cta-inner {
+      background: linear-gradient(135deg, #1a6be6, #0a0d52);
+      box-shadow: 0 2px 12px rgba(17, 85, 204, 0.3);
+    }
+
+    .ai-cta-emoji {
+      font-size: 15px;
+      line-height: 1;
+      flex-shrink: 0;
+      animation: gentlePulse 4s ease-in-out infinite;
+    }
+
+    .ai-cta-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #FFFFFF;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    @keyframes ctaGradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 250% 0; }
+      50% { background-position: -50% 0; }
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
     }
 
     /* User Section */
@@ -336,13 +334,12 @@ interface NavItem {
       align-items: center;
       gap: 12px;
       padding-left: 16px;
-      margin-left: 8px;
+      margin-left: 4px;
       border-left: 1px solid rgba(255, 255, 255, 0.15);
       position: relative;
       cursor: pointer;
     }
 
-    /* User Dropdown */
     .user-dropdown {
       position: absolute;
       top: calc(100% + 12px);
@@ -413,7 +410,7 @@ interface NavItem {
       color: rgba(255, 255, 255, 0.7);
     }
 
-    /* Navigation - Gray background like reference */
+    /* Navigation */
     .header-nav {
       display: flex;
       align-items: center;
@@ -489,10 +486,12 @@ interface NavItem {
       .user-info {
         display: none;
       }
-
       .nav-item {
         padding: 14px 14px;
         font-size: 13px;
+      }
+      .ai-cta-text {
+        display: none;
       }
     }
 
@@ -500,16 +499,13 @@ interface NavItem {
       .header-top {
         padding: 12px 16px;
       }
-
       .search-container {
         max-width: 280px;
       }
-
       .header-nav {
         padding: 0 16px;
         overflow-x: auto;
       }
-
       .nav-item {
         padding: 12px 12px;
         white-space: nowrap;
@@ -519,8 +515,9 @@ interface NavItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  searchQuery = signal('');
+  readonly aiPanel = inject(AiPanelService);
 
+  searchQuery = signal('');
   showUserMenu = signal(false);
 
   navItems = signal<NavItem[]>([
@@ -531,6 +528,14 @@ export class HeaderComponent {
     { label: 'Produccion', route: '/produccion', active: false },
     { label: 'Ventas', route: '/ventas', active: false },
   ]);
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(e: KeyboardEvent): void {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      this.aiPanel.toggle();
+    }
+  }
 
   onSearchInput(event: Event): void {
     const input = event.target as HTMLInputElement;

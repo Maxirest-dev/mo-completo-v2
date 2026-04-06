@@ -6,8 +6,11 @@ export { TrendIndicatorComponent } from './components/trend-indicator/trend-indi
 export { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 export { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
+export { AiPanelComponent } from './components/ai-panel/ai-panel.component';
+
 // Services
 export { NotificationService } from './services/notification.service';
+export { AiPanelService } from './services/ai-panel.service';
 export type { Notification } from './services/notification.service';
 
 // Pipes

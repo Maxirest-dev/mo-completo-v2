@@ -2,17 +2,19 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
+import { AiPanelComponent } from '../ai-panel/ai-panel.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, AiPanelComponent],
   template: `
     <div class="layout">
       <app-header />
       <main class="main-content">
         <router-outlet />
       </main>
+      <app-ai-panel />
     </div>
   `,
   styles: [`

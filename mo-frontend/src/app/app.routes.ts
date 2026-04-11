@@ -157,6 +157,15 @@ export const routes: Routes = [
           ),
       },
 
+      // Tesorería
+      {
+        path: 'tesoreria',
+        loadComponent: () =>
+          import('./features/tesoreria/tesoreria.component').then(
+            (m) => m.TesoreriaComponent
+          ),
+      },
+
       // Mi Cuenta
       {
         path: 'mi-cuenta',

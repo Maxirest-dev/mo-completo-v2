@@ -12,26 +12,23 @@ import { Alerta } from '../../models';
       <div class="alertas-container" role="alert">
         @for (alerta of visibleAlertas(); track alerta.titulo) {
           <div class="alerta" [class]="'alerta alerta-' + alerta.severidad">
-            <div class="alerta-icon">
+            <span class="alerta-icon" aria-hidden="true">
               @switch (alerta.tipo) {
                 @case ('food-cost') { 📊 }
                 @case ('factura-vencida') { ⚠️ }
                 @case ('merma') { 📉 }
                 @case ('liquidez') { 💰 }
               }
-            </div>
+            </span>
             <div class="alerta-content">
-              <span class="alerta-titulo">{{ alerta.titulo }}</span>
-              <span class="alerta-desc">{{ alerta.descripcion }}</span>
-            </div>
-            @if (alerta.valor) {
-              <div class="alerta-values">
-                <span class="alerta-valor">{{ alerta.valor }}</span>
-                @if (alerta.umbral) {
-                  <span class="alerta-umbral">Umbral: {{ alerta.umbral }}</span>
+              <div class="alerta-top">
+                <span class="alerta-titulo">{{ alerta.titulo }}</span>
+                @if (alerta.valor) {
+                  <span class="alerta-valor">{{ alerta.valor }}</span>
                 }
               </div>
-            }
+              <span class="alerta-desc">{{ alerta.descripcion }}</span>
+            </div>
             <button
               class="alerta-dismiss"
               (click)="dismiss(alerta)"
@@ -45,17 +42,17 @@ import { Alerta } from '../../models';
   `,
   styles: [`
     .alertas-container {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
       margin-bottom: 16px;
     }
 
     .alerta {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
+      gap: 10px;
+      padding: 10px 14px;
       border-radius: 10px;
       border: 1px solid;
       animation: slideIn 0.3s ease;
@@ -66,31 +63,25 @@ import { Alerta } from '../../models';
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .alerta-critica {
-      background: #FEF2F2;
-      border-color: #FECACA;
-    }
+    .alerta-critica { background: #FEF2F2; border-color: #FECACA; }
+    .alerta-alta { background: #FFF7ED; border-color: #FED7AA; }
+    .alerta-media { background: #FEF3C7; border-color: #FDE68A; }
 
-    .alerta-alta {
-      background: #FFF7ED;
-      border-color: #FED7AA;
-    }
-
-    .alerta-media {
-      background: #FEF3C7;
-      border-color: #FDE68A;
-    }
-
-    .alerta-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-    }
+    .alerta-icon { font-size: 18px; flex-shrink: 0; align-self: flex-start; padding-top: 2px; }
 
     .alerta-content {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
       flex: 1;
+      min-width: 0;
+    }
+
+    .alerta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
     }
 
     .alerta-titulo {
@@ -102,34 +93,23 @@ import { Alerta } from '../../models';
     .alerta-desc {
       font-size: 12px;
       color: var(--slate-600, #4B5563);
-    }
-
-    .alerta-values {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-      flex-shrink: 0;
+      line-height: 1.4;
     }
 
     .alerta-valor {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 700;
       color: #EF4444;
-    }
-
-    .alerta-umbral {
-      font-size: 10px;
-      color: var(--slate-500, #6B7280);
+      flex-shrink: 0;
     }
 
     .alerta-dismiss {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--slate-400, #9CA3AF);
       background: none;
       border: none;
       cursor: pointer;
-      padding: 4px;
+      padding: 2px 4px;
       line-height: 1;
       border-radius: 4px;
       transition: all 0.15s;
@@ -139,6 +119,10 @@ import { Alerta } from '../../models';
     .alerta-dismiss:hover {
       color: var(--slate-700, #374151);
       background: rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .alertas-container { grid-template-columns: 1fr; }
     }
   `],
 })

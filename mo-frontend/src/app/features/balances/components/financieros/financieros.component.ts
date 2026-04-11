@@ -131,7 +131,9 @@ import { createBarOptions } from '../../config/chart.config';
 
     .kpi-values {
       display: flex;
+      align-items: flex-end;
       gap: 16px;
+      margin-top: 4px;
     }
 
     .kpi-col {
@@ -156,8 +158,9 @@ import { createBarOptions } from '../../config/chart.config';
     }
 
     .kpi-total {
-      font-size: 20px;
+      font-size: 26px;
       font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     /* Proveedores */

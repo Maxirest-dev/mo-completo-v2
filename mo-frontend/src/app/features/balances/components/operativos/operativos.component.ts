@@ -21,14 +21,18 @@ import { createBarOptions } from '../../config/chart.config';
   styles: [`
     :host { display: block; }
 
-    /* Balance de Inventario */
-    .inventario-card {
+    /* Mid row: Inventario + Food Cost */
+    .mid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
       margin-bottom: 16px;
     }
 
     .inventario-formula {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       flex-wrap: wrap;
       padding: 12px 0;
@@ -65,6 +69,7 @@ import { createBarOptions } from '../../config/chart.config';
     .inventario-comparison {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 16px;
       flex-wrap: wrap;
       padding: 12px 16px;
@@ -109,10 +114,11 @@ import { createBarOptions } from '../../config/chart.config';
 
     .valorizacion-row {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       gap: 8px;
       padding-top: 8px;
+      margin-top: auto;
       border-top: 1px solid #F3F4F6;
     }
 
@@ -181,6 +187,99 @@ import { createBarOptions } from '../../config/chart.config';
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    /* Top Mermas - estilo Ventas */
+    .table-card {
+      background: var(--bg-primary, white);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      box-shadow: 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1);
+      padding: 20px 25px;
+    }
+
+    .table-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .table-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--slate-900, #0F172B);
+      margin: 0;
+    }
+
+    .table-wrapper { overflow-x: auto; }
+
+    .mermas-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .mermas-table thead tr {
+      background: var(--slate-50, #F8FAFC);
+    }
+
+    .mermas-table th {
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--slate-400, #90A1B9);
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
+    }
+
+    .mermas-table th:first-child { border-top-left-radius: 8px; }
+    .mermas-table th:last-child { border-top-right-radius: 8px; }
+
+    .mermas-table td {
+      padding: 10px 12px;
+      color: var(--slate-700, #314158);
+      border-bottom: 1px solid var(--slate-200, #E2E8F0);
+      white-space: nowrap;
+    }
+
+    .mermas-table tbody tr:hover {
+      background: var(--slate-50, #F8FAFC);
+    }
+
+    .text-right { text-align: right; }
+    .font-bold { font-weight: 600; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+
+    .status-alert {
+      background: #FEF2F2;
+      color: #EF4444;
+      border-color: #FECACA;
+    }
+
+    .status-ok {
+      background: #ECFDF5;
+      color: #00A43D;
+      border-color: #A4F4CF;
+    }
+
+    @media (max-width: 1024px) {
+      .mid-row { grid-template-columns: 1fr; }
+    }
   `],
   template: `
     <!-- KPI Row -->
@@ -214,65 +313,64 @@ import { createBarOptions } from '../../config/chart.config';
       }
     </section>
 
-    <!-- Balance de Inventario -->
-    <section class="card inventario-card" aria-label="Balance de inventario">
-      <h3 class="card-title">Balance de Inventario</h3>
+    <!-- Balance de Inventario + Food Cost Comparativo -->
+    <div class="mid-row">
+      <section class="card" aria-label="Balance de inventario">
+        <h3 class="card-title">Balance de Inventario</h3>
 
-      <!-- Formula: Stock Inicial + Compras - Ventas = Stock Teorico -->
-      <div class="inventario-formula" role="math" aria-label="Stock Inicial mas Compras menos Ventas igual Stock Teorico">
-        <div class="formula-item">
-          <span class="formula-label">Stock Inicial</span>
-          <span class="formula-value">{{ balanceInventario().stockInicial | mroCurrency }}</span>
+        <!-- Formula: Stock Inicial + Compras - Ventas = Stock Teorico -->
+        <div class="inventario-formula" role="math" aria-label="Stock Inicial mas Compras menos Ventas igual Stock Teorico">
+          <div class="formula-item">
+            <span class="formula-label">Stock Inicial</span>
+            <span class="formula-value">{{ balanceInventario().stockInicial | mroCurrency }}</span>
+          </div>
+          <span class="formula-operator" aria-hidden="true">+</span>
+          <div class="formula-item">
+            <span class="formula-label">Compras</span>
+            <span class="formula-value">{{ balanceInventario().compras | mroCurrency }}</span>
+          </div>
+          <span class="formula-operator" aria-hidden="true">&minus;</span>
+          <div class="formula-item">
+            <span class="formula-label">Ventas</span>
+            <span class="formula-value">{{ balanceInventario().ventas | mroCurrency }}</span>
+          </div>
+          <span class="formula-operator" aria-hidden="true">=</span>
+          <div class="formula-item">
+            <span class="formula-label">Stock Teórico</span>
+            <span class="formula-value">{{ balanceInventario().stockTeorico | mroCurrency }}</span>
+          </div>
         </div>
-        <span class="formula-operator" aria-hidden="true">+</span>
-        <div class="formula-item">
-          <span class="formula-label">Compras</span>
-          <span class="formula-value">{{ balanceInventario().compras | mroCurrency }}</span>
-        </div>
-        <span class="formula-operator" aria-hidden="true">&minus;</span>
-        <div class="formula-item">
-          <span class="formula-label">Ventas</span>
-          <span class="formula-value">{{ balanceInventario().ventas | mroCurrency }}</span>
-        </div>
-        <span class="formula-operator" aria-hidden="true">=</span>
-        <div class="formula-item">
-          <span class="formula-label">Stock Teorico</span>
-          <span class="formula-value">{{ balanceInventario().stockTeorico | mroCurrency }}</span>
-        </div>
-      </div>
 
-      <!-- Comparison: Stock Teorico vs Stock Real = Diferencia -->
-      <div class="inventario-comparison" aria-label="Comparacion stock teorico contra stock real">
-        <div class="comparison-block">
-          <span class="comparison-label">Stock Teorico</span>
-          <span class="comparison-value">{{ balanceInventario().stockTeorico | mroCurrency }}</span>
+        <!-- Comparison: Stock Teorico vs Stock Real = Diferencia -->
+        <div class="inventario-comparison" aria-label="Comparacion stock teorico contra stock real">
+          <div class="comparison-block">
+            <span class="comparison-label">Stock Teórico</span>
+            <span class="comparison-value">{{ balanceInventario().stockTeorico | mroCurrency }}</span>
+          </div>
+          <span class="comparison-operator" aria-hidden="true">vs</span>
+          <div class="comparison-block">
+            <span class="comparison-label">Stock Real</span>
+            <span class="comparison-value">{{ balanceInventario().stockReal | mroCurrency }}</span>
+          </div>
+          <span class="comparison-operator" aria-hidden="true">=</span>
+          <div class="comparison-block">
+            <span class="comparison-label">Diferencia</span>
+            <span
+              class="comparison-value"
+              [class.diferencia-positive]="balanceInventario().diferencia >= 0"
+              [class.diferencia-negative]="balanceInventario().diferencia < 0">
+              {{ balanceInventario().diferencia | mroCurrency }}
+            </span>
+          </div>
         </div>
-        <span class="comparison-operator" aria-hidden="true">vs</span>
-        <div class="comparison-block">
-          <span class="comparison-label">Stock Real</span>
-          <span class="comparison-value">{{ balanceInventario().stockReal | mroCurrency }}</span>
-        </div>
-        <span class="comparison-operator" aria-hidden="true">=</span>
-        <div class="comparison-block">
-          <span class="comparison-label">Diferencia</span>
-          <span
-            class="comparison-value"
-            [class.diferencia-positive]="balanceInventario().diferencia >= 0"
-            [class.diferencia-negative]="balanceInventario().diferencia < 0">
-            {{ balanceInventario().diferencia | mroCurrency }}
-          </span>
-        </div>
-      </div>
 
-      <!-- Valorizacion -->
-      <div class="valorizacion-row">
-        <span class="valorizacion-label">Valorización total</span>
-        <span class="valorizacion-value">{{ balanceInventario().valorizacion | mroCurrency }}</span>
-      </div>
-    </section>
+        <!-- Valorizacion -->
+        <div class="valorizacion-row">
+          <span class="valorizacion-label">Valorización total</span>
+          <span class="valorizacion-value">{{ balanceInventario().valorizacion | mroCurrency }}</span>
+        </div>
+      </section>
 
-    <!-- Bottom Row -->
-    <div class="bottom-row">
       <!-- Food Cost Comparativo -->
       <section class="card" aria-label="Food cost comparativo">
         <h3 class="card-title">Food Cost Comparativo</h3>
@@ -284,50 +382,55 @@ import { createBarOptions } from '../../config/chart.config';
           </canvas>
         </div>
       </section>
+    </div>
 
+    <!-- Bottom Row -->
+    <div class="bottom-row-2">
       <!-- Top Mermas -->
-      <section class="card" aria-label="Top mermas">
-        <div class="card-header-row">
-          <h3 class="card-title">Top Mermas</h3>
+      <section class="table-card" aria-label="Top mermas">
+        <div class="table-header-row">
+          <h3 class="table-title">Top Mermas</h3>
           <span class="card-badge">{{ mermas().length }} items</span>
         </div>
-        <table class="data-table" aria-label="Tabla de mermas principales">
-          <thead>
-            <tr>
-              <th scope="col">Producto</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col" class="th-right">Costo</th>
-              <th scope="col">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (m of mermas(); track m.producto) {
+        <div class="table-wrapper">
+          <table class="mermas-table" aria-label="Tabla de mermas principales">
+            <thead>
               <tr>
-                <td class="td-bold">{{ m.producto }}</td>
-                <td>{{ m.cantidad }}</td>
-                <td class="td-right">{{ m.costo }}</td>
-                <td>
-                  <span
-                    class="badge"
-                    [class.badge-alert]="m.estado === 'Alerta'"
-                    [class.badge-ok]="m.estado === 'Aceptable'"
-                    role="status">
-                    {{ m.estado }}
-                  </span>
-                </td>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col" class="text-right">Costo</th>
+                <th scope="col">Estado</th>
               </tr>
-            } @empty {
-              <tr>
-                <td colspan="4">
-                  <div class="empty-state" role="status">
-                    <span class="empty-state-icon" aria-hidden="true">📦</span>
-                    <span>No se registraron mermas en este periodo</span>
-                  </div>
-                </td>
-              </tr>
+            </thead>
+            <tbody>
+              @for (m of mermas(); track m.producto) {
+                <tr>
+                  <td class="font-bold">{{ m.producto }}</td>
+                  <td>{{ m.cantidad }}</td>
+                  <td class="text-right">{{ m.costo }}</td>
+                  <td>
+                    <span
+                      class="status-badge"
+                      [class.status-alert]="m.estado === 'Alerta'"
+                      [class.status-ok]="m.estado === 'Aceptable'"
+                      role="status">
+                      {{ m.estado }}
+                    </span>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="4">
+                    <div class="empty-state" role="status">
+                      <span class="empty-state-icon" aria-hidden="true">📦</span>
+                      <span>No se registraron mermas en este periodo</span>
+                    </div>
+                  </td>
+                </tr>
             }
           </tbody>
-        </table>
+          </table>
+        </div>
       </section>
 
       <!-- Ingenieria de Menu (Matriz BCG) -->

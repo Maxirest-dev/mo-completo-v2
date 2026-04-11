@@ -74,6 +74,7 @@ import {
         (filtroChange)="onFiltroChange($event)"
         (onDescargar)="onDescargar($event)"
         (onImprimir)="onImprimir()"
+        (onEnviar)="onEnviar()"
       />
 
       <!-- Alertas -->
@@ -305,6 +306,10 @@ export class BalancesComponent implements OnInit {
 
   onImprimir(): void {
     window.print();
+  }
+
+  onEnviar(): void {
+    this.notifications.show('Funcionalidad de envío por mail en desarrollo', 'info');
   }
 
   onExportarTabla(event: { tabla: string; formato: 'xlsx' | 'pdf' }): void {

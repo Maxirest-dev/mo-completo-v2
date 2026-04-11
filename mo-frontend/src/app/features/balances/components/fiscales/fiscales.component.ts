@@ -15,7 +15,6 @@ import { MroCurrencyPipe } from '../../pipes/currency.pipe';
       @for (kpi of kpis(); track kpi.label) {
         <div class="kpi-card">
           <div class="kpi-header">
-            <span class="kpi-icon" [style.background]="kpi.bgColor" aria-hidden="true">{{ kpi.icon }}</span>
             <span class="kpi-label">{{ kpi.label }}</span>
           </div>
           <span class="kpi-value" [style.color]="kpi.color">{{ kpi.value | mroCurrency }}</span>
@@ -218,15 +217,6 @@ import { MroCurrencyPipe } from '../../pipes/currency.pipe';
   styles: [`
     :host { display: block; }
 
-    .kpi-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
 
     .table-wrapper {
       overflow-x: auto;

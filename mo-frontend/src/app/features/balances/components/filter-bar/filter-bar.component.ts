@@ -16,77 +16,79 @@ interface PresetOption {
   template: `
     <div class="filter-bar">
       <div class="filter-left">
-        <!-- Periodo presets -->
-        <div class="preset-group" role="group" aria-label="Seleccionar período">
-          @for (p of presets; track p.key) {
-            <button
-              class="preset-btn"
-              [class.preset-active]="filtro().periodo === p.key"
-              (click)="onPresetChange(p.key)"
-              type="button"
-            >{{ p.label }}</button>
-          }
+        <!-- Date range -->
+        <div class="filter-group">
+          <label class="filter-label">Periodo</label>
+          <div class="date-range">
+            <input
+              type="date"
+              class="date-input"
+              [ngModel]="filtro().fechaDesde"
+              (ngModelChange)="emitChange({ fechaDesde: $event, periodo: 'personalizado' })"
+              aria-label="Fecha desde"
+            />
+            <span class="date-separator">—</span>
+            <input
+              type="date"
+              class="date-input"
+              [ngModel]="filtro().fechaHasta"
+              (ngModelChange)="emitChange({ fechaHasta: $event, periodo: 'personalizado' })"
+              aria-label="Fecha hasta"
+            />
+          </div>
         </div>
 
-        <!-- Date pickers (visible cuando es personalizado o siempre para ajustar) -->
-        <div class="filter-input">
-          <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <input
-            type="date"
-            [ngModel]="filtro().fechaDesde"
-            (ngModelChange)="emitChange({ fechaDesde: $event, periodo: 'personalizado' })"
-            aria-label="Fecha desde"
-          />
-        </div>
-        <div class="filter-input">
-          <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <input
-            type="date"
-            [ngModel]="filtro().fechaHasta"
-            (ngModelChange)="emitChange({ fechaHasta: $event, periodo: 'personalizado' })"
-            aria-label="Fecha hasta"
-          />
+        <!-- Periodo preset -->
+        <div class="filter-group">
+          <label class="filter-label">Rango</label>
+          <select
+            class="filter-input"
+            [ngModel]="filtro().periodo"
+            (ngModelChange)="onPresetChange($event)"
+            aria-label="Seleccionar rango de período"
+          >
+            @for (p of presets; track p.key) {
+              <option [value]="p.key">{{ p.label }}</option>
+            }
+          </select>
         </div>
 
         <!-- Turno -->
-        <select
-          class="filter-select"
-          [ngModel]="filtro().turno"
-          (ngModelChange)="emitChange({ turno: $event })"
-          aria-label="Seleccionar turno"
-        >
-          <option value="todos">Turno: Todos</option>
-          <option value="manana">Mañana</option>
-          <option value="tarde">Tarde</option>
-          <option value="noche">Noche</option>
-        </select>
+        <div class="filter-group">
+          <label class="filter-label">Turno</label>
+          <select
+            class="filter-input"
+            [ngModel]="filtro().turno"
+            (ngModelChange)="emitChange({ turno: $event })"
+            aria-label="Seleccionar turno"
+          >
+            <option value="todos">Todos los turnos</option>
+            <option value="manana">Mañana</option>
+            <option value="tarde">Tarde</option>
+            <option value="noche">Noche</option>
+          </select>
+        </div>
       </div>
 
-      <div class="filter-right">
-        <!-- Comparativa interanual -->
-        <button
-          class="btn-compare"
-          [class.btn-compare-active]="filtro().compararAnioAnterior"
-          (click)="emitChange({ compararAnioAnterior: !filtro().compararAnioAnterior })"
-          type="button"
-          [attr.aria-pressed]="filtro().compararAnioAnterior"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
-          vs Año anterior
+      <!-- Acciones alineadas a la derecha -->
+      <div class="header-actions">
+        <button class="btn-export" type="button" (click)="onDescargar.emit('xlsx')" aria-label="Descargar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="btn-icon" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          Descargar
         </button>
-
-        <!-- Acciones -->
-        <button class="btn-filter" type="button" (click)="onDescargar.emit('xlsx')" aria-label="Descargar Excel">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Excel
-        </button>
-        <button class="btn-filter" type="button" (click)="onDescargar.emit('pdf')" aria-label="Descargar PDF">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF
-        </button>
-        <button class="btn-filter" type="button" (click)="onImprimir.emit()" aria-label="Imprimir">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <button class="btn-export" type="button" (click)="onImprimir.emit()" aria-label="Imprimir">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="btn-icon" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18.75 12h.008v.008h-.008V12Zm-2.25 0h.008v.008H16.5V12Z" />
+          </svg>
           Imprimir
+        </button>
+        <button class="btn-export" type="button" (click)="onEnviar.emit()" aria-label="Enviar">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="btn-icon" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          </svg>
+          Enviar
         </button>
       </div>
     </div>
@@ -95,137 +97,123 @@ interface PresetOption {
     .filter-bar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       padding: 12px 0;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .filter-left, .filter-right {
+    .filter-left {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-actions {
+      display: flex;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
-    /* Presets */
-    .preset-group {
+    /* Date range */
+    .date-range {
       display: flex;
-      border: 1px solid var(--slate-200, #E5E7EB);
-      border-radius: 6px;
+      align-items: center;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
+      background: white;
       overflow: hidden;
+      transition: border-color 0.2s ease;
     }
 
-    .preset-btn {
+    .date-range:focus-within {
+      border-color: var(--primary-orange, #F27920);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
+    }
+
+    .date-input {
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
+      font-size: 14px;
+      padding: 10px 12px;
+      border: none;
+      background: white;
+      color: var(--slate-700, #314158);
+      outline: none;
+    }
+
+    .date-input:focus {
+      background: var(--primary-orange-light, #FFF7ED);
+    }
+
+    .date-separator {
+      font-size: 13px;
+      color: var(--slate-400, #90A1B9);
+      padding: 0 4px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
       font-weight: 500;
-      padding: 6px 12px;
-      border: none;
-      border-right: 1px solid var(--slate-200, #E5E7EB);
-      background: #fff;
-      color: var(--slate-500, #6B7280);
-      cursor: pointer;
-      transition: all 0.15s ease;
+      color: var(--slate-700, #314158);
     }
 
-    .preset-btn:last-child { border-right: none; }
-    .preset-btn:hover:not(.preset-active) { background: #F9FAFB; }
-
-    .preset-active {
-      background: var(--primary-orange, #F27920);
-      color: #fff;
-    }
-
-    /* Date pickers */
     .filter-input {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 10px;
-      height: 32px;
-      border: 1px solid var(--slate-200, #E5E7EB);
-      border-radius: 6px;
-      background: #fff;
-    }
-
-    .filter-icon {
-      width: 14px;
-      height: 14px;
-      color: var(--slate-500, #6B7280);
-      flex-shrink: 0;
-    }
-
-    .filter-input input {
-      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 36px 10px 16px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
+      background: white;
+      color: var(--slate-700, #314158);
       outline: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      color: var(--slate-900, #111827);
-      background: transparent;
-      width: 110px;
-    }
-
-    .filter-select {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      color: var(--slate-900, #111827);
-      height: 32px;
-      padding: 0 10px;
-      border: 1px solid var(--slate-200, #E5E7EB);
-      border-radius: 6px;
-      background: #fff;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      transition: all 0.2s ease;
+      min-width: 140px;
       cursor: pointer;
-      outline: none;
     }
 
-    /* Compare button */
-    .btn-compare {
+    .filter-input:focus {
+      border-color: var(--primary-orange, #F27920);
+      box-shadow: 0 0 0 3px rgba(242, 121, 32, 0.1);
+    }
+
+    /* Action buttons (same as Ventas) */
+    .btn-export {
       display: flex;
       align-items: center;
       gap: 6px;
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--slate-500, #6B7280);
-      padding: 0 12px;
-      height: 32px;
-      border: 1px dashed var(--slate-300, #D1D5DB);
-      border-radius: 6px;
-      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 16px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
+      background: white;
+      color: var(--slate-700, #314158);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
 
-    .btn-compare:hover { border-color: #1155CC; color: #1155CC; }
-
-    .btn-compare-active {
-      background: #EFF6FF;
-      border-color: #1155CC;
-      border-style: solid;
-      color: #1155CC;
+    .btn-export:hover {
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
 
-    /* Action buttons */
-    .btn-filter {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--slate-900, #111827);
-      padding: 0 10px;
-      height: 32px;
-      border: 1px solid var(--slate-200, #E5E7EB);
-      border-radius: 6px;
-      background: #fff;
-      cursor: pointer;
-      transition: all 0.15s ease;
+    .btn-icon {
+      width: 16px;
+      height: 16px;
     }
-
-    .btn-filter:hover { background: #F9FAFB; border-color: #D1D5DB; }
-    .btn-filter svg { color: var(--slate-500, #6B7280); }
   `],
 })
 export class BalancesFilterBarComponent {
@@ -233,6 +221,7 @@ export class BalancesFilterBarComponent {
   readonly filtroChange = output<Partial<FiltroBalances>>();
   readonly onDescargar = output<'xlsx' | 'pdf'>();
   readonly onImprimir = output<void>();
+  readonly onEnviar = output<void>();
 
   readonly presets: PresetOption[] = [
     { key: 'hoy', label: 'Hoy' },

@@ -48,7 +48,7 @@ import {
       <div class="config-section">
         <div class="section-header">
           <h3 class="section-title">Estaciones de Trabajo</h3>
-          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newEstacionNombre.set(''); newEstacionTipo.set('Principal'); showEstacionDialog.set(true)">
+          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newEstacionNombre.set(''); newEstacionTipo.set('Cocina'); showEstacionDialog.set(true)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -125,7 +125,7 @@ import {
       <div class="config-section">
         <div class="section-header">
           <h3 class="section-title">Canales de Venta</h3>
-          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newCategoriaNombre.set(''); newCategoriaTipo.set('Salon'); showCategoriaDialog.set(true)">
+          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newCategoriaNombre.set(''); newCategoriaTipo.set('Salon'); newCategoriaDispositivos.set([]); showCategoriaDialog.set(true)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -161,7 +161,7 @@ import {
       <div class="config-section">
         <div class="section-header">
           <h3 class="section-title">Puntos de Venta</h3>
-          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newDispositivoNombre.set(''); newDispositivoTipo.set('Cajero'); showDispositivoDialog.set(true)">
+          <button class="btn btn-sm btn-outline-orange" (click)="editingId.set(null); newDispositivoNombre.set(''); newDispositivoTipo.set('Cajero'); acceptedTerms.set(false); posStep.set(1); showDispositivoDialog.set(true)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
@@ -237,9 +237,10 @@ import {
           <div class="form-group">
             <label class="form-label">Tipo</label>
             <select class="form-select" [ngModel]="newEstacionTipo()" (ngModelChange)="newEstacionTipo.set($event)">
-              <option value="Principal">Principal</option>
-              <option value="Secundario">Secundario</option>
-              <option value="Produccion">Produccion</option>
+              <option value="Cocina">Cocina</option>
+              <option value="Barra">Barra</option>
+              <option value="Caja">Caja</option>
+              <option value="Delivery">Delivery</option>
             </select>
           </div>
           <div class="dialog-sm-actions">
@@ -297,6 +298,38 @@ import {
               <option value="Delivery">Delivery</option>
             </select>
           </div>
+          <div class="form-group">
+            <label class="form-label">Visible en POS</label>
+            <span class="form-hint">Opcional — si no se selecciona ninguno, se muestra en todos</span>
+            <div class="pos-chips">
+              @for (disp of dispositivos(); track disp.id) {
+                @if (disp.activo) {
+                  <button
+                    type="button"
+                    class="pos-chip"
+                    [class.pos-chip--selected]="isDispositivoSelected(disp.id)"
+                    (click)="toggleDispositivoSelection(disp.id)"
+                  >
+                    <span class="pos-chip-check" [class.pos-chip-check--visible]="isDispositivoSelected(disp.id)">
+                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    {{ disp.nombre }}
+                  </button>
+                }
+              }
+            </div>
+          </div>
+          @if (editingId() && newCategoriaTipo() === 'Salon') {
+            <button class="btn-plano-dialog" (click)="showCategoriaDialog.set(false); openPlano(editingId()!)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+              </svg>
+              Editar plano del salon
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          }
           <div class="dialog-sm-actions">
             <button class="btn btn-secondary" (click)="showCategoriaDialog.set(false)">Cancelar</button>
             <button class="btn btn-primary" (click)="saveCategoria()">{{ editingId() ? 'Guardar' : 'Agregar' }}</button>
@@ -308,25 +341,130 @@ import {
     <!-- Dispositivo Dialog -->
     @if (showDispositivoDialog()) {
       <div class="dialog-backdrop" (click)="showDispositivoDialog.set(false)">
-        <div class="dialog-sm" (click)="$event.stopPropagation()">
-          <h3 class="dialog-sm-title">{{ editingId() ? 'Editar Punto de Venta' : 'Agregar Punto de Venta' }}</h3>
-          <div class="form-group">
-            <label class="form-label">Nombre</label>
-            <input class="form-input" type="text" [ngModel]="newDispositivoNombre()" (ngModelChange)="newDispositivoNombre.set($event)" placeholder="Nombre del POS" />
+        @if (editingId()) {
+          <!-- Modo edicion: dialog simple -->
+          <div class="dialog-sm" (click)="$event.stopPropagation()">
+            <h3 class="dialog-sm-title">Editar Punto de Venta</h3>
+            <div class="form-group">
+              <label class="form-label">Nombre</label>
+              <input class="form-input" type="text" [ngModel]="newDispositivoNombre()" (ngModelChange)="newDispositivoNombre.set($event)" placeholder="Nombre del POS" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo</label>
+              <select class="form-select" [ngModel]="newDispositivoTipo()" (ngModelChange)="newDispositivoTipo.set($event)">
+                <option value="Cajero">Cajero</option>
+                <option value="Mozo">Mozo</option>
+                <option value="Cocina">Cocina</option>
+              </select>
+            </div>
+            <div class="dialog-sm-actions">
+              <button class="btn btn-secondary" (click)="showDispositivoDialog.set(false)">Cancelar</button>
+              <button class="btn btn-primary" (click)="saveDispositivo()">Guardar</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Tipo</label>
-            <select class="form-select" [ngModel]="newDispositivoTipo()" (ngModelChange)="newDispositivoTipo.set($event)">
-              <option value="Cajero">Cajero</option>
-              <option value="Mozo">Mozo</option>
-              <option value="Cocina">Cocina</option>
-            </select>
+        } @else {
+          <!-- Modo alta: dialog comercial 2 pasos -->
+          <div class="dialog-pos" (click)="$event.stopPropagation()">
+            <!-- Stepper -->
+            <div class="pos-stepper">
+              <div class="pos-step" [class.pos-step--active]="posStep() === 1" [class.pos-step--done]="posStep() > 1">
+                <span class="pos-step-dot">{{ posStep() > 1 ? '✓' : '1' }}</span>
+                <span class="pos-step-label">Informacion</span>
+              </div>
+              <div class="pos-step-line" [class.pos-step-line--done]="posStep() > 1"></div>
+              <div class="pos-step" [class.pos-step--active]="posStep() === 2">
+                <span class="pos-step-dot">2</span>
+                <span class="pos-step-label">Configuracion</span>
+              </div>
+            </div>
+
+            @if (posStep() === 1) {
+              <!-- Paso 1: Info comercial -->
+              <div class="pos-step-body">
+                <div class="pos-hero-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="36" height="36">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                  </svg>
+                </div>
+                <h3 class="pos-hero-title">Nuevo Punto de Venta</h3>
+                <p class="pos-hero-desc">Suma un terminal POS a tu local para operar, facturar y gestionar comandas desde un dispositivo adicional.</p>
+
+                <div class="pos-price-block">
+                  <span class="pos-price-label">Costo mensual por terminal</span>
+                  <div class="pos-price-row">
+                    <span class="pos-price-currency">$</span>
+                    <span class="pos-price-amount">4.990</span>
+                    <span class="pos-price-period">/mes</span>
+                  </div>
+                </div>
+
+                <div class="pos-features">
+                  <div class="pos-feature">
+                    <span class="pos-feature-icon">⚡</span>
+                    <div class="pos-feature-text">
+                      <span class="pos-feature-title">Facturacion electronica</span>
+                      <span class="pos-feature-desc">Emiti comprobantes fiscales integrados con ARCA</span>
+                    </div>
+                  </div>
+                  <div class="pos-feature">
+                    <span class="pos-feature-icon">📋</span>
+                    <div class="pos-feature-text">
+                      <span class="pos-feature-title">Comandas en tiempo real</span>
+                      <span class="pos-feature-desc">Envia pedidos a cocina y barra al instante</span>
+                    </div>
+                  </div>
+                  <div class="pos-feature">
+                    <span class="pos-feature-icon">🔄</span>
+                    <div class="pos-feature-text">
+                      <span class="pos-feature-title">Sincronizacion automatica</span>
+                      <span class="pos-feature-desc">Todos los datos sincronizados con tu cuenta</span>
+                    </div>
+                  </div>
+                  <div class="pos-feature">
+                    <span class="pos-feature-icon">🛟</span>
+                    <div class="pos-feature-text">
+                      <span class="pos-feature-title">Soporte tecnico incluido</span>
+                      <span class="pos-feature-desc">Asistencia por chat y telefono sin costo extra</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dialog-sm-actions">
+                <button class="btn btn-secondary" (click)="showDispositivoDialog.set(false)">Cancelar</button>
+                <button class="btn btn-primary" (click)="posStep.set(2)">Continuar</button>
+              </div>
+            } @else {
+              <!-- Paso 2: Configuracion -->
+              <div class="pos-step-body">
+                <div class="pos-dialog-form">
+                  <div class="form-group">
+                    <label class="form-label">Nombre del terminal</label>
+                    <input class="form-input" type="text" [ngModel]="newDispositivoNombre()" (ngModelChange)="newDispositivoNombre.set($event)" placeholder="Ej: POS Caja 2, POS Mozo Terraza..." />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Tipo de terminal</label>
+                    <select class="form-select" [ngModel]="newDispositivoTipo()" (ngModelChange)="newDispositivoTipo.set($event)">
+                      <option value="Cajero">Cajero — Punto fijo de cobro</option>
+                      <option value="Mozo">Mozo — Terminal movil de salon</option>
+                      <option value="Cocina">Cocina — Pantalla de comandas</option>
+                    </select>
+                  </div>
+                </div>
+
+                <label class="pos-dialog-terms">
+                  <input type="checkbox" class="pos-terms-check" [ngModel]="acceptedTerms()" (ngModelChange)="acceptedTerms.set($event)" />
+                  <span class="pos-terms-text">Acepto los <a class="pos-terms-link">terminos y condiciones</a> del servicio y autorizo el cargo mensual de $4.990 por este terminal POS.</span>
+                </label>
+              </div>
+
+              <div class="dialog-sm-actions">
+                <button class="btn btn-secondary" (click)="posStep.set(1)">Atras</button>
+                <button class="btn btn-primary" [disabled]="!acceptedTerms() || !newDispositivoNombre().trim()" (click)="saveDispositivo()">Confirmar y agregar</button>
+              </div>
+            }
           </div>
-          <div class="dialog-sm-actions">
-            <button class="btn btn-secondary" (click)="showDispositivoDialog.set(false)">Cancelar</button>
-            <button class="btn btn-primary" (click)="saveDispositivo()">{{ editingId() ? 'Guardar' : 'Agregar' }}</button>
-          </div>
-        </div>
+        }
       </div>
     }
 
@@ -476,23 +614,312 @@ import {
 
     .th-acciones { text-align: right; }
     .td-acciones { text-align: right; }
-    .acciones-cell { display: flex; justify-content: flex-end; gap: 8px; }
+    .acciones-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: flex-end;
+    }
     .badge-estado {
       display: inline-block; padding: 2px 8px; font-size: 11px;
       font-weight: 500; border-radius: 4px;
     }
     .badge-activo { background: #D1FAE5; color: #065F46; }
     .badge-inactivo { background: #F3F4F6; color: #6B7280; }
-    .btn-edit {
-      padding: 6px 12px; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: var(--gray-700); background: white; border: 1px solid #E5E7EB;
-      border-radius: 6px; cursor: pointer; transition: all 0.15s;
+    /* POS commercial dialog */
+    .dialog-pos {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 0;
+      scrollbar-width: none;
     }
-    .btn-edit:hover { background: #F9FAFB; border-color: #D1D5DB; }
+
+    .dialog-pos::-webkit-scrollbar { display: none; }
+
+    /* Stepper */
+    .pos-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 24px 32px 0;
+    }
+
+    .pos-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+    }
+
+    .pos-step--active { opacity: 1; }
+    .pos-step--done { opacity: 0.7; }
+
+    .pos-step-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--slate-200);
+      color: var(--slate-500);
+    }
+
+    .pos-step--active .pos-step-dot {
+      background: var(--primary-blue, #1155CC);
+      color: white;
+    }
+
+    .pos-step--done .pos-step-dot {
+      background: var(--success-color);
+      color: white;
+      font-size: 11px;
+    }
+
+    .pos-step-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .pos-step--active .pos-step-label { color: var(--text-heading); }
+
+    .pos-step-line {
+      width: 40px;
+      height: 2px;
+      background: var(--slate-200);
+      margin: 0 12px;
+    }
+
+    .pos-step-line--done { background: var(--success-color); }
+
+    /* Step body */
+    .pos-step-body {
+      padding: 24px 32px 0;
+    }
+
+    /* Step 1: Hero */
+    .pos-hero-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: var(--primary-blue, #1155CC);
+      color: white;
+      margin: 0 auto 16px;
+    }
+
+    .pos-hero-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin: 0 0 6px;
+      text-align: center;
+    }
+
+    .pos-hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0 0 24px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .pos-price-block {
+      text-align: center;
+      padding: 20px;
+      background: var(--slate-50, #F8FAFC);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .pos-price-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .pos-price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .pos-price-currency {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .pos-price-amount {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text-heading);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .pos-price-period {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-left: 2px;
+    }
+
+    /* Features */
+    .pos-features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pos-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .pos-feature-icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 24px;
+      text-align: center;
+      margin-top: 1px;
+    }
+
+    .pos-feature-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .pos-feature-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .pos-feature-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .pos-dialog-form {
+      padding: 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pos-dialog-terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 16px 32px 0;
+      cursor: pointer;
+    }
+
+    .pos-terms-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      accent-color: var(--primary-blue, #1155CC);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pos-terms-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .pos-terms-link {
+      color: var(--primary-blue, #1155CC);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .dialog-pos .dialog-sm-actions {
+      padding: 20px 32px 28px;
+    }
+
+    .dialog-pos .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-plano-dialog {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 16px;
+      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--primary-blue, #1155CC);
+      background: rgba(17, 85, 204, 0.04);
+      border: 1px dashed rgba(17, 85, 204, 0.25);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+    .btn-plano-dialog:hover {
+      background: rgba(17, 85, 204, 0.08);
+      border-color: rgba(17, 85, 204, 0.4);
+    }
+    .btn-plano-dialog svg:last-child {
+      margin-left: auto;
+      opacity: 0.5;
+    }
+    .btn-plano-dialog:hover svg:last-child {
+      opacity: 1;
+    }
+    .btn-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
     .btn-deactivate {
-      padding: 6px 12px; font-size: 13px; font-weight: 500; font-family: inherit;
-      color: #DC2626; background: #FFFFFF; border: 1px solid #FECACA;
-      border-radius: 6px; cursor: pointer; transition: all 0.15s;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #DC2626;
+      background: #FFFFFF;
+      border: 1px solid #FECACA;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
     }
     .btn-deactivate:hover { background: #FEF2F2; }
 
@@ -645,6 +1072,65 @@ import {
       margin-top: 24px;
     }
 
+    .form-hint {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--slate-400);
+      margin-top: 2px;
+      margin-bottom: 10px;
+    }
+
+    .pos-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pos-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pos-chip:hover {
+      border-color: var(--slate-300);
+      color: var(--text-primary);
+    }
+
+    .pos-chip--selected {
+      border-color: var(--primary-blue, #1155CC);
+      background: rgba(17, 85, 204, 0.06);
+      color: var(--primary-blue, #1155CC);
+    }
+
+    .pos-chip--selected:hover {
+      border-color: var(--primary-blue, #1155CC);
+    }
+
+    .pos-chip-check {
+      display: inline-flex;
+      width: 0;
+      overflow: hidden;
+      transition: width 0.15s ease;
+      color: var(--primary-blue, #1155CC);
+    }
+
+    .pos-chip-check--visible {
+      width: 14px;
+    }
+
     @media (max-width: 1024px) {
       .config-grid {
         grid-template-columns: 1fr;
@@ -683,8 +1169,11 @@ export class ConfiguracionesComponent {
   cobroCategoriaItems = signal<ConfigFormaCobro[]>([]);
   newCategoriaNombre = signal('');
   newCategoriaTipo = signal<'Salon' | 'Mostrador' | 'Delivery'>('Salon');
+  newCategoriaDispositivos = signal<number[]>([]);
   newDispositivoNombre = signal('');
   newDispositivoTipo = signal('Cajero');
+  acceptedTerms = signal(false);
+  posStep = signal(1);
   newTurnoNombre = signal('');
   newTurnoInicio = signal('');
   newTurnoFin = signal('');
@@ -770,7 +1259,7 @@ export class ConfiguracionesComponent {
       const maxId = Math.max(...this.estaciones().map(e => e.id), 0);
       this.estaciones.update(list => [...list, { id: maxId + 1, nombre, tipo: this.newEstacionTipo(), activo: true }]);
     }
-    this.newEstacionNombre.set(''); this.newEstacionTipo.set('Principal'); this.editingId.set(null);
+    this.newEstacionNombre.set(''); this.newEstacionTipo.set('Cocina'); this.editingId.set(null);
     this.showEstacionDialog.set(false);
   }
 
@@ -788,10 +1277,15 @@ export class ConfiguracionesComponent {
     return `${activos}/${items.length}`;
   }
 
+  openPlano(canalId: number): void {
+    this.router.navigate(['/pdv/configuraciones/plano', canalId]);
+  }
+
   editCategoria(cat: ConfigCategoria): void {
     this.editingId.set(cat.id);
     this.newCategoriaNombre.set(cat.nombre);
     this.newCategoriaTipo.set(cat.tipo);
+    this.newCategoriaDispositivos.set(cat.dispositivoIds ? [...cat.dispositivoIds] : []);
     this.showCategoriaDialog.set(true);
   }
 
@@ -799,14 +1293,25 @@ export class ConfiguracionesComponent {
     const nombre = this.newCategoriaNombre().trim();
     if (!nombre) return;
     const id = this.editingId();
+    const dispositivoIds = this.newCategoriaDispositivos().length > 0 ? this.newCategoriaDispositivos() : undefined;
     if (id) {
-      this.categorias.update(list => list.map(c => c.id === id ? { ...c, nombre, tipo: this.newCategoriaTipo() } : c));
+      this.categorias.update(list => list.map(c => c.id === id ? { ...c, nombre, tipo: this.newCategoriaTipo(), dispositivoIds } : c));
     } else {
       const maxId = Math.max(...this.categorias().map(c => c.id), 0);
-      this.categorias.update(list => [...list, { id: maxId + 1, nombre, tipo: this.newCategoriaTipo(), activo: true }]);
+      this.categorias.update(list => [...list, { id: maxId + 1, nombre, tipo: this.newCategoriaTipo(), activo: true, dispositivoIds }]);
     }
-    this.newCategoriaNombre.set(''); this.newCategoriaTipo.set('Salon'); this.editingId.set(null);
+    this.newCategoriaNombre.set(''); this.newCategoriaTipo.set('Salon'); this.newCategoriaDispositivos.set([]); this.editingId.set(null);
     this.showCategoriaDialog.set(false);
+  }
+
+  isDispositivoSelected(id: number): boolean {
+    return this.newCategoriaDispositivos().includes(id);
+  }
+
+  toggleDispositivoSelection(id: number): void {
+    this.newCategoriaDispositivos.update(ids =>
+      ids.includes(id) ? ids.filter(i => i !== id) : [...ids, id]
+    );
   }
 
   editDispositivo(disp: ConfigDispositivo): void {

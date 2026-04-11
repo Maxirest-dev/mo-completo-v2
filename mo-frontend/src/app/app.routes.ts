@@ -28,6 +28,27 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'pdv/configuraciones/plano/:id',
+        loadComponent: () =>
+          import('./features/pdv/components/plano-editor/plano-editor.component').then(
+            (m) => m.PlanoEditorComponent
+          ),
+      },
+      {
+        path: 'pdv/auditoria',
+        loadComponent: () =>
+          import('./features/pdv/components/auditoria/components/informe/informe-page.component').then(
+            (m) => m.InformePageComponent
+          ),
+      },
+      {
+        path: 'pdv/auditoria/configuracion',
+        loadComponent: () =>
+          import('./features/pdv/components/auditoria/components/configuracion/configuracion-page.component').then(
+            (m) => m.ConfiguracionPageComponent
+          ),
+      },
+      {
         path: 'pdv/alta-arca',
         loadComponent: () =>
           import('./features/pdv/components/alta-arca/alta-arca.component').then(
@@ -74,8 +95,22 @@ export const routes: Routes = [
       {
         path: 'compras',
         loadComponent: () =>
-          import('./features/compras/compras-placeholder.component').then(
-            (m) => m.ComprasPlaceholderComponent
+          import('./features/compras/components/ordenes/ordenes-page.component').then(
+            (m) => m.OrdenesPageComponent
+          ),
+      },
+      {
+        path: 'compras/ordenes/nueva',
+        loadComponent: () =>
+          import('./features/compras/components/ordenes/orden-page.component').then(
+            (m) => m.OrdenPageComponent
+          ),
+      },
+      {
+        path: 'compras/ordenes/:id',
+        loadComponent: () =>
+          import('./features/compras/components/ordenes/orden-page.component').then(
+            (m) => m.OrdenPageComponent
           ),
       },
 

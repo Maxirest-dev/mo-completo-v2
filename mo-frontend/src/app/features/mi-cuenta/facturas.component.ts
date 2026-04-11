@@ -86,7 +86,7 @@ const METODOS_PAGO: MetodoPago[] = [
           @for (tab of tabs; track tab.key) {
             <button
               class="filter-tab"
-              [class.filter-tab--active]="activeTab() === tab.key"
+              [class.filter-tab-active]="activeTab() === tab.key"
               (click)="activeTab.set(tab.key)">
               {{ tab.label }}
               <span class="filter-tab-count">{{ tab.count() }}</span>
@@ -131,9 +131,9 @@ const METODOS_PAGO: MetodoPago[] = [
                       <span class="cell-total">\${{ formatNumber(factura.total) }}</span>
                     </td>
                     <td>
-                      <div class="cell-actions">
-                        <button class="action-btn action-btn--outline" (click)="openDetalle(factura)">Ver detalle</button>
-                        <button class="action-btn action-btn--ghost">
+                      <div class="acciones-cell">
+                        <button class="btn-edit" (click)="openDetalle(factura)">Ver detalle</button>
+                        <button class="btn-edit">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                           </svg>
@@ -385,37 +385,40 @@ const METODOS_PAGO: MetodoPago[] = [
     /* ───── Filter Tabs ───── */
     .filter-tabs {
       display: flex;
-      gap: 8px;
+      gap: 22px;
       margin-bottom: 20px;
       flex-wrap: wrap;
     }
 
     .filter-tab {
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--slate-700);
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      line-height: 1.428;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      border-radius: var(--radius-full);
-      border: 1px solid var(--slate-200);
-      background: white;
-      color: var(--slate-500);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
     }
     .filter-tab:hover {
       border-color: var(--slate-300);
       background: var(--slate-50);
     }
-    .filter-tab--active {
-      background: var(--slate-900);
-      color: white;
-      border-color: var(--slate-900);
+    .filter-tab-active {
+      color: var(--primary-orange-dark);
+      border-color: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
     }
-    .filter-tab--active:hover {
-      background: var(--slate-800);
-      border-color: var(--slate-800);
+    .filter-tab-active:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange-lighter);
     }
 
     .filter-tab-count {
@@ -425,8 +428,9 @@ const METODOS_PAGO: MetodoPago[] = [
       font-size: 11px;
       font-weight: 600;
     }
-    .filter-tab--active .filter-tab-count {
-      background: rgba(255, 255, 255, 0.2);
+    .filter-tab-active .filter-tab-count {
+      background: var(--primary-orange-lighter);
+      color: var(--primary-orange-dark);
     }
 
     /* ───── Table Card ───── */
@@ -528,41 +532,29 @@ const METODOS_PAGO: MetodoPago[] = [
       color: var(--slate-900);
     }
 
-    .cell-actions {
+    .acciones-cell {
       display: flex;
+      align-items: center;
       gap: 8px;
+      justify-content: flex-end;
     }
 
-    .action-btn {
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 500;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.15s ease;
+    .btn-edit {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-    }
-    .action-btn--outline {
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
       background: white;
       border: 1px solid var(--slate-200);
-      color: var(--slate-700);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
     }
-    .action-btn--outline:hover {
-      background: var(--slate-50);
-      border-color: var(--slate-300);
-    }
-    .action-btn--ghost {
-      background: transparent;
-      border: 1px solid transparent;
-      color: var(--slate-500);
-    }
-    .action-btn--ghost:hover {
-      background: var(--slate-100);
-      color: var(--slate-700);
-    }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .empty-row {
       text-align: center;
@@ -608,7 +600,7 @@ const METODOS_PAGO: MetodoPago[] = [
       padding: 12px;
       border-radius: var(--radius-md);
       border: none;
-      background: #22C55E;
+      background: var(--primary-orange);
       color: white;
       font-size: 15px;
       font-weight: 600;
@@ -616,7 +608,7 @@ const METODOS_PAGO: MetodoPago[] = [
       transition: background 0.15s ease;
     }
     .btn-pagar:hover {
-      background: #16A34A;
+      background: var(--primary-orange-hover);
     }
 
     /* Debito toggle */
@@ -988,7 +980,7 @@ const METODOS_PAGO: MetodoPago[] = [
       .facturas-sidebar {
         flex-direction: column;
       }
-      .cell-actions {
+      .acciones-cell {
         flex-direction: column;
         gap: 4px;
       }

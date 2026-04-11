@@ -31,9 +31,9 @@ interface CategoriaPrecios extends CategoriaGridRow {
     <div class="precios-container">
       <!-- Header -->
       <header class="page-header">
-        <button class="btn-back" (click)="onBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+        <button class="back-btn" (click)="onBack()" title="Volver">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
         </button>
         <div class="header-info">
@@ -50,48 +50,22 @@ interface CategoriaPrecios extends CategoriaGridRow {
       <!-- Toolbar -->
       <div class="filter-toolbar">
         <div class="filter-tabs">
-          @for (tab of visibleTabs(); track tab.id) {
-            <button
-              type="button"
-              class="filter-tab"
-              [class.filter-tab-active]="filtroActivo() === tab.id"
-              (click)="onFiltroClick(tab.id)"
-            >
-              {{ tab.label }} ({{ tab.count }})
-            </button>
-          }
-
-          @if (dropdownTabs().length > 0) {
-            <div class="dropdown-wrapper">
-              <button
-                type="button"
-                class="filter-tab filter-tab-dropdown"
-                [class.filter-tab-active]="isDropdownActive()"
-                (click)="toggleDropdown(); $event.stopPropagation()"
-              >
-                {{ dropdownLabel() }}
-                <svg class="dropdown-chevron" [class.dropdown-chevron-open]="showDropdown()" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                </svg>
-              </button>
-              @if (showDropdown()) {
-                <div class="dropdown-backdrop" (click)="showDropdown.set(false)"></div>
-                <div class="dropdown-menu">
-                  @for (tab of dropdownTabs(); track tab.id) {
-                    <button
-                      type="button"
-                      class="dropdown-item"
-                      [class.dropdown-item-active]="filtroActivo() === tab.id"
-                      (click)="onFiltroClick(tab.id); showDropdown.set(false)"
-                    >
-                      {{ tab.label }}
-                      <span class="dropdown-item-count">({{ tab.count }})</span>
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          }
+          <button
+            type="button"
+            class="filter-tab"
+            [class.filter-tab-active]="vistaMode() === 'categorias'"
+            (click)="vistaMode.set('categorias')"
+          >
+            Por categorias
+          </button>
+          <button
+            type="button"
+            class="filter-tab"
+            [class.filter-tab-active]="vistaMode() === 'todo'"
+            (click)="vistaMode.set('todo')"
+          >
+            Todo el menu ({{ allProductosCount() }})
+          </button>
         </div>
 
         <div class="toolbar-right">
@@ -133,6 +107,72 @@ interface CategoriaPrecios extends CategoriaGridRow {
       <!-- Table Card -->
       <div class="card">
         <div class="grid-container">
+          @if (vistaMode() === 'todo') {
+            <!-- Vista plana: todos los productos -->
+            <table class="detail-table detail-table--full">
+              <thead>
+                <tr>
+                  <th class="det-producto">PRODUCTO</th>
+                  <th class="det-categoria">CATEGORIA</th>
+                  <th class="det-default">DEFAULT</th>
+                  <th class="det-takeaway">TAKE AWAY</th>
+                  <th class="det-delivery">DELIVERY</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (prod of allProductosFlat(); track prod.id) {
+                  <tr class="producto-row">
+                    <td class="det-producto">{{ prod.nombre }}</td>
+                    <td class="det-categoria">{{ prod.categoriaNombre }}</td>
+                    <td class="det-default" (click)="$event.stopPropagation()">
+                      @if (isEditingCell(prod.id, 'default')) {
+                        <input type="text" class="precio-input" [value]="formatPrice(prod.precio)" (blur)="onCellBlur(prod, 'default', $event)" (keydown.enter)="onPrecioEnter($event)" (keydown.escape)="clearEditing()" #autoFocus />
+                      } @else {
+                        <span class="precio-clickable" (click)="startEditing(prod.id, 'default')">{{ formatPrice(prod.precio) }}</span>
+                      }
+                    </td>
+                    <td class="det-takeaway" (click)="$event.stopPropagation()">
+                      @if (isEditingCell(prod.id, 'takeaway')) {
+                        <input type="text" class="precio-input" [value]="formatPrice(prod.precioTakeAway ?? prod.precio)" (blur)="onCellBlur(prod, 'takeaway', $event)" (keydown.enter)="onPrecioEnter($event)" (keydown.escape)="clearEditing()" #autoFocus />
+                      } @else {
+                        <span class="precio-cell">
+                          <span class="precio-clickable" (click)="startEditing(prod.id, 'takeaway')">{{ formatPrice(prod.precioTakeAway ?? prod.precio) }}</span>
+                          @if (getDiffPercent(prod.precio, prod.precioTakeAway) !== 0) {
+                            <span class="badge-diff" [class.badge-positive]="getDiffPercent(prod.precio, prod.precioTakeAway) > 0" [class.badge-negative]="getDiffPercent(prod.precio, prod.precioTakeAway) < 0">
+                              {{ getDiffPercent(prod.precio, prod.precioTakeAway) > 0 ? '+' : '' }}{{ getDiffPercent(prod.precio, prod.precioTakeAway).toFixed(1) }}%
+                            </span>
+                          }
+                        </span>
+                      }
+                    </td>
+                    <td class="det-delivery" (click)="$event.stopPropagation()">
+                      @if (isEditingCell(prod.id, 'delivery')) {
+                        <input type="text" class="precio-input" [value]="formatPrice(prod.precioDelivery ?? prod.precio)" (blur)="onCellBlur(prod, 'delivery', $event)" (keydown.enter)="onPrecioEnter($event)" (keydown.escape)="clearEditing()" #autoFocus />
+                      } @else {
+                        <span class="precio-cell">
+                          <span class="precio-clickable" (click)="startEditing(prod.id, 'delivery')">{{ formatPrice(prod.precioDelivery ?? prod.precio) }}</span>
+                          @if (getDiffPercent(prod.precio, prod.precioDelivery) !== 0) {
+                            <span class="badge-diff" [class.badge-positive]="getDiffPercent(prod.precio, prod.precioDelivery) > 0" [class.badge-negative]="getDiffPercent(prod.precio, prod.precioDelivery) < 0">
+                              {{ getDiffPercent(prod.precio, prod.precioDelivery) > 0 ? '+' : '' }}{{ getDiffPercent(prod.precio, prod.precioDelivery).toFixed(1) }}%
+                            </span>
+                          }
+                        </span>
+                      }
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="empty-state-row">
+                      <div class="empty-state">
+                        <span class="empty-state-title">Sin productos</span>
+                        <span class="empty-state-description">No se encontraron productos</span>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          } @else {
           <table class="master-table">
             <thead>
               <tr>
@@ -264,18 +304,10 @@ interface CategoriaPrecios extends CategoriaGridRow {
               }
             </tbody>
           </table>
+          }
         </div>
       </div>
 
-      <!-- Footer hint -->
-      <div class="footer-hint">
-        <span class="hint-label">Como usar:</span>
-        Ingresa un valor en la fila de la categoria y presiona
-        <span class="hint-btn hint-btn-percent">%</span>
-        para cambio porcentual o
-        <span class="hint-btn hint-btn-fixed">$</span>
-        para monto fijo. Afecta todos los productos y listas de esa categoria.
-      </div>
     </div>
 
     @if (showNuevaListaDialog()) {
@@ -373,23 +405,22 @@ interface CategoriaPrecios extends CategoriaGridRow {
       margin-bottom: 32px;
     }
 
-    .btn-back {
+    .back-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 40px;
       height: 40px;
-      padding: 0;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      color: var(--gray-700);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: white;
+      color: var(--slate-700);
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.15s ease;
       flex-shrink: 0;
       margin-top: 2px;
     }
-    .btn-back:hover { background: var(--gray-100); }
+    .back-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .header-info { flex: 1; }
 
@@ -883,6 +914,11 @@ interface CategoriaPrecios extends CategoriaGridRow {
       overflow: hidden;
     }
 
+    .detail-table--full {
+      border: none;
+      border-radius: 0;
+    }
+
     .detail-table thead th {
       padding: 10px 16px;
       font-size: 11px;
@@ -1083,6 +1119,7 @@ export class ActualizarPreciosComponent implements OnDestroy, AfterViewChecked {
     MOCK_CATEGORIAS.map(c => ({ ...c, masEditInput: '' }))
   );
   filtroActivo = signal('todas');
+  vistaMode = signal<'categorias' | 'todo'>('categorias');
   searchTerm = signal('');
   busquedaInterna = signal('');
   showDropdown = signal(false);
@@ -1149,6 +1186,28 @@ export class ActualizarPreciosComponent implements OnDestroy, AfterViewChecked {
 
     return filtered;
   });
+
+  allProductosFlat = computed(() => {
+    const search = this.searchTerm().toLowerCase().trim();
+    const prods: (ProductoGridRow & { categoriaNombre: string })[] = [];
+    for (const cat of this.categorias()) {
+      for (const prod of cat.productos) {
+        prods.push({ ...prod, categoriaNombre: cat.nombre });
+      }
+    }
+    if (search) {
+      return prods.filter(p =>
+        p.nombre.toLowerCase().includes(search) ||
+        p.categoriaNombre.toLowerCase().includes(search) ||
+        p.codigoBusqueda?.includes(search)
+      );
+    }
+    return prods;
+  });
+
+  allProductosCount = computed(() =>
+    this.categorias().reduce((sum, c) => sum + c.productos.length, 0)
+  );
 
   constructor() {
     this.searchSubject

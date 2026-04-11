@@ -8,7 +8,7 @@ import { TopVenta } from '../../models';
   standalone: true,
   imports: [DashboardPanelComponent, TopVentaItemComponent],
   template: `
-    <app-dashboard-panel titulo="Top Ventas & Ganadores" icono="🏆" [loading]="loading()">
+    <app-dashboard-panel titulo="Top Ventas & Ganadores" icono="🏆" [loading]="loading()" headerLink="/ventas">
       @if (ventas().length === 0) {
         <div class="empty-state">
           <span class="empty-icon">📊</span>

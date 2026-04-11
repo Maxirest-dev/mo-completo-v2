@@ -4,24 +4,23 @@ import {
   input,
   computed,
 } from '@angular/core';
-import { AgCharts } from 'ag-charts-angular';
-import { AgChartOptions } from 'ag-charts-community';
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables, ChartConfiguration } from 'chart.js';
 import { DemandForecast, DemandSeries } from '../../models';
 
-interface ChartDataPoint {
-  hora: string;
-  semanaPasada: number | null;
-  ventasHoy: number | null;
-  prediccionIA: number | null;
-}
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-demand-chart',
   standalone: true,
-  imports: [AgCharts],
+  imports: [BaseChartDirective],
   template: `
     <div class="demand-chart-wrapper">
-      <ag-charts [options]="chartOptions()" />
+      <canvas baseChart
+        [type]="'line'"
+        [data]="chartData()"
+        [options]="chartOptions"
+      ></canvas>
     </div>
   `,
   styles: [`
@@ -32,6 +31,7 @@ interface ChartDataPoint {
     .demand-chart-wrapper {
       width: 100%;
       height: 250px;
+      position: relative;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,143 +39,111 @@ interface ChartDataPoint {
 export class DemandChartComponent {
   forecast = input.required<DemandForecast | null>();
 
-  chartOptions = computed(() => {
-    const forecast = this.forecast();
-    const data = this.transformData(forecast);
-
-    return {
-      data,
-      height: 250,
-      padding: { top: 16, right: 16, bottom: 8, left: 8 },
-      background: { visible: false },
-      series: [
-        {
-          type: 'area',
-          xKey: 'hora',
-          yKey: 'semanaPasada',
-          yName: 'Semana Pasada',
-          stroke: '#90A1B9',
-          strokeWidth: 2,
-          lineDash: [5, 5],
-          fill: 'transparent',
-          fillOpacity: 0,
-          marker: { enabled: false },
-          tooltip: {
-            renderer: (params: any) => ({
-              content: `$${params.datum.semanaPasada?.toLocaleString('es-AR') ?? '—'}`,
-              title: params.datum.hora,
-            }),
-          },
-        },
-        {
-          type: 'area',
-          xKey: 'hora',
-          yKey: 'ventasHoy',
-          yName: 'Ventas Hoy',
-          stroke: '#F27920',
-          strokeWidth: 2.5,
-          fill: '#F27920',
-          fillOpacity: 0.08,
-          marker: { enabled: false },
-          tooltip: {
-            renderer: (params: any) => ({
-              content: `$${params.datum.ventasHoy?.toLocaleString('es-AR') ?? '—'}`,
-              title: params.datum.hora,
-            }),
-          },
-          connectMissingData: false,
-        },
-        {
-          type: 'area',
-          xKey: 'hora',
-          yKey: 'prediccionIA',
-          yName: 'Prediccion IA',
-          stroke: '#314158',
-          strokeWidth: 2,
-          fill: '#314158',
-          fillOpacity: 0.08,
-          marker: { enabled: false },
-          tooltip: {
-            renderer: (params: any) => ({
-              content: `$${params.datum.prediccionIA?.toLocaleString('es-AR') ?? '—'}`,
-              title: params.datum.hora,
-            }),
-          },
-        },
-      ],
-      axes: [
-        {
-          type: 'category',
-          position: 'bottom',
-          label: {
-            color: '#90A1B9',
-            fontSize: 11,
-          },
-          line: { color: '#E2E8F0' },
-          gridLine: { enabled: false },
-        },
-        {
-          type: 'number',
-          position: 'left',
-          label: {
-            color: '#90A1B9',
-            fontSize: 11,
-            formatter: (params: any) => {
-              const val = params.value;
-              if (val >= 1000) {
-                return `$${(val / 1000).toFixed(0)}k`;
-              }
-              return `$${val}`;
-            },
-          },
-          line: { enabled: false },
-          gridLine: {
-            style: [{ stroke: '#F1F5F9', lineDash: [4, 4] }],
-          },
-        },
-      ],
+  readonly chartOptions: ChartConfiguration<'line'>['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
       legend: {
         position: 'top',
-        spacing: 24,
-        item: {
-          marker: { size: 8 },
-          label: {
-            color: '#64748B',
-            fontSize: 12,
+        labels: {
+          color: '#64748B',
+          font: { size: 12, family: 'Inter' },
+          usePointStyle: true,
+          pointStyle: 'circle',
+          padding: 20,
+        },
+      },
+      tooltip: {
+        backgroundColor: '#1F2937',
+        titleFont: { family: 'Inter', size: 12 },
+        bodyFont: { family: 'Inter', size: 12 },
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: (ctx) => {
+            const val = ctx.parsed.y;
+            return ` ${ctx.dataset.label}: $${val?.toLocaleString('es-AR') ?? '—'}`;
           },
         },
       },
-    } as unknown as AgChartOptions;
-  });
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#90A1B9', font: { size: 11, family: 'Inter' } },
+        border: { color: '#E2E8F0' },
+      },
+      y: {
+        grid: { color: '#F1F5F9' },
+        border: { display: false },
+        ticks: {
+          color: '#90A1B9',
+          font: { size: 11, family: 'Inter' },
+          callback: (val) => {
+            const v = Number(val);
+            return v >= 1000 ? `$${(v / 1000).toFixed(0)}k` : `$${v}`;
+          },
+        },
+      },
+    },
+  };
 
-  private transformData(forecast: DemandForecast | null): ChartDataPoint[] {
-    if (!forecast || !forecast.series.length) {
-      return [];
+  chartData = computed(() => {
+    const fc = this.forecast();
+    if (!fc || !fc.series.length) {
+      return { labels: [] as string[], datasets: [] as any[] };
     }
 
-    const semanaPasada = this.findSeries(forecast.series, 'Semana Pasada');
-    const ventasHoy = this.findSeries(forecast.series, 'Ventas Hoy');
-    const prediccionIA = this.findSeries(forecast.series, 'Prediccion IA');
+    const semanaPasada = this.findSeries(fc.series, 'Semana Pasada');
+    const ventasHoy = this.findSeries(fc.series, 'Ventas Hoy');
+    const prediccionIA = this.findSeries(fc.series, 'Prediccion IA');
 
-    const horas = semanaPasada?.datos ?? ventasHoy?.datos ?? prediccionIA?.datos ?? [];
+    const labels = (semanaPasada ?? ventasHoy ?? prediccionIA)!.datos.map(d => d.hora);
 
-    return horas.map((_, i) => ({
-      hora: horas[i].hora,
-      semanaPasada: semanaPasada?.datos[i]?.valor ?? null,
-      ventasHoy: this.getActiveValue(ventasHoy?.datos[i]?.valor ?? null),
-      prediccionIA: prediccionIA?.datos[i]?.valor ?? null,
-    }));
-  }
+    return {
+      labels,
+      datasets: [
+        {
+          label: 'Semana Pasada',
+          data: semanaPasada?.datos.map(d => d.valor) ?? [],
+          borderColor: '#90A1B9',
+          borderWidth: 2,
+          borderDash: [5, 5],
+          backgroundColor: 'transparent',
+          fill: false,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          tension: 0.3,
+        },
+        {
+          label: 'Ventas Hoy',
+          data: ventasHoy?.datos.map(d => d.valor === 0 ? null : d.valor) ?? [],
+          borderColor: '#F27920',
+          borderWidth: 2.5,
+          backgroundColor: 'rgba(242, 121, 32, 0.08)',
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          tension: 0.3,
+          spanGaps: false,
+        },
+        {
+          label: 'Prediccion IA',
+          data: prediccionIA?.datos.map(d => d.valor) ?? [],
+          borderColor: '#314158',
+          borderWidth: 2,
+          backgroundColor: 'rgba(49, 65, 88, 0.08)',
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          tension: 0.3,
+        },
+      ],
+    };
+  });
 
   private findSeries(series: DemandSeries[], nombre: string): DemandSeries | undefined {
     return series.find(s => s.nombre === nombre);
-  }
-
-  /** Filter out zero values for "Ventas Hoy" so the line stops at current time */
-  private getActiveValue(valor: number | null): number | null {
-    if (valor === null || valor === 0) {
-      return null;
-    }
-    return valor;
   }
 }

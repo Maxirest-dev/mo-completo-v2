@@ -56,23 +56,23 @@ const MOCK_NEGOCIO: NegocioData = {
           <p class="page-subtitle">Mantene la informacion de tu negocio actualizada</p>
         </div>
       </div>
-      <div class="page-header-right">
+    </div>
+
+    <!-- Business Card -->
+    <div class="business-card">
+      <div class="business-card-actions">
         @if (editing()) {
           <button class="btn-secondary" (click)="cancelEdit()">Cancelar</button>
           <button class="btn-dark" (click)="saveEdit()">Guardar</button>
         } @else {
-          <button class="btn-primary" (click)="startEdit()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+          <button class="btn-edit-card" (click)="startEdit()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15">
               <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
             </svg>
             Editar informacion
           </button>
         }
       </div>
-    </div>
-
-    <!-- Business Card -->
-    <div class="business-card">
       <!-- Top row: logo + name + type -->
       <div class="business-top">
         <div class="business-logo">
@@ -406,6 +406,36 @@ const MOCK_NEGOCIO: NegocioData = {
       padding: 28px;
       margin-bottom: 20px;
       box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .business-card-actions {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-edit-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--primary-orange);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-edit-card:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange);
     }
 
     .business-top {

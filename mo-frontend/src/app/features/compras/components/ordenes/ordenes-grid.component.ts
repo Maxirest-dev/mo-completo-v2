@@ -60,9 +60,9 @@ export class OrdenesGridComponent {
   columnDefs: ColDef[] = [
     {
       field: 'numero',
-      headerName: 'Número de Orden / Factura',
-      flex: 1.2,
-      minWidth: 200,
+      headerName: 'Número',
+      flex: 0.8,
+      minWidth: 150,
       cellRenderer: (params: any) => {
         const data = params.data as OrdenCompra;
         return `
@@ -129,7 +129,7 @@ export class OrdenesGridComponent {
     {
       field: 'acciones',
       headerName: 'Acciones',
-      width: 320,
+      width: 380,
       suppressHeaderMenuButton: true,
       sortable: false,
       cellRenderer: (params: any) => {

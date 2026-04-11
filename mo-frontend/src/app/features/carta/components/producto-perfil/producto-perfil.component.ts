@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastContainerComponent, NotificationService } from '@mro/shared-ui';
 import { PreciosDialogComponent } from './precios-dialog.component';
@@ -19,7 +20,7 @@ import { CalendarioDialogComponent } from './calendario-dialog.component';
 import { ExtrasDialogComponent } from './extras-dialog.component';
 import { IngredientesDialogComponent } from './ingredientes-dialog.component';
 import { ElaboracionDialogComponent } from './elaboracion-dialog.component';
-import { ProductoPerfil, PreciosFormData, CodigosFormData, DetalleFormData, EstacionFormData, CalendarioFormData, ExtrasFormData, IngredientesFormData, ElaboracionFormData } from '../../models/producto-perfil.model';
+import { ProductoPerfil, PreciosFormData, CodigosFormData, DetalleFormData, EstacionFormData, CalendarioFormData, ExtrasFormData, IngredientesFormData, ElaboracionFormData, PrecioStrategy, PizzaConfig } from '../../models/producto-perfil.model';
 import { getProductoPerfil, ESTACIONES_DISPONIBLES } from '../../data/mock-producto-perfil.data';
 
 type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' | 'extras' | 'ingredientes' | 'elaboracion' | null;
@@ -29,6 +30,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ToastContainerComponent,
     PreciosDialogComponent,
     CodigosDialogComponent,
@@ -42,18 +44,12 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
   template: `
     <div class="perfil-container">
       @if (producto()) {
-        <!-- Breadcrumb -->
-        <nav class="breadcrumb">
-          <button class="breadcrumb-back" (click)="goBack()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
-            </svg>
-          </button>
-          <span class="breadcrumb-item" (click)="goBack()">Marcas</span>
-          <span class="breadcrumb-sep">/</span>
-          <span class="breadcrumb-item" (click)="goBack()">Grupos</span>
-          <span class="breadcrumb-current">{{ producto()!.categoriaNombre }}</span>
-        </nav>
+        <!-- Back button -->
+        <button class="back-btn" (click)="goBack()" title="Volver">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+        </button>
 
         <!-- Top Row: 3 columns -->
         <div class="top-row">
@@ -89,11 +85,11 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
           <div class="info-card">
             <!-- Name row -->
             <div class="info-name-row">
+              <h1 class="product-name">{{ producto()!.nombre }}</h1>
               <span class="status-badge" [class.status-active]="producto()!.activo" [class.status-inactive]="!producto()!.activo">
                 <span class="status-dot"></span>
                 {{ producto()!.activo ? 'Activo' : 'Inactivo' }}
               </span>
-              <h1 class="product-name">{{ producto()!.nombre }}</h1>
               <button class="icon-btn" (click)="showEnDesarrollo()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -132,7 +128,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                 </svg>
               </div>
-              <span class="cta-value cta-value-price">{{ formatPrice(producto()!.precioSalon) }}</span>
+              <span class="cta-value cta-value-price">{{ isPizza() ? pizzaPriceRange() : formatPrice(producto()!.precioSalon) }}</span>
             </div>
 
             <!-- Codigo -->
@@ -200,26 +196,90 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
               <span class="cta-value cta-value-small">{{ calendarioLabel() }}</span>
             </div>
 
-            <!-- Extras -->
+            <!-- Extras / Configuracion (combo) -->
             <div class="cta-card" (click)="openDialog('extras')">
               <div class="cta-header">
                 <div class="cta-icon-label">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success-color)" stroke-width="2" class="cta-icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                   </svg>
-                  <span class="cta-label">+ Extras</span>
+                  <span class="cta-label">{{ isSpecialProduct() ? 'Configuracion' : '+ Extras' }}</span>
                 </div>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cta-edit-icon">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                 </svg>
               </div>
-              <span class="cta-value" [class.cta-value-muted]="extrasCount() === 0">{{ extrasCount() > 0 ? extrasCount() + ' item' + (extrasCount() > 1 ? 's' : '') : 'Sin extras' }}</span>
+              @if (isSpecialProduct()) {
+                <span class="cta-value cta-value-small">{{ specialConfigLabel() }}</span>
+              } @else {
+                <span class="cta-value" [class.cta-value-muted]="extrasCount() === 0">{{ extrasCount() > 0 ? extrasCount() + ' item' + (extrasCount() > 1 ? 's' : '') : 'Sin extras' }}</span>
+              }
             </div>
           </div>
         </div>
 
-        <!-- Bottom Row: Ingredientes & Elaboracion -->
+        <!-- Bottom Row -->
+        @if (isComboOrMenu()) {
+        <!-- Combo/Menu: Ingredientes & Elaboracion disabled -->
+        <div class="bottom-grid">
+          <div class="detail-card detail-card--disabled">
+            <div class="detail-card-header">
+              <h3 class="detail-card-title">INGREDIENTES</h3>
+              <span class="disabled-hint">No aplica para agrupadores</span>
+            </div>
+            <div class="disabled-content">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <p>Los ingredientes se definen en cada producto individual del combo</p>
+            </div>
+          </div>
+
+          <div class="detail-card detail-card--disabled">
+            <div class="detail-card-header">
+              <h3 class="detail-card-title">ELABORACION PASO A PASO</h3>
+              <span class="disabled-hint">No aplica para agrupadores</span>
+            </div>
+            <div class="disabled-content">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <p>La elaboracion se define en cada producto individual del combo</p>
+            </div>
+          </div>
+        </div>
+        } @else if (isPizza()) {
+        <!-- Pizza: Ingredientes & Elaboracion disabled -->
+        <div class="bottom-grid">
+          <div class="detail-card detail-card--disabled">
+            <div class="detail-card-header">
+              <h3 class="detail-card-title">INGREDIENTES</h3>
+              <span class="disabled-hint">No aplica para pizzas</span>
+            </div>
+            <div class="disabled-content">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <p>Los ingredientes se definen en cada sabor individual de la pizza</p>
+            </div>
+          </div>
+
+          <div class="detail-card detail-card--disabled">
+            <div class="detail-card-header">
+              <h3 class="detail-card-title">ELABORACION PASO A PASO</h3>
+              <span class="disabled-hint">No aplica para pizzas</span>
+            </div>
+            <div class="disabled-content">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/>
+              </svg>
+              <p>La elaboracion se define en cada sabor individual de la pizza</p>
+            </div>
+          </div>
+        </div>
+        } @else {
+        <!-- Plato normal: Ingredientes & Elaboracion -->
         <div class="bottom-grid">
           <div class="detail-card">
             <div class="detail-card-header">
@@ -282,6 +342,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
             }
           </div>
         </div>
+        }
 
         <!-- Footer -->
         <footer class="perfil-footer">
@@ -307,6 +368,12 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
         [precioSalon]="producto()!.precioSalon"
         [precioDelivery]="producto()!.precioDelivery"
         [precioMostrador]="producto()!.precioMostrador"
+        [isCombo]="isComboOrMenu()"
+        [isPizzaMode]="isPizza()"
+        [pizzaTamanos]="producto()!.pizzaConfig?.tamanos ?? []"
+        [precioStrategy]="producto()!.precioStrategy ?? 'manual'"
+        [precioSuma]="comboPrecioSuma()"
+        [precioMayor]="comboPrecioMayor()"
         (guardar)="onGuardarPrecios($event)"
         (cancelar)="closeDialog()"
       />
@@ -353,7 +420,11 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
       <app-extras-dialog
         [extras]="producto()!.extras"
         [adicionales]="producto()!.adicionales"
+        [isPizza]="isPizza()"
+        [isComboOrMenu]="isComboOrMenu()"
+        [pizzaConfig]="producto()!.pizzaConfig"
         (guardar)="onGuardarExtras($event)"
+        (guardarPizza)="onGuardarPizzaConfig($event)"
         (cancelar)="closeDialog()"
       />
     }
@@ -384,33 +455,22 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     }
 
     /* ---- Breadcrumb ---- */
-    .breadcrumb {
+    .back-btn {
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      color: var(--slate-500);
-    }
-    .breadcrumb-back {
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: transparent;
-      border: none;
-      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: white;
+      color: var(--slate-700);
       cursor: pointer;
-      transition: color 0.15s;
-      margin-right: 4px;
-      padding: 0;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      margin-bottom: 24px;
     }
-    .breadcrumb-back:hover { color: var(--primary-orange); }
-    .breadcrumb-item { cursor: pointer; transition: color 0.15s; }
-    .breadcrumb-item:hover { color: var(--primary-orange); }
-    .breadcrumb-sep { color: var(--slate-300); }
-    .breadcrumb-current { color: var(--text-heading); font-weight: 600; margin-left: 4px; }
+    .back-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     /* ---- Top Row: 3 columns ---- */
     .top-row {
@@ -705,6 +765,260 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     }
     .ver-mas-btn:hover { color: var(--primary-orange-hover); }
 
+    /* ---- Disabled cards ---- */
+    .detail-card--disabled {
+      opacity: 0.45;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .disabled-hint {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--slate-400);
+      background: var(--slate-100);
+      padding: 2px 8px;
+      border-radius: 8px;
+    }
+
+    .disabled-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      gap: 8px;
+      text-align: center;
+      color: var(--slate-400);
+    }
+
+    .disabled-content p {
+      font-size: 13px;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ---- Combo/Menu styles ---- */
+    .combo-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .combo-list--nested { margin-top: 8px; }
+
+    .combo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    .combo-item:last-child { border-bottom: none; }
+
+    .combo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .combo-dot--fijo { background: var(--primary-blue, #1155CC); }
+    .combo-dot--opcional { background: var(--primary-orange, #F27920); }
+
+    .combo-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-heading);
+    }
+
+    .combo-price {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+
+    .combo-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .combo-step-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    .combo-step-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      background: var(--primary-orange);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .combo-step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-heading);
+      flex: 1;
+    }
+
+    .combo-step-rule {
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--slate-100);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* ---- Pizza styles ---- */
+    .pizza-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .pizza-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    .pizza-item:last-child { border-bottom: none; }
+
+    .pizza-icon { font-size: 18px; flex-shrink: 0; }
+
+    .pizza-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .pizza-detail {
+      font-size: 12px;
+      color: var(--slate-400);
+      flex: 1;
+    }
+
+    .pizza-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .mitad-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: default;
+    }
+
+    .mitad-check {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--success-color);
+    }
+
+    .mitad-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success-color);
+    }
+
+    .sabores-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .sabores-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .sabores-table thead { border-bottom: 1px solid var(--divider-color); }
+
+    .sabor-th-name {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--slate-500);
+      padding: 8px 0;
+    }
+
+    .sabor-th-price {
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--slate-500);
+      padding: 8px 12px;
+    }
+
+    .sabor-td-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: var(--text-heading);
+      padding: 8px 0;
+    }
+
+    .sabor-td-price {
+      text-align: right;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 8px 12px;
+    }
+
+    .sabor-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--slate-300);
+      flex-shrink: 0;
+    }
+
+    .sabor-dot--active { background: var(--success-color); }
+
+    .sabor-disabled { opacity: 0.4; }
+
+    .sabores-table tbody tr {
+      border-bottom: 1px solid var(--divider-color);
+    }
+
+    .sabores-table tbody tr:last-child { border-bottom: none; }
+
+    .mitad-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: var(--slate-50);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--slate-500);
+    }
+
+    .empty-detail {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 8px 0 0;
+    }
+
     /* ---- Footer ---- */
     .perfil-footer {
       display: flex;
@@ -768,7 +1082,7 @@ type DialogType = 'precios' | 'codigos' | 'detalle' | 'estacion' | 'calendario' 
     @media (max-width: 600px) {
       .top-row { grid-template-columns: 1fr; }
       .cta-grid { grid-template-columns: 1fr 1fr; }
-      .breadcrumb { font-size: 13px; }
+      .back-btn { font-size: 13px; }
       .product-name { font-size: 18px; }
     }
   `],
@@ -841,6 +1155,65 @@ export class ProductoPerfilComponent implements OnInit {
     return (p.extras?.length || 0) + (p.adicionales?.length || 0);
   });
 
+  isComboOrMenu = computed(() => {
+    const tipo = this.producto()?.tipo;
+    return tipo === 'combo' || tipo === 'menu';
+  });
+
+  isPizza = computed(() => this.producto()?.tipo === 'pizza');
+
+  pizzaPriceRange = computed(() => {
+    const tamanos = this.producto()?.pizzaConfig?.tamanos ?? [];
+    if (tamanos.length === 0) return 'Sin precios';
+    const precios = tamanos.map(t => t.precio);
+    const min = Math.min(...precios);
+    const max = Math.max(...precios);
+    if (min === max) return this.formatPrice(min);
+    return `${this.formatPrice(min)} - ${this.formatPrice(max)}`;
+  });
+
+  isSpecialProduct = computed(() => this.isComboOrMenu() || this.isPizza());
+
+  comboPrecioSuma = computed(() => {
+    const p = this.producto();
+    if (!p) return 0;
+    const fijos = (p.productosFijos ?? []).reduce((s, f) => s + f.precio, 0);
+    const pasos = (p.pasos ?? []).reduce((s, paso) => {
+      const max = paso.opciones.length ? Math.max(...paso.opciones.map(o => o.precio)) : 0;
+      return s + max;
+    }, 0);
+    return fijos + pasos;
+  });
+
+  comboPrecioMayor = computed(() => {
+    const p = this.producto();
+    if (!p) return 0;
+    const allPrices = [
+      ...(p.productosFijos ?? []).map(f => f.precio),
+      ...(p.pasos ?? []).flatMap(paso => paso.opciones.map(o => o.precio)),
+    ];
+    return allPrices.length ? Math.max(...allPrices) : 0;
+  });
+
+  specialConfigLabel = computed(() => {
+    const p = this.producto();
+    if (!p) return '';
+    if (p.tipo === 'pizza' && p.pizzaConfig) {
+      const t = p.pizzaConfig.tamanos.length;
+      return `${t} tamano${t !== 1 ? 's' : ''}`;
+    }
+    return this.comboConfigLabel();
+  });
+
+  comboConfigLabel = computed(() => {
+    const p = this.producto();
+    if (!p) return '';
+    const fijos = p.productosFijos?.length ?? 0;
+    const pasos = p.pasos?.length ?? 0;
+    return `${fijos} fijo${fijos !== 1 ? 's' : ''} · ${pasos} paso${pasos !== 1 ? 's' : ''}`;
+  });
+
+
   ngOnInit(): void {
     this.loadProducto();
   }
@@ -911,7 +1284,7 @@ export class ProductoPerfilComponent implements OnInit {
   }
 
   // Dialog save handlers
-  onGuardarPrecios(data: PreciosFormData): void {
+  onGuardarPrecios(data: PreciosFormData & { precioStrategy?: PrecioStrategy }): void {
     this.producto.update(p => p ? { ...p, ...data } : p);
     this.closeDialog();
     this.notificationService.success('Precios actualizados');
@@ -961,6 +1334,12 @@ export class ProductoPerfilComponent implements OnInit {
     this.producto.update(p => p ? { ...p, extras: data.extras, adicionales: data.adicionales } : p);
     this.closeDialog();
     this.notificationService.success('Extras actualizados');
+  }
+
+  onGuardarPizzaConfig(config: PizzaConfig): void {
+    this.producto.update(p => p ? { ...p, pizzaConfig: config } : p);
+    this.closeDialog();
+    this.notificationService.success('Configuracion de pizza actualizada');
   }
 
   onGuardarIngredientes(data: IngredientesFormData): void {

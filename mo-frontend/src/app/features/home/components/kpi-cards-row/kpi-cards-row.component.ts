@@ -15,7 +15,15 @@ import { GaugeKpiStrategy } from '../kpi-card/kpi-strategies';
 interface KpiWithStrategy {
   data: KpiData;
   strategy: KpiRenderStrategy;
+  link?: string;
 }
+
+const KPI_LINKS: Record<string, string> = {
+  'ventas-hoy': '/ventas',
+  'ticket-promedio': '/ventas',
+  'food-cost-teorico': '/inventario',
+  'estado-salon': '/pdv',
+};
 
 // Singleton instances to avoid recreating on each render
 const SPARKLINE_STRATEGY = new CurrencyKpiStrategy('sparkline');
@@ -34,6 +42,7 @@ const GAUGE_STRATEGY = new GaugeKpiStrategy();
           class="kpi-col"
           [data]="item.data"
           [strategy]="item.strategy"
+          [link]="item.link"
         />
       }
     </div>
@@ -81,6 +90,7 @@ export class KpiCardsRowComponent {
     this.kpis().map(kpi => ({
       data: kpi,
       strategy: this.resolveStrategy(kpi),
+      link: KPI_LINKS[kpi.id],
     }))
   );
 

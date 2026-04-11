@@ -10,16 +10,7 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="grid-controls">
-      <div class="filter-tabs">
-        @for (filtro of filtros; track filtro.value) {
-          <button
-            class="filter-tab"
-            [class.filter-tab--active]="facade.filtroConcepto() === filtro.value"
-            (click)="facade.setFiltroConcepto(filtro.value)">
-            {{ filtro.label }} ({{ getConteo(filtro.value) }})
-          </button>
-        }
-      </div>
+      <h2 class="grid-title">Conceptos de Gasto</h2>
       <div class="search-box">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -31,6 +22,12 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
           [value]="facade.busquedaConcepto()"
           (input)="onBusqueda($event)">
       </div>
+      <button class="btn-nuevo" (click)="nuevoClick.emit()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Nuevo Concepto
+      </button>
     </div>
 
     <div class="grid-table">
@@ -52,18 +49,9 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
             </span>
           </div>
           <div class="grid-col grid-col--acciones">
-            <button class="btn-action" (click)="editarClick.emit(concepto.id)">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-              </svg>
-            </button>
+            <button class="btn-edit" (click)="editarClick.emit(concepto.id)">Editar</button>
             @if (concepto.activo) {
-              <button class="btn-action btn-action--danger" (click)="desactivarClick.emit(concepto.id)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-                </svg>
-              </button>
+              <button class="btn-deactivate" (click)="desactivarClick.emit(concepto.id)">Desactivar</button>
             }
           </div>
         </div>
@@ -73,40 +61,74 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
     </div>
   `,
   styles: [`
+    .btn-nuevo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: white;
+      background: var(--primary-orange);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-nuevo:hover { background: var(--primary-orange-hover); }
+
+    .grid-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--slate-900);
+      margin: 0;
+      margin-right: auto;
+    }
+
     .grid-controls {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       margin-bottom: 12px;
       gap: 12px;
     }
 
     .filter-tabs {
       display: flex;
-      gap: 6px;
+      gap: 22px;
+      flex-wrap: wrap;
     }
 
     .filter-tab {
-      padding: 6px 14px;
-      font-size: 13px;
+      padding: 11px 16px;
+      font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-full);
+      color: var(--slate-700);
       background: white;
-      color: var(--gray-500);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
+      white-space: nowrap;
+      line-height: 1.428;
+    }
 
-      &:hover:not(.filter-tab--active) {
-        background: var(--gray-50);
-      }
+    .filter-tab:hover {
+      border-color: var(--slate-300);
+      background: var(--slate-50);
+    }
 
-      &--active {
-        background: var(--primary-orange-light);
-        color: var(--primary-orange);
-        border-color: var(--primary-orange);
-      }
+    .filter-tab-active {
+      color: var(--primary-orange-dark);
+      border-color: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
+    }
+
+    .filter-tab-active:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange-lighter);
     }
 
     .search-box {
@@ -173,7 +195,7 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
     .grid-col--nombre { flex: 1; }
     .grid-col--rubro { width: 160px; }
     .grid-col--estado { width: 100px; }
-    .grid-col--acciones { width: 100px; display: flex; gap: 6px; justify-content: flex-end; }
+    .grid-col--acciones { width: 200px; display: flex; gap: 8px; justify-content: flex-end; }
 
     .rubro-badge {
       font-size: 12px;
@@ -200,29 +222,36 @@ import { FiltroConcepto, FILTROS_CONCEPTO } from '../../models/compras.models';
       }
     }
 
-    .btn-action {
+    .btn-edit {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 6px;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--gray-700);
       background: white;
-      color: var(--gray-500);
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s ease;
-
-      &:hover {
-        background: var(--gray-50);
-        border-color: var(--gray-300);
-      }
-
-      &--danger:hover {
-        background: var(--danger-bg);
-        border-color: #FECACA;
-        color: #DC2626;
-      }
+      transition: all 0.15s;
     }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
+
+    .btn-deactivate {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      color: #DC2626;
+      background: #FFFFFF;
+      border: 1px solid #FECACA;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-deactivate:hover { background: #FEF2F2; }
 
     .grid-empty {
       padding: 24px;
@@ -238,6 +267,7 @@ export class ConceptosGastoGridComponent {
 
   editarClick = output<number>();
   desactivarClick = output<number>();
+  nuevoClick = output<void>();
 
   getConteo(filtro: FiltroConcepto): number {
     const conteos = this.facade.conteosConceptos();

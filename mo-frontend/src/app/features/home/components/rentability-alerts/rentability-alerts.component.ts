@@ -4,9 +4,18 @@ import {
   input,
   signal,
   computed,
+  inject,
 } from '@angular/core';
-import { RentabilityAlert, RentabilityAlertSeveridad } from '../../models';
+import { Router } from '@angular/router';
+import { RentabilityAlert, RentabilityAlertSeveridad, RentabilityAlertTipo } from '../../models';
 import { DashboardPanelComponent } from '../dashboard-panel';
+
+const TIPO_ROUTES: Record<RentabilityAlertTipo, string> = {
+  MARGEN_BAJO: '/carta/actualizar-precios',
+  COSTO_ALTO: '/carta/actualizar-precios',
+  OPORTUNIDAD: '/carta',
+  TENDENCIA: '/ventas',
+};
 
 @Component({
   selector: 'app-rentability-alerts',
@@ -32,6 +41,7 @@ import { DashboardPanelComponent } from '../dashboard-panel';
               [class.alert-item--critical]="alert.severidad === 'CRITICAL'"
               [class.alert-item--warning]="alert.severidad === 'WARNING'"
               [class.alert-item--info]="alert.severidad === 'INFO'"
+              (click)="navigateAlert(alert)"
             >
               <div class="alert-icon" aria-hidden="true">
                 {{ severityIcon(alert.severidad) }}
@@ -43,6 +53,11 @@ import { DashboardPanelComponent } from '../dashboard-panel';
                   <span class="suggestion-prefix">IA sugiere:</span>
                   {{ stripIaSugiere(alert.sugerencia) }}
                 </p>
+              </div>
+              <div class="alert-action" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
             </article>
             @if (!last) {
@@ -98,7 +113,14 @@ import { DashboardPanelComponent } from '../dashboard-panel';
       padding: 12px 0;
       border-left: 3px solid transparent;
       padding-left: 12px;
+      padding-right: 8px;
       border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .alert-item:hover {
+      background: var(--slate-50, #F8FAFC);
     }
 
     .alert-item--critical {
@@ -154,6 +176,19 @@ import { DashboardPanelComponent } from '../dashboard-panel';
     .suggestion-prefix {
       font-weight: 600;
       font-style: italic;
+      color: var(--primary-orange, #F27920);
+    }
+
+    /* ── Action chevron ── */
+    .alert-action {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      color: var(--slate-300, #CBD5E1);
+      transition: color 0.15s ease;
+    }
+
+    .alert-item:hover .alert-action {
       color: var(--primary-orange, #F27920);
     }
 
@@ -241,32 +276,22 @@ import { DashboardPanelComponent } from '../dashboard-panel';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentabilityAlertsComponent {
+  private readonly router = inject(Router);
 
-  /** List of rentability alerts from BI + IA engine */
   alerts = input.required<RentabilityAlert[]>();
-
-  /** Whether the component is in a loading state */
   loading = input(false);
 
-  /** Maximum alerts to show before "Ver mas" */
   private readonly MAX_VISIBLE = 3;
-
-  /** Toggle to show all alerts */
   showAll = signal(false);
 
-  /** Whether there are more alerts than the visible limit */
   hasMore = computed(() => this.alerts().length > this.MAX_VISIBLE);
-
-  /** Number of remaining hidden alerts */
   remainingCount = computed(() => Math.max(0, this.alerts().length - this.MAX_VISIBLE));
 
-  /** The alerts to display (limited or all) */
   visibleAlerts = computed(() => {
     const all = this.alerts();
     return this.showAll() ? all : all.slice(0, this.MAX_VISIBLE);
   });
 
-  /** Map severity to a visual icon */
   severityIcon(severidad: RentabilityAlertSeveridad): string {
     const icons: Record<RentabilityAlertSeveridad, string> = {
       CRITICAL: '\u26A0\uFE0F',
@@ -276,13 +301,16 @@ export class RentabilityAlertsComponent {
     return icons[severidad];
   }
 
-  /** Strip the "IA sugiere:" prefix if present, since we render it separately */
   stripIaSugiere(sugerencia: string): string {
     return sugerencia.replace(/^IA sugiere:\s*/i, '');
   }
 
-  /** Toggle show all alerts */
   toggleShowAll(): void {
     this.showAll.update(v => !v);
+  }
+
+  navigateAlert(alert: RentabilityAlert): void {
+    const route = TIPO_ROUTES[alert.tipo];
+    this.router.navigateByUrl(route);
   }
 }

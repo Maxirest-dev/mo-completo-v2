@@ -28,40 +28,40 @@ import { Proveedor, CondicionIVA } from '../../models/compras.models';
           <div class="form-row">
             <div class="form-group">
               <label>Nombre</label>
-              <input class="form-control" [(ngModel)]="nombre" placeholder="Nombre comercial">
+              <input class="form-input" [(ngModel)]="nombre" placeholder="Nombre comercial">
             </div>
             <div class="form-group">
               <label>Razon Social</label>
-              <input class="form-control" [(ngModel)]="razonSocial" placeholder="Razon social">
+              <input class="form-input" [(ngModel)]="razonSocial" placeholder="Razon social">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label>CUIT</label>
-              <input class="form-control" [(ngModel)]="cuit" placeholder="30-12345678-9">
+              <input class="form-input" [(ngModel)]="cuit" placeholder="30-12345678-9">
             </div>
             <div class="form-group">
               <label>Email</label>
-              <input class="form-control" type="email" [(ngModel)]="email" placeholder="email@empresa.com.ar">
+              <input class="form-input" type="email" [(ngModel)]="email" placeholder="email@empresa.com.ar">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label>Telefono</label>
-              <input class="form-control" [(ngModel)]="telefono" placeholder="011-1234-5678">
+              <input class="form-input" [(ngModel)]="telefono" placeholder="011-1234-5678">
             </div>
             <div class="form-group">
               <label>Direccion</label>
-              <input class="form-control" [(ngModel)]="direccion" placeholder="Direccion completa">
+              <input class="form-input" [(ngModel)]="direccion" placeholder="Direccion completa">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label>Condicion IVA</label>
-              <select class="form-control" [(ngModel)]="condicionIVA">
+              <select class="form-select" [(ngModel)]="condicionIVA">
                 <option value="Responsable Inscripto">Responsable Inscripto</option>
                 <option value="Monotributo">Monotributo</option>
                 <option value="Exento">Exento</option>
@@ -70,14 +70,14 @@ import { Proveedor, CondicionIVA } from '../../models/compras.models';
             </div>
             <div class="form-group">
               <label>Dias de Credito</label>
-              <input class="form-control" type="number" [(ngModel)]="diasCredito" min="0" max="365">
+              <input class="form-input" type="number" [(ngModel)]="diasCredito" min="0" max="365">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label>Concepto de gasto asociado</label>
-              <select class="form-control" [(ngModel)]="conceptoGastoId">
+              <select class="form-select" [(ngModel)]="conceptoGastoId">
                 <option [ngValue]="null">Sin concepto asociado</option>
                 @for (c of facade.conceptosActivos(); track c.id) {
                   <option [ngValue]="c.id">{{ c.nombre }} ({{ c.rubro }})</option>

@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   input,
   computed,
+  inject,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { KpiData } from '../../models/kpi.model';
 import { KpiRenderStrategy, KpiComparisonBadge } from './kpi-strategies';
@@ -14,7 +16,7 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
   standalone: true,
   imports: [TrendIndicatorComponent],
   template: `
-    <div class="kpi-card" [class]="strategy().getCssClass()">
+    <div class="kpi-card" [class]="strategy().getCssClass()" [class.kpi-card--clickable]="link()" (click)="navigate()" [attr.role]="link() ? 'link' : null" [attr.tabindex]="link() ? 0 : null">
       <h3 class="kpi-title">{{ data().titulo }}</h3>
       <span class="kpi-value">{{ formattedValue() }}</span>
 
@@ -137,10 +139,23 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
       flex-direction: column;
       gap: 4px;
       flex: 1;
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
 
       &:hover {
         box-shadow: var(--shadow-md);
+      }
+    }
+
+    .kpi-card--clickable {
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
 
@@ -270,9 +285,11 @@ import { TrendIndicatorComponent } from '@mro/shared-ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KpiCardComponent {
+  private readonly router = inject(Router);
 
   data = input.required<KpiData>();
   strategy = input.required<KpiRenderStrategy>();
+  link = input<string>();
 
   formattedValue = computed(() => this.strategy().formatValue(this.data().valor));
 
@@ -308,4 +325,11 @@ export class KpiCardComponent {
 
   /** 12 segments for the heatbar visual dividers */
   readonly heatbarSegments = Array.from({ length: 12 }, (_, i) => i);
+
+  navigate(): void {
+    const link = this.link();
+    if (link) {
+      this.router.navigateByUrl(link);
+    }
+  }
 }

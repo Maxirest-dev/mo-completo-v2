@@ -73,38 +73,43 @@ import {
         [otrosResumen]="otrosResumen()"
       />
 
-      @switch (tabActivo()) {
-        @case ('dashboard') {
-          <app-dashboard
-            [formasCobro]="formasCobro()"
-            [comprobantes]="comprobantes()"
-            [articulos]="articulos()"
-            [categorias]="categorias()"
-            [movimientos]="movimientosFiltrados()"
-          />
+      @for (tab of [tabActivo()]; track tab) {
+      <div class="tab-content">
+        @switch (tabActivo()) {
+          @case ('dashboard') {
+            <app-dashboard
+              [formasCobro]="formasCobro()"
+              [comprobantes]="comprobantes()"
+              [articulos]="articulos()"
+              [categorias]="categorias()"
+              [movimientos]="movimientosFiltrados()"
+              (tabChange)="tabActivo.set($event)"
+            />
+          }
+          @case ('formasCobro') {
+            <app-formas-cobro
+              [formasCobro]="formasCobro()"
+            />
+          }
+          @case ('conceptos') {
+            <app-conceptos
+              [conceptos]="conceptos()"
+            />
+          }
+          @case ('comprobantes') {
+            <app-comprobantes
+              [comprobantes]="comprobantes()"
+              [ventas]="ventasComprobantes()"
+            />
+          }
+          @case ('articulos') {
+            <app-articulos
+              [articulos]="articulos()"
+              [categorias]="categorias()"
+            />
+          }
         }
-        @case ('formasCobro') {
-          <app-formas-cobro
-            [formasCobro]="formasCobro()"
-          />
-        }
-        @case ('conceptos') {
-          <app-conceptos
-            [conceptos]="conceptos()"
-          />
-        }
-        @case ('comprobantes') {
-          <app-comprobantes
-            [comprobantes]="comprobantes()"
-            [ventas]="ventasComprobantes()"
-          />
-        }
-        @case ('articulos') {
-          <app-articulos
-            [articulos]="articulos()"
-            [categorias]="categorias()"
-          />
-        }
+      </div>
       }
     }
   `,
@@ -134,6 +139,15 @@ import {
       height: 1px;
       background: var(--slate-200, #E2E8F0);
       margin: 16px 0 20px;
+    }
+
+    .tab-content {
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .loading-overlay {

@@ -1,15 +1,16 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProgressBarComponent } from '@mro/shared-ui';
 import { StockAlert, StockAlertEstado } from '../../models';
 
 @Component({
   selector: 'app-stock-alert-item',
   standalone: true,
-  imports: [ProgressBarComponent],
+  imports: [ProgressBarComponent, RouterLink],
   template: `
     <div class="alert-item">
       <div class="alert-info">
-        <span class="alert-nombre">{{ alert().nombre }}</span>
+        <a class="alert-nombre" [routerLink]="['/inventario/insumo', alert().insumoId]">{{ alert().nombre }}</a>
         <span class="alert-deposito">{{ alert().depositoNombre }}</span>
       </div>
 
@@ -22,9 +23,9 @@ import { StockAlert, StockAlertEstado } from '../../models';
       </span>
 
       @if (alert().estado === 'CRITICO') {
-        <button class="btn-pedir" title="Crear pedido de reposicion">
+        <a class="btn-pedir" routerLink="/compras" title="Crear pedido de reposicion">
           Pedir+
-        </button>
+        </a>
       }
     </div>
   `,
@@ -57,6 +58,12 @@ import { StockAlert, StockAlertEstado } from '../../models';
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .alert-nombre:hover {
+      color: var(--primary-orange, #F27920);
     }
 
     .alert-deposito {
@@ -108,6 +115,7 @@ import { StockAlert, StockAlertEstado } from '../../models';
       color: var(--danger-color, #EF4444);
       cursor: pointer;
       white-space: nowrap;
+      text-decoration: none;
       transition: background 0.2s ease, color 0.2s ease;
     }
 

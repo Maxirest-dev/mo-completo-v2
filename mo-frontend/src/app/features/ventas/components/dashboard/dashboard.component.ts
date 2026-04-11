@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables, ChartData, ChartOptions } from 'chart.js';
-import { FormaCobro, ComprobanteVenta, ArticuloVenta, CategoriaVenta, MovimientoHora } from '../../models';
+import { FormaCobro, ComprobanteVenta, ArticuloVenta, CategoriaVenta, MovimientoHora, TabVentas } from '../../models';
 
 Chart.register(...registerables);
 
@@ -14,7 +14,7 @@ Chart.register(...registerables);
   template: `
     <div class="dashboard-grid">
       <!-- Top row -->
-      <div class="chart-card">
+      <div class="chart-card chart-card--clickable" (click)="tabChange.emit('formasCobro')">
         <h3 class="chart-title">Formas de Cobro</h3>
         <div class="chart-container chart-container-sm">
           <canvas baseChart
@@ -25,7 +25,7 @@ Chart.register(...registerables);
         </div>
       </div>
 
-      <div class="chart-card">
+      <div class="chart-card chart-card--clickable" (click)="tabChange.emit('conceptos')">
         <h3 class="chart-title">Conceptos</h3>
         <div class="chart-container chart-container-sm">
           <canvas baseChart
@@ -36,7 +36,7 @@ Chart.register(...registerables);
         </div>
       </div>
 
-      <div class="chart-card">
+      <div class="chart-card chart-card--clickable" (click)="tabChange.emit('comprobantes')">
         <h3 class="chart-title">Ventas por Comprobante</h3>
         <div class="comprobante-list">
           @for (comp of comprobantes(); track comp.tipo) {
@@ -50,7 +50,7 @@ Chart.register(...registerables);
       </div>
 
       <!-- Bottom row -->
-      <div class="chart-card chart-card-half">
+      <div class="chart-card chart-card-half chart-card--clickable" (click)="tabChange.emit('articulos')">
         <h3 class="chart-title">Articulos</h3>
         <div class="chart-container">
           <canvas baseChart
@@ -86,6 +86,20 @@ Chart.register(...registerables);
       border-radius: var(--radius-lg, 14px);
       box-shadow: var(--shadow-sm, 0 1px 1.75px -1px rgba(0,0,0,0.1), 0 1px 2.625px rgba(0,0,0,0.1));
       padding: 20px 25px;
+    }
+
+    .chart-card--clickable {
+      cursor: pointer;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .chart-card--clickable:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .chart-card--clickable:active {
+      transform: translateY(0);
     }
 
     .chart-card-half {
@@ -172,6 +186,7 @@ export class DashboardComponent {
   readonly articulos = input.required<ArticuloVenta[]>();
   readonly categorias = input.required<CategoriaVenta[]>();
   readonly movimientos = input.required<MovimientoHora[]>();
+  readonly tabChange = output<TabVentas>();
 
   readonly doughnutOptions: ChartOptions<'doughnut'> = {
     responsive: true,

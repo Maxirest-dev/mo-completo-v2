@@ -4,7 +4,9 @@ import {
   input,
   signal,
   computed,
+  inject,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { AiSummary, AiHighlight } from '../../models';
 
 @Component({
@@ -53,10 +55,13 @@ import { AiSummary, AiHighlight } from '../../models';
               <div class="ai-banner__highlights">
                 @for (highlight of summary()!.highlights; track highlight.texto) {
                   <span
-                    class="highlight-tag"
+                    class="highlight-tag highlight-tag--clickable"
                     [class.highlight-tag--positivo]="highlight.tipo === 'positivo'"
                     [class.highlight-tag--negativo]="highlight.tipo === 'negativo'"
                     [class.highlight-tag--neutro]="highlight.tipo === 'neutro'"
+                    (click)="navigateHighlight(highlight)"
+                    role="link"
+                    tabindex="0"
                   >
                     @if (highlight.tipo === 'positivo') {
                       <span class="highlight-dot highlight-dot--positivo"></span>
@@ -66,6 +71,9 @@ import { AiSummary, AiHighlight } from '../../models';
                       <span class="highlight-dot highlight-dot--neutro"></span>
                     }
                     {{ highlight.texto }}
+                    <svg class="highlight-arrow" width="10" height="10" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                   </span>
                 }
               </div>
@@ -199,6 +207,26 @@ import { AiSummary, AiHighlight } from '../../models';
       padding: 4px 10px;
       border-radius: var(--radius-full, 9999px);
       line-height: 1.4;
+    }
+
+    .highlight-tag--clickable {
+      cursor: pointer;
+      transition: filter 0.15s ease, transform 0.1s ease;
+    }
+
+    .highlight-tag--clickable:hover {
+      filter: brightness(0.95);
+      transform: translateY(-1px);
+    }
+
+    .highlight-arrow {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .highlight-tag--clickable:hover .highlight-arrow {
+      opacity: 1;
     }
 
     .highlight-dot {
@@ -391,21 +419,32 @@ import { AiSummary, AiHighlight } from '../../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AiSummaryBannerComponent {
+  private readonly router = inject(Router);
 
-  /** The AI-generated summary data */
   summary = input.required<AiSummary | null>();
-
-  /** Whether the component is in a loading state */
   loading = input(false);
-
-  /** Internal toggle for expanded details view */
   expanded = signal(false);
 
-  /** Whether highlights exist in the summary */
   hasHighlights = computed(() => (this.summary()?.highlights?.length ?? 0) > 0);
 
-  /** Toggle the expanded details section */
   toggleExpanded(): void {
     this.expanded.update(v => !v);
+  }
+
+  navigateHighlight(highlight: AiHighlight): void {
+    const text = highlight.texto.toLowerCase();
+    if (text.includes('demanda') || text.includes('ventas') || text.includes('venta')) {
+      this.router.navigateByUrl('/ventas');
+    } else if (text.includes('precio') || text.includes('proveedor') || text.includes('costo') || text.includes('lácteo')) {
+      this.router.navigateByUrl('/compras');
+    } else if (text.includes('stock') || text.includes('insumo')) {
+      this.router.navigateByUrl('/inventario');
+    } else if (text.includes('produccion') || text.includes('partida') || text.includes('reforzar')) {
+      this.router.navigateByUrl('/produccion');
+    } else if (text.includes('menu') || text.includes('carta') || text.includes('producto')) {
+      this.router.navigateByUrl('/carta');
+    } else {
+      this.router.navigateByUrl('/ventas');
+    }
   }
 }

@@ -26,17 +26,12 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
   imports: [CommonModule, FormsModule, IngredientesDialogComponent, ElaboracionDialogComponent],
   template: `
     <div class="perfil-container">
-      <!-- Breadcrumb -->
-      <nav class="breadcrumb">
-        <button class="breadcrumb-back" (click)="goBack()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
-          </svg>
-        </button>
-        <span class="breadcrumb-item" (click)="goBack()">Inventario</span>
-        <span class="breadcrumb-sep">/</span>
-        <span class="breadcrumb-current">{{ insumo()?.nombre ?? 'Insumo' }}</span>
-      </nav>
+      <!-- Back button -->
+      <button class="back-btn" (click)="goBack()" title="Volver">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+      </button>
 
       @if (loading()) {
         <div class="loading-container">
@@ -60,11 +55,11 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
           <!-- Col 2: Name + Description -->
           <div class="info-card">
             <div class="info-name-row">
+              <h1 class="info-nombre">{{ ins.nombre }}</h1>
               <span class="status-badge" [class.status-inactive]="!ins.activo">
                 <span class="status-dot"></span>
                 {{ ins.activo ? 'Activo' : 'Inactivo' }}
               </span>
-              <h1 class="info-nombre">{{ ins.nombre }}</h1>
               <button class="btn-edit-icon" aria-label="Editar nombre">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -401,45 +396,22 @@ type EditField = 'tipoInsumo' | 'deposito' | 'unidad' | 'codigo' | 'precio' | 's
     }
 
     /* Breadcrumb */
-    .breadcrumb {
+    .back-btn {
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      color: var(--slate-500);
-    }
-
-    .breadcrumb-back {
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: transparent;
-      border: none;
-      color: var(--text-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: white;
+      color: var(--slate-700);
       cursor: pointer;
-      transition: color 0.15s;
-      margin-right: 4px;
-      padding: 0;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      margin-bottom: 24px;
     }
-
-    .breadcrumb-back:hover { color: var(--primary-orange); }
-
-    .breadcrumb-item {
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-
-    .breadcrumb-item:hover { color: var(--primary-orange); }
-    .breadcrumb-sep { color: var(--slate-300); }
-
-    .breadcrumb-current {
-      color: var(--text-heading);
-      font-weight: 600;
-      margin-left: 4px;
-    }
+    .back-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     /* Loading */
     .loading-container {

@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TrendIndicatorComponent } from '@mro/shared-ui';
 import { TopVenta, TopVentaTendencia } from '../../models';
 
@@ -40,9 +41,9 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
 @Component({
   selector: 'app-top-venta-item',
   standalone: true,
-  imports: [TrendIndicatorComponent],
+  imports: [TrendIndicatorComponent, RouterLink],
   template: `
-    <div class="venta-item">
+    <a class="venta-item" [routerLink]="['/carta/producto', venta().productoId]">
       <span class="venta-posicion" [style.background-color]="medalColor()">
         #{{ venta().posicion }}
       </span>
@@ -59,7 +60,7 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
         [valor]="venta().variacionPct ?? 0"
         [direccion]="trendDirection()"
       />
-    </div>
+    </a>
   `,
   styles: [`
     .venta-item {
@@ -69,10 +70,21 @@ const TENDENCIA_MAP: Record<TopVentaTendencia, 'up' | 'down' | 'neutral'> = {
       padding: 10px 0;
       min-height: 40px;
       border-bottom: 1px solid var(--divider-color, #F1F5F9);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+      cursor: pointer;
+      margin: 0 -8px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
 
     .venta-item:last-child {
       border-bottom: none;
+    }
+
+    .venta-item:hover {
+      background: var(--slate-50, #F8FAFC);
     }
 
     .venta-posicion {

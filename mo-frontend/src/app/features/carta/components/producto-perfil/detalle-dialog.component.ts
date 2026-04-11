@@ -35,6 +35,7 @@ const CATEGORIA_OPTIONS: CategoriaOption[] = [
   { id: 6, nombre: 'Pastas' },
   { id: 7, nombre: 'Bebidas' },
   { id: 8, nombre: 'Postres' },
+  { id: 9, nombre: 'Pizzas' },
 ];
 
 const TIPO_OPTIONS: TipoOption[] = [
@@ -101,18 +102,6 @@ const TIPO_OPTIONS: TipoOption[] = [
               @for (tipo of tipoOptions; track tipo.value) {
                 <option [value]="tipo.value">{{ tipo.label }}</option>
               }
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="origen" class="form-label">Origen</label>
-            <select
-              id="origen"
-              formControlName="origen"
-              class="form-select"
-            >
-              <option value="elaborado">Elaborado</option>
-              <option value="comprado">Comprado</option>
             </select>
           </div>
 

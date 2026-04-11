@@ -3,9 +3,8 @@ import {
   ChangeDetectionStrategy,
   input,
   output,
-  computed,
 } from '@angular/core';
-import { TurnoActual, ViewMode } from '../../models';
+import { TurnoActual, EstadoCaja, ViewMode } from '../../models';
 
 @Component({
   selector: 'app-turno-kpis',
@@ -13,6 +12,7 @@ import { TurnoActual, ViewMode } from '../../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="stat-card">
+      <!-- Header -->
       <div class="stat-card-header">
         <div class="stat-card-header-left">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="header-icon">
@@ -47,6 +47,7 @@ import { TurnoActual, ViewMode } from '../../models';
         </div>
       </div>
 
+      <!-- Turno KPIs -->
       <div class="stat-card-body">
         @if (viewMode() === 'pesos') {
           <div class="stat-card-metric">
@@ -75,6 +76,28 @@ import { TurnoActual, ViewMode } from '../../models';
             <span class="stat-card-value stat-card-value--highlight">#{{ formatNumber(turno().cantCubiertos) }}</span>
           </div>
         }
+      </div>
+
+      <!-- Estado de Caja — compact footer -->
+      <div class="caja-footer">
+        <div class="caja-item">
+          <span class="caja-dot caja-dot--saldo"></span>
+          <span class="caja-label">Saldo</span>
+          <span class="caja-value">\${{ formatNumber(estadoCaja().efectivo) }}</span>
+          <span class="caja-pct">{{ estadoCaja().porcentajeEfectivo }}%</span>
+        </div>
+        <div class="caja-sep"></div>
+        <div class="caja-item">
+          <span class="caja-dot caja-dot--ingreso"></span>
+          <span class="caja-label">Ingresos</span>
+          <span class="caja-value caja-value--ingreso">\${{ formatNumber(estadoCaja().ingreso) }}</span>
+        </div>
+        <div class="caja-sep"></div>
+        <div class="caja-item">
+          <span class="caja-dot caja-dot--egreso"></span>
+          <span class="caja-label">Egresos</span>
+          <span class="caja-value caja-value--egreso">\${{ formatNumber(estadoCaja().diferencia) }}</span>
+        </div>
       </div>
     </div>
   `,
@@ -208,6 +231,67 @@ import { TurnoActual, ViewMode } from '../../models';
       color: var(--success-color);
     }
 
+    /* Caja compact footer */
+    .caja-footer {
+      display: flex;
+      align-items: center;
+      padding: 14px 25px;
+      background: var(--slate-50, #F8FAFC);
+      border-top: 1px solid var(--divider-color);
+    }
+
+    .caja-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .caja-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .caja-dot--saldo { background: var(--slate-500, #64748B); }
+    .caja-dot--ingreso { background: var(--success-color, #00A43D); }
+    .caja-dot--egreso { background: var(--danger-color, #EF4444); }
+
+    .caja-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .caja-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-heading);
+      white-space: nowrap;
+    }
+
+    .caja-value--ingreso { color: var(--success-color); }
+    .caja-value--egreso { color: var(--danger-color); }
+
+    .caja-pct {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: var(--success-bg);
+      color: var(--success-color);
+      white-space: nowrap;
+    }
+
+    .caja-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border-color);
+      margin: 0 16px;
+      flex-shrink: 0;
+    }
+
     @media (max-width: 768px) {
       .stat-card-header {
         flex-direction: column;
@@ -230,11 +314,21 @@ import { TurnoActual, ViewMode } from '../../models';
       .stat-card-value {
         font-size: 22px;
       }
+
+      .caja-footer {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .caja-sep {
+        display: none;
+      }
     }
   `],
 })
 export class TurnoKpisComponent {
   turno = input.required<TurnoActual>();
+  estadoCaja = input.required<EstadoCaja>();
   viewMode = input.required<ViewMode>();
   viewModeChange = output<ViewMode>();
 

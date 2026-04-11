@@ -19,7 +19,6 @@ import {
   MockDashboardDataSource,
 } from '../../../../core/tokens/dashboard-data-source.token';
 
-import { TurnoSelectorComponent } from '../turno-selector';
 import { AiSummaryBannerComponent } from '../ai-summary-banner';
 import { KpiCardsRowComponent } from '../kpi-cards-row';
 import { DemandForecastComponent } from '../demand-forecast';
@@ -31,7 +30,6 @@ import { RentabilityAlertsComponent } from '../rentability-alerts';
   selector: 'app-home',
   standalone: true,
   imports: [
-    TurnoSelectorComponent,
     AiSummaryBannerComponent,
     KpiCardsRowComponent,
     DemandForecastComponent,
@@ -57,13 +55,7 @@ import { RentabilityAlertsComponent } from '../rentability-alerts';
           <h1 class="page-title">Home</h1>
           <p class="page-subtitle">Dashboard operativo del turno actual</p>
         </div>
-        <div class="page-header-right">
-          <app-turno-selector
-            [turnoActivo]="facade.turnoActivo()"
-            [turnos]="facade.turnos()"
-            (turnoChange)="facade.changeTurno($event)"
-          />
-        </div>
+        <div class="page-header-right"></div>
       </header>
 
       <!-- AI Banner -->

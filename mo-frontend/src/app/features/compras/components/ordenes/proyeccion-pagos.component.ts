@@ -1,17 +1,86 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AgCharts } from 'ag-charts-angular';
-import { AgChartOptions, ModuleRegistry, AllCommunityModule } from 'ag-charts-community';
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables, ChartData, ChartOptions } from 'chart.js';
 import { ProyeccionPagos } from '../../models/compras.models';
 import { CurrencyArsPipe } from '@mro/shared-ui';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-proyeccion-pagos',
   standalone: true,
-  imports: [CommonModule, AgCharts, CurrencyArsPipe],
+  imports: [CommonModule, BaseChartDirective, CurrencyArsPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [`
+    .proyeccion-card {
+      background: white;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: var(--radius-lg, 14px);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .proyeccion-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--slate-600);
+      margin-bottom: 16px;
+    }
+
+    .proyeccion-content {
+      display: flex;
+      align-items: center;
+    }
+
+    .proyeccion-kpis {
+      display: flex;
+      gap: 32px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--slate-900);
+      white-space: nowrap;
+    }
+
+    .kpi-detail {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+
+    .kpi-esta-semana .kpi-label { color: #3B82F6; }
+    .kpi-prox-30 .kpi-label { color: var(--warning-color, #F59E0B); }
+    .kpi-vencidas .kpi-label { color: #8B5CF6; }
+
+    .proyeccion-chart {
+      width: 220px;
+      height: 140px;
+      flex-shrink: 0;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .proyeccion-card {
+      position: relative;
+    }
+  `],
   template: `
     <div class="proyeccion-card">
       <div class="proyeccion-title">Proyección de Pagos</div>
@@ -36,7 +105,11 @@ ModuleRegistry.registerModules([AllCommunityModule]);
           }
         </div>
         <div class="proyeccion-chart">
-          <ag-charts [options]="chartOptions()"></ag-charts>
+          <canvas baseChart
+            [type]="'doughnut'"
+            [data]="chartData()"
+            [options]="chartOptions"
+          ></canvas>
         </div>
       </div>
     </div>
@@ -45,48 +118,53 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 export class ProyeccionPagosComponent {
   data = input.required<ProyeccionPagos | null>();
 
-  private baseOptions: AgChartOptions = {
-    width: 340,
-    height: 140,
-    data: [],
-    series: [{
-      type: 'donut',
-      angleKey: 'value',
-      legendItemKey: 'label',
-      innerRadiusRatio: 0.6,
-      outerRadiusRatio: 0.95,
-      fills: ['#3B82F6', 'var(--warning-color)', '#8B5CF6'],
-      strokes: ['#3B82F6', 'var(--warning-color)', '#8B5CF6'],
-      calloutLabel: { enabled: false },
-      sectorLabel: { enabled: false },
+  readonly chartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          color: '#64748B',
+          font: { size: 12, family: 'Inter' },
+          usePointStyle: true,
+          pointStyle: 'circle',
+          padding: 16,
+          boxWidth: 8,
+        },
+      },
       tooltip: {
-        renderer: (params: any) =>
-          `${params.datum.label}: $${params.datum.value.toLocaleString('es-AR')} (${params.datum.pct}%)`
-      }
-    } as any],
-    legend: {
-      position: 'right',
-      item: {
-        label: {
-          fontSize: 12,
-          formatter: ({ itemId, value }: any) => value
-        }
-      }
+        backgroundColor: '#1F2937',
+        titleFont: { family: 'Inter', size: 12 },
+        bodyFont: { family: 'Inter', size: 12 },
+        padding: 10,
+        cornerRadius: 8,
+        callbacks: {
+          label: (ctx) => {
+            const val = ctx.parsed;
+            return ` $${val.toLocaleString('es-AR')}`;
+          },
+        },
+      },
     },
-    padding: { top: 5, right: 5, bottom: 5, left: 5 },
-    background: { visible: false }
-  } as AgChartOptions;
+    layout: {
+      padding: { right: 10 },
+    },
+  };
 
-  chartOptions = computed<AgChartOptions>(() => {
+  chartData = computed<ChartData<'doughnut'>>(() => {
     const proy = this.data();
-    if (!proy) return this.baseOptions;
+    if (!proy) {
+      return { labels: [], datasets: [] };
+    }
     return {
-      ...this.baseOptions,
-      data: [
-        { label: 'Esta semana', value: proy.estaSemana.monto, pct: proy.estaSemana.porcentaje },
-        { label: 'Próximos 30 días', value: proy.proximos30Dias.monto, pct: proy.proximos30Dias.porcentaje },
-        { label: 'Vencidas', value: proy.vencidas.monto, pct: proy.vencidas.porcentaje }
-      ]
+      labels: ['Esta semana', 'Próximos 30 días', 'Vencidas'],
+      datasets: [{
+        data: [proy.estaSemana.monto, proy.proximos30Dias.monto, proy.vencidas.monto],
+        backgroundColor: ['#3B82F6', '#F59E0B', '#8B5CF6'],
+        borderWidth: 0,
+      }],
     };
   });
 }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, inject, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject, HostListener, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AiPanelService } from '../../services/ai-panel.service';
@@ -9,65 +9,134 @@ interface NavItem {
   active: boolean;
 }
 
+interface Local {
+  code: string;
+  name: string;
+  selected: boolean;
+}
+
+interface Brand {
+  id: string;
+  code: string;
+  name: string;
+  color: string;
+  locals: Local[];
+  expanded: boolean;
+}
+
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <header class="header">
-      <div class="header-top">
-        <!-- Left: Logo -->
-        <div class="header-top-left">
-          <div class="logo" routerLink="/home" title="Maxirest">
-            <img src="/logo.png" alt="Maxirest" class="logo-img" />
+      <div class="header-single">
+        <!-- Left: Logo + Brand -->
+        <div class="header-left">
+          <div class="logo" routerLink="/home" title="Inicio">
+            <img src="/logo-icon.png" alt="Maxirest" class="logo-img" />
           </div>
-        </div>
 
-        <!-- Center: Home + Search -->
-        <div class="search-group">
-          <button class="home-btn" title="Inicio" routerLink="/home">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          <button
+            class="brand-selector"
+            (click)="showBrandMenu.set(!showBrandMenu()); $event.stopPropagation()"
+            [attr.aria-expanded]="showBrandMenu()"
+            aria-haspopup="true"
+            aria-label="Selector de marca y locales"
+          >
+            <span class="brand-badge" [style.background]="activeBrand().color">{{ activeBrand().code }}</span>
+            <span class="brand-name">{{ activeBrand().name }}</span>
+            <span class="brand-count">{{ selectedLocalsCount() }}</span>
+            <svg class="brand-chevron" [class.brand-chevron-open]="showBrandMenu()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="14" height="14">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
             </svg>
           </button>
-          <div class="search-container">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Buscar..."
-              class="search-input"
-              [value]="searchQuery()"
-              (input)="onSearchInput($event)"
-            />
-          </div>
+
+          @if (showBrandMenu()) {
+            <div class="brand-dropdown" role="menu" (click)="$event.stopPropagation()">
+              @for (brand of brands(); track brand.id) {
+                <div class="brand-section">
+                  <div class="brand-section-header" role="menuitem" (click)="selectBrand(brand.id)">
+                    <span class="brand-badge-sm" [style.background]="brand.color">{{ brand.code }}</span>
+                    <span class="brand-section-name">{{ brand.name }}</span>
+                    @if (brand.id === activeBrand().id) {
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="var(--primary-blue, #1155CC)" width="16" height="16">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                      </svg>
+                    }
+                    <svg class="brand-section-chevron" [class.brand-section-chevron-open]="brand.expanded" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12" (click)="toggleBrandExpand(brand.id); $event.stopPropagation()">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </div>
+                  @if (brand.expanded && brand.id === activeBrand().id) {
+                    <div class="brand-locals">
+                      <label class="local-item local-item-all">
+                        <input type="checkbox" class="local-checkbox" [checked]="allLocalsSelected(brand.id)" (change)="toggleAllLocals(brand.id)" />
+                        <span class="local-label">Seleccionar todo</span>
+                      </label>
+                      @for (local of brand.locals; track local.code) {
+                        <label class="local-item">
+                          <input type="checkbox" class="local-checkbox" [checked]="local.selected" (change)="toggleLocal(brand.id, local.code)" />
+                          <span class="local-code">{{ local.code }}</span>
+                          <span class="local-label">{{ local.name }}</span>
+                        </label>
+                      }
+                      <button class="brand-apply-btn" (click)="applySelection()">Aplicar</button>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
         </div>
+
+        <!-- Center: Nav -->
+        <nav class="header-nav" aria-label="Navegacion principal">
+          @for (item of navItems(); track item.route) {
+            <a [routerLink]="item.route" routerLinkActive="nav-item-active" class="nav-item">
+              {{ item.label }}
+            </a>
+          }
+          <div class="nav-more" (click)="showMoreMenu.set(!showMoreMenu()); $event.stopPropagation()">
+            <span class="nav-item" role="button" [attr.aria-expanded]="showMoreMenu()" aria-haspopup="true">
+              Mas
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="more-chevron" [class.more-chevron-open]="showMoreMenu()" width="12" height="12">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </span>
+            @if (showMoreMenu()) {
+              <div class="more-dropdown" role="menu" (click)="$event.stopPropagation()">
+                @for (item of moreItems(); track item.route) {
+                  <a class="more-dropdown-item" role="menuitem" [routerLink]="item.route" (click)="showMoreMenu.set(false)">{{ item.label }}</a>
+                }
+              </div>
+            }
+          </div>
+        </nav>
 
         <!-- Right: AI CTA + User -->
         <div class="header-right">
-          <!-- AI Assistant CTA -->
-          <button class="ai-cta" (click)="aiPanel.toggle()" title="Asistente IA (⌘K)">
+          <button class="ai-cta" (click)="aiPanel.toggle()" aria-label="Asistente IA - Habla con Maxi">
             <div class="ai-cta-shimmer"></div>
             <div class="ai-cta-inner">
-              <span class="ai-cta-emoji">🧠</span>
+              <svg class="ai-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.09 8.26L20 6L16.74 10.91L23 12L16.74 13.09L20 18L14.09 15.74L12 22L9.91 15.74L4 18L7.26 13.09L1 12L7.26 10.91L4 6L9.91 8.26L12 2Z" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+              </svg>
               <span class="ai-cta-text">Habla con Maxi</span>
             </div>
           </button>
 
-          <!-- User Info -->
-          <div class="user-section" (click)="showUserMenu.set(!showUserMenu()); $event.stopPropagation()">
-            <div class="user-info">
-              <span class="user-code">(22326)</span>
-              <span class="user-name">Nombre Nombre</span>
-            </div>
-            <div class="user-avatar">
-              <span>NN</span>
-            </div>
+          <button class="notif-btn" aria-label="Notificaciones">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+            </svg>
+            <span class="notif-badge"></span>
+          </button>
 
-            <!-- User Dropdown -->
+          <button class="user-section" [attr.aria-expanded]="showUserMenu()" aria-haspopup="true" aria-label="Menu de usuario" (click)="showUserMenu.set(!showUserMenu()); $event.stopPropagation()">
+            <div class="user-avatar"><span>NN</span></div>
             @if (showUserMenu()) {
-              <div class="user-dropdown" (click)="$event.stopPropagation()">
+              <div class="user-dropdown" role="menu" (click)="$event.stopPropagation()">
                 <div class="dropdown-header">
                   <div class="dropdown-avatar">NN</div>
                   <div class="dropdown-user-info">
@@ -76,61 +145,16 @@ interface NavItem {
                   </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" routerLink="/mi-cuenta" (click)="showUserMenu.set(false)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                  </svg>
-                  Mi cuenta
-                </a>
-                <a class="dropdown-item" routerLink="/usuarios" (click)="showUserMenu.set(false)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                  </svg>
-                  Usuarios
-                </a>
-                <a class="dropdown-item" routerLink="/configuracion-negocio" (click)="showUserMenu.set(false)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                  </svg>
-                  Configuracion del negocio
-                </a>
+                <a class="dropdown-item" role="menuitem" routerLink="/mi-cuenta" (click)="showUserMenu.set(false)">Mi cuenta</a>
+                <a class="dropdown-item" role="menuitem" routerLink="/usuarios" (click)="showUserMenu.set(false)">Usuarios</a>
+                <a class="dropdown-item" role="menuitem" routerLink="/configuracion-negocio" (click)="showUserMenu.set(false)">Configuracion del negocio</a>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item dropdown-item-danger" (click)="showUserMenu.set(false)">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                  </svg>
-                  Cerrar sesion
-                </button>
+                <button class="dropdown-item dropdown-item-danger" role="menuitem" aria-label="Cerrar sesion" (click)="showUserMenu.set(false)">Cerrar sesion</button>
               </div>
             }
-          </div>
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="header-nav">
-        <div class="nav-spacer"></div>
-        <div class="nav-center">
-          @for (item of navItems(); track item.route) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="nav-item-active"
-              class="nav-item"
-              [class.nav-item-active]="item.active"
-            >
-              {{ item.label }}
-            </a>
-          }
-        </div>
-        <div class="nav-spacer nav-spacer-right">
-          <button class="download-btn" title="Descargar">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
           </button>
         </div>
-      </nav>
+      </div>
     </header>
   `,
   styles: [`
@@ -142,19 +166,21 @@ interface NavItem {
       z-index: 100;
     }
 
-    .header-top {
+    /* === Single bar === */
+    .header-single {
       display: flex;
       align-items: center;
-      padding: 12px 24px;
-      gap: 16px;
+      padding: 10px 24px;
+      gap: 24px;
       background: var(--surface-dark, #01033E);
     }
 
-    .header-top-left {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       flex: 1;
+      position: relative;
     }
 
     .logo {
@@ -170,126 +196,187 @@ interface NavItem {
       object-fit: contain;
     }
 
-    /* Search group */
-    .search-group {
+    /* Brand/Local Selector */
+    .brand-selector {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin: 0 auto;
-    }
-
-    .home-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      border-radius: 50%;
-      color: white;
+      padding: 7px 14px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      color: inherit;
     }
 
-    .home-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+    .brand-selector:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
-    .home-btn svg {
-      width: 20px;
-      height: 20px;
+    .brand-selector:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 2px;
     }
 
-    .search-container {
-      width: 400px;
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 8px;
-      padding: 0 12px;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .search-container:focus-within {
-      border-color: var(--primary-blue, #1155CC);
-      box-shadow: 0 0 0 3px rgba(17, 85, 204, 0.15);
-    }
-
-    .search-icon {
-      width: 18px;
-      height: 18px;
-      color: rgba(255, 255, 255, 0.5);
+    .brand-badge {
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: 0.3px;
       flex-shrink: 0;
     }
 
-    .search-input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 10px 12px;
-      font-size: 14px;
-      font-family: inherit;
-      color: #FFFFFF;
-      background: transparent;
+    .brand-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      transition: color 0.15s ease;
     }
 
-    .search-input::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+    .brand-selector:hover .brand-name {
+      color: #FFFFFF;
     }
+
+    .brand-count {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1px 6px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .brand-chevron {
+      color: rgba(255, 255, 255, 0.4);
+      transition: transform 0.2s ease, color 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .brand-selector:hover .brand-chevron {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .brand-chevron-open { transform: rotate(180deg); }
+
+    .brand-dropdown {
+      position: absolute;
+      top: calc(100% + 20px);
+      left: 132px;
+      width: 280px;
+      max-height: 420px;
+      overflow-y: auto;
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      animation: brandDropIn 0.15s ease;
+    }
+
+    .brand-dropdown::-webkit-scrollbar { width: 4px; }
+    .brand-dropdown::-webkit-scrollbar-track { background: transparent; }
+    .brand-dropdown::-webkit-scrollbar-thumb { background: var(--slate-200, #E2E8F0); border-radius: 10px; }
+
+    @keyframes brandDropIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand-section { border-bottom: none; }
+
+    .brand-section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      margin: 6px 8px;
+      border-radius: 8px;
+      background: var(--slate-50, #F8FAFC);
+      border: 1px solid #EEF2F6;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .brand-section-header:hover {
+      background: var(--slate-100, #F1F5F9);
+      border-color: var(--slate-200, #E2E8F0);
+    }
+
+    .brand-badge-sm {
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+
+    .brand-section-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--slate-800, #1F2937); }
+    .brand-section-chevron { color: var(--slate-400, #9CA3AF); transition: transform 0.2s ease; flex-shrink: 0; }
+    .brand-section-chevron-open { transform: rotate(180deg); }
+
+    .brand-locals { padding: 0 12px 12px; }
+
+    .local-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 8px; border-radius: 6px; cursor: pointer;
+      transition: background 0.1s ease;
+    }
+    .local-item:hover { background: var(--slate-50, #F9FAFB); }
+    .local-item-all { padding-bottom: 8px; margin-bottom: 4px; border-bottom: 1px solid var(--slate-100, #F3F4F6); }
+
+    .local-checkbox { width: 16px; height: 16px; border-radius: 4px; accent-color: var(--accent-orange, #F18800); cursor: pointer; flex-shrink: 0; }
+    .local-code { font-size: 11px; color: var(--slate-400, #9CA3AF); font-weight: 500; flex-shrink: 0; }
+    .local-label { font-size: 13px; color: var(--slate-700, #374151); }
+    .local-item-all .local-label { font-weight: 500; color: var(--slate-800, #1F2937); }
+
+    .brand-apply-btn {
+      display: inline-block; margin-top: 8px; padding: 5px 20px;
+      border: none; border-radius: 6px; background: var(--primary-blue, #1155CC); color: white;
+      font-size: 12px; font-weight: 500; font-family: inherit; cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .brand-apply-btn:hover { background: var(--primary-blue-hover, #0D44A6); }
 
     /* Right Section */
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex: 1;
       justify-content: flex-end;
+      gap: 14px;
+      flex: 1;
     }
 
-    /* === AI CTA — subtle, header-native === */
+    /* AI CTA */
     .ai-cta {
-      position: relative;
-      display: flex;
-      align-items: center;
-      border: none;
-      border-radius: 10px;
-      padding: 0;
-      cursor: pointer;
-      background: transparent;
-      overflow: hidden;
+      position: relative; display: flex; align-items: center;
+      border: none; border-radius: 10px; padding: 0;
+      cursor: pointer; background: transparent; overflow: hidden;
+    }
+
+    .ai-cta:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 2px;
     }
 
     .ai-cta-shimmer {
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      background: linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.08) 40%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 60%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      background-size: 250% 100%;
-      animation: shimmer 6s ease-in-out infinite;
-      z-index: 0;
+      position: absolute; inset: 0; border-radius: 10px;
+      background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 40%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0) 100%);
+      background-size: 250% 100%; animation: shimmer 6s ease-in-out infinite; z-index: 0;
     }
 
     .ai-cta-inner {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: none;
+      position: relative; z-index: 1; display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 10px; border: none;
       background: linear-gradient(135deg, #1155CC, #01033E, #1155CC);
-      background-size: 200% 100%;
-      animation: ctaGradientShift 8s ease infinite;
+      background-size: 200% 100%; animation: ctaGradientShift 8s ease infinite;
       transition: all 0.2s ease;
     }
 
@@ -298,218 +385,151 @@ interface NavItem {
       box-shadow: 0 2px 12px rgba(17, 85, 204, 0.3);
     }
 
-    .ai-cta-emoji {
-      font-size: 15px;
-      line-height: 1;
-      flex-shrink: 0;
-      animation: gentlePulse 4s ease-in-out infinite;
+    .ai-cta-icon { width: 16px; height: 16px; flex-shrink: 0; animation: gentlePulse 4s ease-in-out infinite; }
+    .ai-cta-text { font-size: 13px; font-weight: 500; color: #FFFFFF; white-space: nowrap; }
+
+    @keyframes ctaGradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes shimmer { 0%, 100% { background-position: 250% 0; } 50% { background-position: -50% 0; } }
+    @keyframes gentlePulse { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+
+    /* Notifications */
+    .notif-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.15s ease;
     }
 
-    .ai-cta-text {
-      font-size: 13px;
-      font-weight: 500;
+    .notif-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
       color: #FFFFFF;
-      white-space: nowrap;
-      letter-spacing: -0.01em;
     }
 
-    @keyframes ctaGradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes shimmer {
-      0%, 100% { background-position: 250% 0; }
-      50% { background-position: -50% 0; }
-    }
-
-    @keyframes gentlePulse {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.06); }
+    .notif-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-orange, #F18800);
+      border: 1.5px solid var(--surface-dark, #01033E);
     }
 
     /* User Section */
     .user-section {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding-left: 16px;
-      margin-left: 4px;
-      border-left: 1px solid rgba(255, 255, 255, 0.15);
-      position: relative;
-      cursor: pointer;
+      display: flex; align-items: center;
+      padding: 0;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      position: relative; cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .user-section:hover .user-avatar {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .user-section:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 2px;
     }
 
     .user-dropdown {
-      position: absolute;
-      top: calc(100% + 12px);
-      right: 0;
-      width: 280px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      z-index: 1000;
-      overflow: hidden;
+      position: absolute; top: calc(100% + 12px); right: 0; width: 280px;
+      background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      z-index: 1000; overflow: hidden; animation: brandDropIn 0.15s ease;
     }
-    .dropdown-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-    }
-    .dropdown-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: var(--primary-blue, #1155CC); color: white; display: flex;
-      align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 600; flex-shrink: 0;
-    }
+    .dropdown-header { display: flex; align-items: center; gap: 12px; padding: 16px; }
+    .dropdown-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary-blue, #1155CC); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
     .dropdown-user-info { display: flex; flex-direction: column; }
-    .dropdown-user-name { font-size: 14px; font-weight: 600; color: #1F2937; }
-    .dropdown-user-detail { font-size: 12px; color: #9CA3AF; }
-    .dropdown-divider { height: 1px; background: #F3F4F6; }
-    .dropdown-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 16px; font-size: 14px; color: #374151;
-      text-decoration: none; cursor: pointer; transition: background 0.15s;
-      border: none; background: none; width: 100%; font-family: inherit;
-    }
-    .dropdown-item:hover { background: #F9FAFB; }
-    .dropdown-item svg { color: #9CA3AF; flex-shrink: 0; }
-    .dropdown-item-danger { color: #DC2626; }
-    .dropdown-item-danger svg { color: #DC2626; }
+    .dropdown-user-name { font-size: 14px; font-weight: 600; color: var(--slate-800, #1F2937); }
+    .dropdown-user-detail { font-size: 12px; color: var(--slate-400, #9CA3AF); }
+    .dropdown-divider { height: 1px; background: var(--slate-100, #F3F4F6); }
+    .dropdown-item { display: flex; align-items: center; gap: 10px; padding: 12px 16px; font-size: 14px; color: var(--slate-700, #374151); text-decoration: none; cursor: pointer; transition: background 0.15s; border: none; background: none; width: 100%; font-family: inherit; }
+    .dropdown-item:hover { background: var(--slate-50, #F9FAFB); }
+    .dropdown-item-danger { color: var(--danger-color, #DC2626); }
 
-    .user-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      line-height: 1.3;
-    }
+    .user-avatar { width: 32px; height: 32px; background: rgba(255, 255, 255, 0.1); border: 1.5px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.8); flex-shrink: 0; transition: all 0.15s ease; }
 
-    .user-code {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .user-name {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 500;
-    }
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    /* Navigation */
+    /* === Navigation inline === */
     .header-nav {
       display: flex;
       align-items: center;
-      padding: 0 24px;
-      background: var(--surface-dark-nav, #0A0D52);
-    }
-    .nav-center {
-      display: flex;
-      align-items: center;
-    }
-    .nav-spacer {
-      flex: 1;
-    }
-    .nav-spacer-right {
-      display: flex;
-      justify-content: flex-end;
+      flex: 0 0 auto;
+      justify-content: center;
+      gap: 0;
     }
 
     .nav-item {
-      position: relative;
-      padding: 14px 20px;
-      font-size: 14px;
+      display: flex;
+      align-items: center;
+      padding: 8px 14px;
+      font-size: 13.5px;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
-      transition: color 0.15s ease;
+      border-radius: 6px;
+      transition: color 0.15s ease, background 0.15s ease;
+      white-space: nowrap;
     }
 
     .nav-item:hover {
-      color: white;
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-item:focus-visible {
+      outline: 2px solid white;
+      outline-offset: 2px;
     }
 
     .nav-item-active {
-      color: white;
+      color: #FFFFFF;
       background: rgba(255, 255, 255, 0.1);
     }
 
-    .nav-item-active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: white;
-    }
+    /* More menu */
+    .nav-more { position: relative; }
+    .nav-more .nav-item { gap: 4px; cursor: pointer; }
+    .more-chevron { transition: transform 0.2s ease; }
+    .more-chevron-open { transform: rotate(180deg); }
 
-    .download-btn {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.7);
-      cursor: pointer;
-      transition: color 0.15s ease;
+    .more-dropdown {
+      position: absolute; top: calc(100% + 4px); left: 0; min-width: 180px;
+      background: #FFFFFF; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      z-index: 1000; overflow: hidden; animation: brandDropIn 0.15s ease; padding: 4px 0;
     }
-
-    .download-btn:hover {
-      color: white;
-    }
-
-    .download-btn svg {
-      width: 20px;
-      height: 20px;
-    }
+    .more-dropdown-item { display: block; padding: 10px 16px; font-size: 13.5px; font-weight: 500; color: var(--slate-700, #374151); text-decoration: none; transition: background 0.1s ease; }
+    .more-dropdown-item:hover { background: var(--slate-50, #F9FAFB); }
 
     /* Responsive */
+    @media (max-width: 1280px) {
+      .nav-item { padding: 8px 10px; font-size: 12px; }
+    }
+
     @media (max-width: 1024px) {
-      .user-info {
-        display: none;
-      }
-      .nav-item {
-        padding: 14px 14px;
-        font-size: 13px;
-      }
-      .ai-cta-text {
-        display: none;
-      }
+      .ai-cta-text { display: none; }
+      .nav-item { padding: 6px 8px; font-size: 11.5px; }
+      .header-left { gap: 16px; }
     }
 
     @media (max-width: 768px) {
-      .header-top {
-        padding: 12px 16px;
-      }
-      .search-container {
-        max-width: 280px;
-      }
-      .header-nav {
-        padding: 0 16px;
-        overflow-x: auto;
-      }
-      .nav-item {
-        padding: 12px 12px;
-        white-space: nowrap;
-      }
+      .header-single { padding: 10px 16px; gap: 12px; }
+      .brand-name { display: none; }
+      .brand-count { display: none; }
+      .header-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -517,8 +537,53 @@ interface NavItem {
 export class HeaderComponent {
   readonly aiPanel = inject(AiPanelService);
 
-  searchQuery = signal('');
   showUserMenu = signal(false);
+  showBrandMenu = signal(false);
+  showMoreMenu = signal(false);
+
+  brands = signal<Brand[]>([
+    {
+      id: 'bp', code: 'C33', name: 'BIG PONS', color: '#FACC15',
+      expanded: true,
+      locals: [
+        { code: 'C2330', name: 'Quilmes', selected: true },
+        { code: 'C2326', name: 'Lomas de Zamora', selected: true },
+        { code: 'C2340', name: 'Escobar', selected: false },
+        { code: 'C2345', name: 'Pilar', selected: false },
+        { code: 'C2350', name: 'San Isidro', selected: true },
+        { code: 'C2360', name: 'Tigre', selected: false },
+      ],
+    },
+    {
+      id: 'bk', code: 'C25', name: 'BURGER KING', color: '#F97316',
+      expanded: false,
+      locals: [
+        { code: 'C2500', name: 'Palermo', selected: true },
+        { code: 'C2510', name: 'Belgrano', selected: true },
+        { code: 'C2520', name: 'Recoleta', selected: false },
+        { code: 'C2530', name: 'Caballito', selected: true },
+      ],
+    },
+  ]);
+
+  activeBrand = signal<Brand>({
+    id: 'bp', code: 'C33', name: 'BIG PONS', color: '#FACC15',
+    expanded: true,
+    locals: [
+      { code: 'C2330', name: 'Quilmes', selected: true },
+      { code: 'C2326', name: 'Lomas de Zamora', selected: true },
+      { code: 'C2340', name: 'Escobar', selected: false },
+      { code: 'C2345', name: 'Pilar', selected: false },
+      { code: 'C2350', name: 'San Isidro', selected: true },
+      { code: 'C2360', name: 'Tigre', selected: false },
+    ],
+  });
+
+  selectedLocalsCount = computed(() => {
+    const brand = this.activeBrand();
+    const selected = brand.locals.filter(l => l.selected).length;
+    return `${selected}/${brand.locals.length}`;
+  });
 
   navItems = signal<NavItem[]>([
     { label: 'Punto de venta', route: '/pdv', active: false },
@@ -529,16 +594,79 @@ export class HeaderComponent {
     { label: 'Ventas', route: '/ventas', active: false },
   ]);
 
+  moreItems = signal<NavItem[]>([
+    { label: 'Tesoreria', route: '/tesoreria', active: false },
+    { label: 'Personal', route: '/personal', active: false },
+    { label: 'Balances', route: '/balances', active: false },
+  ]);
+
   @HostListener('document:keydown', ['$event'])
   onKeydown(e: KeyboardEvent): void {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       this.aiPanel.toggle();
     }
+    if (e.key === 'Escape') {
+      this.showBrandMenu.set(false);
+      this.showUserMenu.set(false);
+      this.showMoreMenu.set(false);
+    }
   }
 
-  onSearchInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.searchQuery.set(input.value);
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.showBrandMenu.set(false);
+    this.showUserMenu.set(false);
+    this.showMoreMenu.set(false);
+  }
+
+  selectBrand(brandId: string): void {
+    const brand = this.brands().find(b => b.id === brandId);
+    if (brand) {
+      this.activeBrand.set(brand);
+      this.brands.update(brands =>
+        brands.map(b => ({ ...b, expanded: b.id === brandId }))
+      );
+    }
+  }
+
+  toggleBrandExpand(brandId: string): void {
+    this.brands.update(brands =>
+      brands.map(b => ({ ...b, expanded: b.id === brandId ? !b.expanded : b.expanded }))
+    );
+  }
+
+  toggleLocal(brandId: string, localCode: string): void {
+    this.brands.update(brands =>
+      brands.map(b => b.id !== brandId ? b : {
+        ...b,
+        locals: b.locals.map(l => l.code === localCode ? { ...l, selected: !l.selected } : l),
+      })
+    );
+  }
+
+  toggleAllLocals(brandId: string): void {
+    const brand = this.brands().find(b => b.id === brandId);
+    if (!brand) return;
+    const allSelected = brand.locals.every(l => l.selected);
+    this.brands.update(brands =>
+      brands.map(b => b.id !== brandId ? b : {
+        ...b,
+        locals: b.locals.map(l => ({ ...l, selected: !allSelected })),
+      })
+    );
+  }
+
+  allLocalsSelected(brandId: string): boolean {
+    const brand = this.brands().find(b => b.id === brandId);
+    return brand ? brand.locals.every(l => l.selected) : false;
+  }
+
+  applySelection(): void {
+    const brand = this.brands().find(b => b.id === this.activeBrand().id);
+    if (brand) {
+      this.activeBrand.set(brand);
+      this.showBrandMenu.set(false);
+    }
   }
 }

@@ -16,7 +16,7 @@ import { Proveedor, FiltroProveedor, FILTROS_PROVEEDOR } from '../../models/comp
         @for (filtro of filtros; track filtro.value) {
           <button
             class="filter-tab"
-            [class.filter-tab--active]="facade.filtroProveedor() === filtro.value"
+            [class.filter-tab-active]="facade.filtroProveedor() === filtro.value"
             (click)="facade.setFiltroProveedor(filtro.value)">
             {{ filtro.label }} ({{ getConteo(filtro.value) }})
           </button>
@@ -65,38 +65,39 @@ import { Proveedor, FiltroProveedor, FILTROS_PROVEEDOR } from '../../models/comp
 
     .filter-tabs {
       display: flex;
-      gap: 8px;
+      gap: 22px;
       flex-wrap: wrap;
     }
 
     .filter-tab {
-      padding: 9px 18px;
+      padding: 11px 16px;
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-full);
+      color: var(--slate-700);
       background: white;
-      color: var(--gray-500);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
+      line-height: 1.428;
+    }
 
-      &:hover:not(.filter-tab--active) {
-        background: var(--gray-50);
-        border-color: var(--gray-300);
-      }
+    .filter-tab:hover {
+      border-color: var(--slate-300);
+      background: var(--slate-50);
+    }
 
-      &--active {
-        background: var(--primary-orange-light);
-        color: var(--primary-orange);
-        border-color: var(--primary-orange);
+    .filter-tab-active {
+      color: var(--primary-orange-dark);
+      border-color: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
+    }
 
-        &:hover {
-          background: var(--primary-orange-light);
-          border-color: var(--primary-orange);
-        }
-      }
+    .filter-tab-active:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange-lighter);
     }
 
     .filters-actions {

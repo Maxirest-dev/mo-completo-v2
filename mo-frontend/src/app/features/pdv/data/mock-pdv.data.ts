@@ -66,10 +66,10 @@ export const MOCK_CIERRE_TURNO: CierreTurnoData = {
 };
 
 export const MOCK_ESTACIONES: ConfigEstacion[] = [
-  { id: 1, nombre: 'Mostrador', tipo: 'Principal', activo: true },
-  { id: 2, nombre: 'Barra', tipo: 'Secundario', activo: true },
-  { id: 3, nombre: 'Cocina', tipo: 'Produccion', activo: true },
-  { id: 4, nombre: 'Parrilla', tipo: 'Produccion', activo: false },
+  { id: 1, nombre: 'Cocina Principal', tipo: 'Cocina', activo: true },
+  { id: 2, nombre: 'Barra', tipo: 'Barra', activo: true },
+  { id: 3, nombre: 'Caja 1', tipo: 'Caja', activo: true },
+  { id: 4, nombre: 'Delivery', tipo: 'Delivery', activo: false },
 ];
 
 export const MOCK_FORMAS_COBRO_CONFIG: ConfigFormaCobro[] = [

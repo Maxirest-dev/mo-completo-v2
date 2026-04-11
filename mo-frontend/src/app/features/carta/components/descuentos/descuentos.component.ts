@@ -29,9 +29,9 @@ import {
     <div class="descuentos-container">
       <!-- Header -->
       <header class="page-header">
-        <button class="btn-back" (click)="onBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+        <button class="back-btn" (click)="onBack()" title="Volver">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
         </button>
         <div class="header-info">
@@ -171,23 +171,22 @@ import {
       margin-bottom: 32px;
     }
 
-    .btn-back {
+    .back-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 40px;
       height: 40px;
-      padding: 0;
-      background: transparent;
-      border: none;
-      border-radius: 8px;
-      color: var(--gray-700);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: white;
+      color: var(--slate-700);
       cursor: pointer;
       transition: background 0.15s;
       flex-shrink: 0;
       margin-top: 2px;
     }
-    .btn-back:hover { background: var(--gray-100); }
+    .back-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .header-info { flex: 1; }
 
@@ -587,8 +586,8 @@ export class DescuentosComponent implements OnDestroy {
   // Tabs config
   readonly tabs: { id: DescuentoFiltroTipo; label: string; countKey: keyof DescuentoFilterContadores }[] = [
     { id: 'todas', label: 'Todas', countKey: 'todas' },
-    { id: 'activas', label: 'Activas', countKey: 'activas' },
-    { id: 'onHold', label: 'On Hold', countKey: 'onHold' },
+    { id: 'activas', label: 'Activos', countKey: 'activas' },
+    { id: 'onHold', label: 'Inactivos', countKey: 'onHold' },
   ];
 
   // Computed

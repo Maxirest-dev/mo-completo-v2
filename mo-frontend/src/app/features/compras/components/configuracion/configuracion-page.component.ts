@@ -19,35 +19,29 @@ import { ConceptoGastoModalComponent } from './concepto-gasto-modal.component';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- Rubros -->
-    <section class="config-section">
-      <div class="section-header">
-        <h2>Rubros de Conceptos de Gasto</h2>
-        <button class="btn btn-primary btn-sm" (click)="abrirModalRubro()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Nuevo Rubro
-        </button>
-      </div>
-      <app-rubros-grid (editarClick)="editarRubro($event)" />
-    </section>
+    <div class="config-grid">
+      <!-- Rubros -->
+      <section class="config-section">
+        <div class="section-header">
+          <h2>Rubros de Conceptos de Gasto</h2>
+          <button class="btn btn-primary btn-sm" (click)="abrirModalRubro()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Nuevo Rubro
+          </button>
+        </div>
+        <app-rubros-grid (editarClick)="editarRubro($event)" />
+      </section>
 
-    <!-- Conceptos -->
-    <section class="config-section">
-      <div class="section-header">
-        <h2>Conceptos de Gasto</h2>
-        <button class="btn btn-primary btn-sm" (click)="abrirModalConcepto()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Nuevo Concepto
-        </button>
-      </div>
-      <app-conceptos-gasto-grid
-        (editarClick)="editarConcepto($event)"
-        (desactivarClick)="onDesactivarConcepto($event)" />
-    </section>
+      <!-- Conceptos -->
+      <section class="config-section">
+        <app-conceptos-gasto-grid
+          (editarClick)="editarConcepto($event)"
+          (desactivarClick)="onDesactivarConcepto($event)"
+          (nuevoClick)="abrirModalConcepto()" />
+      </section>
+    </div>
 
     <!-- Modales -->
     @if (modalRubroAbierto()) {
@@ -65,8 +59,19 @@ import { ConceptoGastoModalComponent } from './concepto-gasto-modal.component';
     }
   `,
   styles: [`
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
     .config-section {
-      margin-bottom: 32px;
+      background: white;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
     }
 
     .section-header {
@@ -76,9 +81,9 @@ import { ConceptoGastoModalComponent } from './concepto-gasto-modal.component';
       margin-bottom: 16px;
 
       h2 {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
-        color: var(--gray-900);
+        color: var(--slate-900);
         margin: 0;
       }
     }

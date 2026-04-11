@@ -72,6 +72,7 @@ export interface ConfigCategoria {
   nombre: string;
   tipo: CanalTipo;
   activo: boolean;
+  dispositivoIds?: number[];
 }
 
 export interface ConfigDispositivo {

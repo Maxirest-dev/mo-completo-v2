@@ -28,9 +28,9 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     <div class="em-container">
       <!-- Header -->
       <header class="page-header">
-        <button class="btn-back" (click)="onBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+        <button class="back-btn" (click)="onBack()" title="Volver">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
         </button>
         <div class="header-info">
@@ -214,12 +214,12 @@ const TURNOS = ['Manana', 'Tarde', 'Noche'];
     .page-header {
       display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
     }
-    .btn-back {
+    .back-btn {
       display: flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--slate-200);
-      background: white; cursor: pointer; color: var(--text-primary); transition: all 0.15s;
+      width: 40px; height: 40px; border-radius: var(--radius-md); border: 1px solid var(--slate-200);
+      background: white; cursor: pointer; color: var(--slate-700); transition: all 0.15s ease;
     }
-    .btn-back:hover { background: var(--slate-50); border-color: var(--slate-300); }
+    .back-btn:hover { background: var(--slate-50); border-color: var(--slate-300); }
     .page-title { font-size: 26px; font-weight: 600; color: var(--gray-900); margin: 0; }
     .page-subtitle { font-size: 14px; color: var(--gray-500); margin: 4px 0 0; }
 

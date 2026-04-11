@@ -12,8 +12,6 @@ export interface EstacionCreateData {
 
 const TIPO_OPTIONS: { value: EstacionTipo; label: string }[] = [
   { value: 'COCINA', label: 'Cocina' },
-  { value: 'PARRILLA', label: 'Parrilla' },
-  { value: 'MOSTRADOR', label: 'Mostrador' },
   { value: 'BARRA', label: 'Barra' },
 ];
 

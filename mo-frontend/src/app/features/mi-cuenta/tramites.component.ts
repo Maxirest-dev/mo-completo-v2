@@ -127,10 +127,10 @@ const MOCK_TRAMITES: Tramite[] = [
           @for (tab of tabs(); track tab.key) {
             <button
               class="filter-tab"
-              [class.filter-tab--active]="activeTab() === tab.key"
+              [class.filter-tab-active]="activeTab() === tab.key"
               (click)="activeTab.set(tab.key)">
               {{ tab.label }}
-              <span class="filter-tab-count" [class.filter-tab-count--active]="activeTab() === tab.key">{{ tab.count }}</span>
+              <span class="filter-tab-count" [class.filter-tab-count-active]="activeTab() === tab.key">{{ tab.count }}</span>
             </button>
           }
         </div>
@@ -193,7 +193,7 @@ const MOCK_TRAMITES: Tramite[] = [
                   </span>
                 </td>
                 <td>
-                  <button class="btn-action" (click)="openDetail(tramite)">
+                  <button class="btn-edit" (click)="openDetail(tramite)">
                     Ver detalle
                   </button>
                 </td>
@@ -380,34 +380,39 @@ const MOCK_TRAMITES: Tramite[] = [
 
     .filter-tabs {
       display: flex;
-      gap: 6px;
-      background: var(--slate-100);
-      border-radius: var(--radius-md);
-      padding: 4px;
+      gap: 22px;
+      flex-wrap: wrap;
     }
 
     .filter-tab {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      color: var(--slate-500);
-      font-size: 13px;
+      padding: 11px 16px;
+      font-size: 14px;
       font-weight: 500;
+      font-family: inherit;
+      color: var(--slate-700);
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
+      line-height: 1.428;
     }
     .filter-tab:hover {
-      color: var(--slate-700);
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
-    .filter-tab--active {
-      background: white;
-      color: var(--slate-900);
-      box-shadow: var(--shadow-sm);
+    .filter-tab-active {
+      color: var(--primary-orange-dark);
+      border-color: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
+    }
+    .filter-tab-active:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange-lighter);
     }
 
     .filter-tab-count {
@@ -423,9 +428,9 @@ const MOCK_TRAMITES: Tramite[] = [
       font-size: 11px;
       font-weight: 600;
     }
-    .filter-tab-count--active {
-      background: var(--primary-orange);
-      color: white;
+    .filter-tab-count-active {
+      background: var(--primary-orange-lighter);
+      color: var(--primary-orange-dark);
     }
 
     .search-wrapper {
@@ -608,22 +613,22 @@ const MOCK_TRAMITES: Tramite[] = [
       border: 1px solid #FECACA;
     }
 
-    .btn-action {
-      padding: 6px 14px;
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-sm);
-      background: white;
-      color: var(--slate-700);
-      font-size: 12px;
+    .btn-edit {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
       font-weight: 500;
+      color: var(--gray-700);
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
+      transition: all 0.15s;
+      font-family: inherit;
     }
-    .btn-action:hover {
-      background: var(--slate-50);
-      border-color: var(--slate-300);
-    }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .empty-row {
       text-align: center;

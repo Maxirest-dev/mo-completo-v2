@@ -95,12 +95,12 @@ export class ProveedoresGridComponent {
     {
       field: 'telefono',
       headerName: 'Teléfono',
-      width: 160
+      width: 130
     },
     {
       field: 'acciones',
       headerName: 'Acciones',
-      width: 170,
+      width: 200,
       suppressHeaderMenuButton: true,
       sortable: false,
       cellRenderer: (params: any) => {

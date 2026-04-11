@@ -46,17 +46,16 @@ const MOCK_USUARIOS: Usuario[] = [
         <p class="page-subtitle">{{ countTodos() }} usuarios registrados</p>
       </div>
     </div>
-    <div class="title-divider"></div>
 
     <!-- Toolbar -->
     <div class="toolbar">
       <div class="toolbar-left">
-        <!-- Filter Pills -->
-        <div class="filter-pills">
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
           @for (tab of tabs; track tab.key) {
             <button
-              class="filter-pill"
-              [class.filter-pill--active]="tabActivo() === tab.key"
+              class="filter-tab"
+              [class.filter-tab-active]="tabActivo() === tab.key"
               (click)="tabActivo.set(tab.key)">
               {{ tab.label }} ({{ tab.count() }})
             </button>
@@ -139,14 +138,14 @@ const MOCK_USUARIOS: Usuario[] = [
                 </span>
               </td>
               <td>
-                <div class="actions-cell">
-                  <button class="btn-action" (click)="navigateToUser(user.id)">
+                <div class="acciones-cell">
+                  <button class="btn-edit" (click)="navigateToUser(user.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="15" height="15">
                       <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" />
                     </svg>
                     Editar
                   </button>
-                  <button class="btn-action btn-action--hold" (click)="toggleUserActive(user)">
+                  <button class="btn-deactivate" (click)="toggleUserActive(user)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="15" height="15">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
                     </svg>
@@ -239,41 +238,39 @@ const MOCK_USUARIOS: Usuario[] = [
       gap: 12px;
     }
 
-    /* Filter Pills — Pencil v2 */
-    .filter-pills {
+    /* Filter Tabs */
+    .filter-tabs {
       display: flex;
       gap: 22px;
       flex-wrap: wrap;
     }
 
-    .filter-pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 18px;
+    .filter-tab {
+      padding: 11px 16px;
       font-size: 14px;
       font-weight: 500;
       font-family: inherit;
-      color: var(--slate-500, #64748B);
-      background: var(--bg-primary, white);
-      border: 1px solid var(--border-color, #E2E8F0);
-      border-radius: var(--radius-md, 10px);
+      color: var(--slate-700);
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
       white-space: nowrap;
+      line-height: 1.428;
     }
-    .filter-pill:hover {
-      border-color: var(--slate-300, #CBD5E1);
-      background: var(--slate-50, #F8FAFC);
+    .filter-tab:hover {
+      border-color: var(--slate-300);
+      background: var(--slate-50);
     }
-    .filter-pill--active {
-      color: var(--primary-orange-dark, #CA3500);
-      border-color: var(--primary-orange-lighter, #FFD6A7);
-      background: var(--primary-orange-light, #FFF7ED);
+    .filter-tab-active {
+      color: var(--primary-orange-dark);
+      border-color: var(--primary-orange-lighter);
+      background: var(--primary-orange-light);
     }
-    .filter-pill--active:hover {
-      background: var(--primary-orange-light, #FFF7ED);
-      border-color: var(--primary-orange-lighter, #FFD6A7);
+    .filter-tab-active:hover {
+      background: var(--primary-orange-light);
+      border-color: var(--primary-orange-lighter);
     }
 
     /* Search — Pencil v2 buscador */
@@ -466,37 +463,48 @@ const MOCK_USUARIOS: Usuario[] = [
       border: 1px solid var(--inactive-border, #E2E8F0);
     }
 
-    /* Actions — Pencil v2 pill buttons */
-    .actions-cell {
+    /* Actions */
+    .acciones-cell {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
       gap: 8px;
+      justify-content: flex-end;
     }
 
-    .btn-action {
+    .btn-edit {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       padding: 6px 12px;
       font-size: 13px;
       font-weight: 500;
-      font-family: inherit;
-      color: var(--text-primary, #314158);
-      background: var(--bg-primary, white);
-      border: 1px solid var(--border-color, #E2E8F0);
-      border-radius: var(--radius-sm, 8px);
+      color: var(--gray-700);
+      background: white;
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
+
+    .btn-deactivate {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #DC2626;
+      background: #FFFFFF;
+      border: 1px solid #FECACA;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
       white-space: nowrap;
     }
-    .btn-action:hover {
-      background: var(--slate-50, #F8FAFC);
-      border-color: var(--slate-300, #CBD5E1);
-    }
-    .btn-action--hold {
-      color: var(--slate-500, #64748B);
-    }
+    .btn-deactivate:hover { background: #FEF2F2; }
 
     /* Empty State */
     .empty-state {
@@ -535,10 +543,10 @@ const MOCK_USUARIOS: Usuario[] = [
 
     @media (max-width: 768px) {
       .page-title { font-size: 22px; }
-      .filter-pills { flex-wrap: wrap; gap: 10px; }
+      .filter-tabs { flex-wrap: wrap; gap: 10px; }
       .table-card { overflow-x: auto; }
       .data-table { min-width: 750px; }
-      .btn-action--hold { display: none; }
+      .btn-deactivate { display: none; }
     }
   `],
 })

@@ -39,6 +39,43 @@ export interface ExtraItem {
   cantidadMax: number;
 }
 
+export type PrecioStrategy = 'suma' | 'mayor' | 'manual';
+
+export interface PizzaTamano {
+  id: number;
+  nombre: string;
+  precio: number;
+  porciones: number;
+}
+
+export interface PizzaSabor {
+  id: number;
+  nombre: string;
+  preciosPorTamano: Record<number, number>;
+  habilitado: boolean;
+}
+
+export interface PizzaConfig {
+  tamanos: PizzaTamano[];
+  sabores: PizzaSabor[];
+  permiteMitad: boolean;
+}
+
+export interface ComboProducto {
+  id: number;
+  nombre: string;
+  precio: number;
+  fijo: boolean;
+}
+
+export interface ComboStep {
+  id: number;
+  titulo: string;
+  opciones: ComboProducto[];
+  minSeleccion: number;
+  maxSeleccion: number;
+}
+
 export interface ProductoPerfil {
   id: number;
   nombre: string;
@@ -64,6 +101,10 @@ export interface ProductoPerfil {
   calendario: CalendarioData[];
   extras: ExtraItem[];
   adicionales: ExtraItem[];
+  precioStrategy?: PrecioStrategy;
+  productosFijos?: ComboProducto[];
+  pasos?: ComboStep[];
+  pizzaConfig?: PizzaConfig;
 }
 
 export interface PreciosFormData {

@@ -17,7 +17,7 @@ import { ComprasFacade } from '../../state/compras.facade';
         <div class="grid-row">
           <div class="grid-col grid-col--nombre">{{ rubro.nombre }}</div>
           <div class="grid-col grid-col--acciones">
-            <button class="btn-action" (click)="editarClick.emit(rubro.id)">
+            <button class="btn-edit" (click)="editarClick.emit(rubro.id)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
                 <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -66,26 +66,22 @@ import { ComprasFacade } from '../../state/compras.facade';
     .grid-col--nombre { flex: 1; }
     .grid-col--acciones { width: 120px; text-align: right; }
 
-    .btn-action {
+    .btn-edit {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-family: inherit;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
       font-weight: 500;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
+      font-family: inherit;
+      color: var(--gray-700);
       background: white;
-      color: var(--gray-600);
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.15s ease;
-
-      &:hover {
-        background: var(--gray-50);
-        border-color: var(--gray-300);
-      }
+      transition: all 0.15s;
     }
+    .btn-edit:hover { background: var(--slate-50); border-color: var(--slate-300); }
 
     .grid-empty {
       padding: 24px;

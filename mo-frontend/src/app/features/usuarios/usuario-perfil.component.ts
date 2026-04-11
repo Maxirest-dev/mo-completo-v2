@@ -4,6 +4,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 type RolUsuario = 'Dueño' | 'Encargado' | 'Administrador';
 
@@ -59,7 +60,6 @@ const MOCK_USUARIOS: Record<number, UsuarioPerfil> = {
         <p class="page-subtitle">{{ usuario()?.id === 0 ? 'Completa los datos del nuevo usuario' : 'Administra la informacion del usuario' }}</p>
       </div>
     </div>
-    <div class="title-divider"></div>
 
     @if (usuario()) {
       <div class="perfil-layout">
@@ -334,6 +334,7 @@ const MOCK_USUARIOS: Record<number, UsuarioPerfil> = {
 export class UsuarioPerfilComponent implements OnInit {
   @Input() id!: string;
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
 
   usuario = signal<UsuarioPerfil | null>(null);
   editing = signal(false);
@@ -361,7 +362,7 @@ export class UsuarioPerfilComponent implements OnInit {
     }
   }
 
-  goBack(): void { this.router.navigate(['/usuarios']); }
+  goBack(): void { this.location.back(); }
 
   getAvatarColor(rol: RolUsuario): string {
     switch (rol) { case 'Dueño': return 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)'; case 'Encargado': return 'linear-gradient(135deg, #F27920 0%, #E06A10 100%)'; case 'Administrador': return 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)'; }

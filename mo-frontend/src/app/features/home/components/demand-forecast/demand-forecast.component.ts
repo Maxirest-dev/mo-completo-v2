@@ -19,6 +19,7 @@ import { PrepItem } from '../../models/prep-list.model';
       titulo="Prevision de Demanda & Prep-List"
       icono="📊"
       [loading]="loading()"
+      headerLink="/produccion"
     >
       <div class="demand-forecast-content">
         <section class="chart-section">

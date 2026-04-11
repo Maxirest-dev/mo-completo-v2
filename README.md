@@ -41,10 +41,12 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 ## 📝 Últimos cambios
 
-### 2026-04-06
+### 2026-04-11
 
 **Commits incluidos:**
-- 42c210e feat: add AI assistant CTA and resizable chat panel
+- 65b7e53 feat: major UI overhaul across all sections
 
 **Archivos modificados:**
-  - `.ts`: ai-panel.component.ts, header.component.ts, layout.component.ts, public-api.ts, ai-panel.service.ts
+  - `.png`: logo-icon.png
+  - `.ts`: header.component.ts, app.routes.ts, carta.component.ts, actualizar-precios.component.ts, descuentos.component.ts, edicion-masiva.component.ts, detalle-dialog.component.ts, extras-dialog.component.ts, precios-dialog.component.ts, producto-perfil.component.ts, mock-categorias.data.ts, mock-producto-perfil.data.ts, producto-perfil.model.ts, conceptos-gasto-grid.component.ts, configuracion-page.component.ts, rubros-grid.component.ts, orden-page.component.ts, ordenes-grid.component.ts, ordenes-page.component.ts, proyeccion-pagos.component.ts, proveedor-modal.component.ts, proveedores-grid.component.ts, proveedores-page.component.ts, ai-summary-banner.component.ts, dashboard-panel.component.ts, demand-chart.component.ts, demand-forecast.component.ts, home.component.ts, kpi-card.component.ts, kpi-cards-row.component.ts, rentability-alerts.component.ts, stock-alert-item.component.ts, stock-alerts.component.ts, top-venta-item.component.ts, top-ventas.component.ts, insumo-perfil.component.ts, facturas.component.ts, negocio.component.ts, tramites.component.ts, config-modal.component.ts, configuracion-page.component.ts, configuracion-seccion.component.ts, auditoria-grid.component.ts, filtros-tab.component.ts, informe-page.component.ts, auditoria.models.ts, auditoria-mock.data.ts, auditoria.service.ts, auditoria.facade.ts, configuraciones.component.ts, plano-editor.component.ts, turno-kpis.component.ts, mock-pdv.data.ts, mock-plano.data.ts, pdv.model.ts, plano.model.ts, pdv.component.ts, estacion-dialog.component.ts, usuario-perfil.component.ts, usuarios.component.ts, dashboard.component.ts, ventas-header.component.ts, ventas.component.ts
+  - `.scss`: styles.scss

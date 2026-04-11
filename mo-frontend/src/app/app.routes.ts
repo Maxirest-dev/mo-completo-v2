@@ -148,6 +148,15 @@ export const routes: Routes = [
           ),
       },
 
+      // Balances
+      {
+        path: 'balances',
+        loadComponent: () =>
+          import('./features/balances/balances.component').then(
+            (m) => m.BalancesComponent
+          ),
+      },
+
       // Mi Cuenta
       {
         path: 'mi-cuenta',

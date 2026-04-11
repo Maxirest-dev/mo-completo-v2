@@ -166,6 +166,15 @@ export const routes: Routes = [
           ),
       },
 
+      // Personal
+      {
+        path: 'personal',
+        loadComponent: () =>
+          import('./features/personal/personal.component').then(
+            (m) => m.PersonalComponent
+          ),
+      },
+
       // Mi Cuenta
       {
         path: 'mi-cuenta',

@@ -7,7 +7,7 @@ export interface FiltroTesoreria {
   periodo: PeriodoPreset;
   fechaDesde: string;
   fechaHasta: string;
-  turno: 'todos' | 'manana' | 'tarde' | 'noche';
+  categoria: string;
 }
 
 // === DISPONIBILIDADES ===

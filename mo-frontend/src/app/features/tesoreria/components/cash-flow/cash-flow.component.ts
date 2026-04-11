@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
-import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } from '../../models';
+import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow } from '../../models';
 
 @Component({
   selector: 'app-cash-flow',
@@ -10,46 +10,22 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: '../../../balances/styles/balances-shared.css',
   template: `
-    <!-- Horizon Selector -->
-    <div class="horizon-selector">
-      <span class="horizon-label">Horizonte de proyección:</span>
-      <div class="pill-group">
-        @for (opt of horizonteOptions; track opt.value) {
-          <button
-            class="pill-btn"
-            [class.pill-active]="horizonte() === opt.value"
-            (click)="onHorizonteSelect(opt.value)"
-            [attr.aria-label]="'Proyección a ' + opt.value + ' días'"
-            [attr.aria-pressed]="horizonte() === opt.value"
-            type="button"
-          >
-            {{ opt.label }}
-          </button>
-        }
-      </div>
-    </div>
 
-    <!-- Projection Summary -->
-    <div class="card projection-summary">
-      <div class="summary-row">
-        @for (kpi of kpis(); track $index; let last = $last; let first = $first) {
-          @if (!first) {
-            <span class="summary-operator" aria-hidden="true">{{ kpi.operador }}</span>
-          }
-          <div
-            class="summary-item"
-            [style.background]="kpi.bgColor ?? 'transparent'"
-          >
-            <span class="summary-label">{{ kpi.label }}</span>
-            <span
-              class="summary-value"
-              [style.color]="kpi.color ?? 'var(--slate-900, #111827)'"
-            >
-              {{ kpi.value | mroCurrency }}
-            </span>
-          </div>
+
+    <!-- KPI Row: 4 cards con operadores -->
+    <div class="kpi-ops-row">
+      @for (kpi of kpis(); track kpi.label; let first = $first) {
+        @if (!first) {
+          <span class="kpi-op" aria-hidden="true">{{ kpi.operador === '-' ? '−' : kpi.operador === '=' ? '=' : '+' }}</span>
         }
-      </div>
+        <div class="kpi-card" [style.background]="kpi.bgColor ?? '#fff'"
+          [style.border-color]="kpi.bgColor ? '#A7F3D0' : ''">
+          <span class="kpi-label">{{ kpi.label }}</span>
+          <span class="kpi-value" [style.color]="kpi.color ?? 'var(--slate-900, #111827)'">
+            {{ kpi.value | mroCurrency }}
+          </span>
+        </div>
+      }
     </div>
 
     <!-- Bottom Row: Table + Alerts -->
@@ -166,33 +142,35 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
       border-color: #1155CC;
     }
 
-    /* ===== PROJECTION SUMMARY ===== */
-    .projection-summary {
+    /* KPI 4 cards con operadores */
+    .kpi-ops-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 16px;
     }
 
-    .summary-row {
-      display: flex;
+    .kpi-ops-row .kpi-card {
+      flex: 1;
       align-items: center;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
+      text-align: center;
     }
 
-    .summary-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 16px 24px;
-      border-radius: 8px;
-      min-width: 140px;
+    .kpi-op {
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--slate-400, #9CA3AF);
+      flex-shrink: 0;
     }
 
-    .summary-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--slate-500, #6B7280);
+    @media (max-width: 1024px) {
+      .kpi-ops-row { flex-wrap: wrap; }
+      .kpi-ops-row .kpi-card { flex: 1 1 calc(50% - 24px); min-width: 160px; }
+      .kpi-op { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .kpi-ops-row .kpi-card { flex: 1 1 100%; }
     }
 
     .summary-value {
@@ -311,15 +289,4 @@ export class CashFlowComponent {
   readonly alertas = input.required<AlertaCashFlow[]>();
   readonly horizonte = input.required<number>();
 
-  readonly horizonteChange = output<HorizonteProyeccion>();
-
-  readonly horizonteOptions: { value: HorizonteProyeccion; label: string }[] = [
-    { value: 7, label: '7 días' },
-    { value: 15, label: '15 días' },
-    { value: 30, label: '30 días' },
-  ];
-
-  onHorizonteSelect(value: HorizonteProyeccion): void {
-    this.horizonteChange.emit(value);
-  }
 }

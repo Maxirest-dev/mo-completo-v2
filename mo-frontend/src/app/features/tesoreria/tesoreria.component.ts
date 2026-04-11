@@ -66,11 +66,16 @@ import {
       <!-- Filter Bar -->
       <app-tesoreria-filter-bar
         [filtro]="filtro()"
+        [tabActivo]="tabActivo()"
         (filtroChange)="onFiltroChange($event)"
         (onDescargar)="onDescargar()"
         (onImprimir)="onImprimir()"
         (onEnviar)="onEnviar()"
         (cuentaChange)="onCuentaChange($event)"
+        (categoriaChange)="onCategoriaChange($event)"
+        (proveedorChange)="onProveedorChange($event)"
+        (estadoChange)="onEstadoChange($event)"
+        (horizonteChange)="horizonte.set($event)"
       />
 
       <!-- Tab Content -->
@@ -101,6 +106,9 @@ import {
             <app-agenda-pagos
               [kpis]="kpiAgenda()"
               [facturas]="facturasPendientes()"
+              [filtroProveedor]="proveedorGlobal()"
+              [filtroEstado]="estadoGlobal()"
+              (onPagar)="onPagar($event)"
             />
           }
           @case ('cashflow') {
@@ -109,7 +117,6 @@ import {
               [proyeccion]="proyeccionDiaria()"
               [alertas]="alertasCashFlow()"
               [horizonte]="horizonte()"
-              (horizonteChange)="horizonte.set($event)"
             />
           }
         }
@@ -182,10 +189,13 @@ export class TesoreriaComponent implements OnInit {
     periodo: 'mes',
     fechaDesde: this.getDefaultFechaDesde(),
     fechaHasta: this.getDefaultFechaHasta(),
-    turno: 'todos',
+    categoria: '',
   });
 
   readonly cuentaGlobal = signal<string>('todas');
+  readonly categoriaGlobal = signal<string>('');
+  readonly proveedorGlobal = signal<string>('');
+  readonly estadoGlobal = signal<string>('');
 
   // Disponibilidades
   readonly cuentas = signal<CuentaDisponibilidad[]>([]);
@@ -230,6 +240,15 @@ export class TesoreriaComponent implements OnInit {
     this.loadData();
   }
 
+  onCategoriaChange(categoria: string): void {
+    this.categoriaGlobal.set(categoria);
+    this.loading.set(true);
+    this.loadData();
+  }
+
+  onProveedorChange(proveedor: string): void { this.proveedorGlobal.set(proveedor); }
+  onEstadoChange(estado: string): void { this.estadoGlobal.set(estado); }
+  onPagar(factura: FacturaPendiente): void { this.notifications.show(`Pagar factura ${factura.nroFactura} — en desarrollo`, 'info'); }
   onDescargar(): void { this.notifications.show('Descargando...', 'info'); }
   onImprimir(): void { window.print(); }
   onEnviar(): void { this.notifications.show('Funcionalidad de envío por mail en desarrollo', 'info'); }

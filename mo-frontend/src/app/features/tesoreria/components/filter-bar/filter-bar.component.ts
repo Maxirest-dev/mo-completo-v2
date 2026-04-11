@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FiltroTesoreria, PeriodoPreset } from '../../models';
+import { FiltroTesoreria, PeriodoPreset, TabTesoreria } from '../../models';
 
 interface PresetOption {
   key: PeriodoPreset;
@@ -21,73 +21,133 @@ interface CuentaOption {
   template: `
     <div class="filter-bar">
       <div class="filter-left">
-        <!-- Date range -->
-        <div class="filter-group">
-          <label class="filter-label">Periodo</label>
-          <div class="date-range">
-            <input
-              type="date"
-              class="date-input"
-              [ngModel]="filtro().fechaDesde"
-              (ngModelChange)="emitChange({ fechaDesde: $event, periodo: 'personalizado' })"
-              aria-label="Fecha desde"
-            />
-            <span class="date-separator">&mdash;</span>
-            <input
-              type="date"
-              class="date-input"
-              [ngModel]="filtro().fechaHasta"
-              (ngModelChange)="emitChange({ fechaHasta: $event, periodo: 'personalizado' })"
-              aria-label="Fecha hasta"
-            />
+        @if (!esCashFlow()) {
+          <!-- Date range (oculto en Cash Flow) -->
+          <div class="filter-group">
+            <label class="filter-label">Periodo</label>
+            <div class="date-range">
+              <input
+                type="date"
+                class="date-input"
+                [ngModel]="filtro().fechaDesde"
+                (ngModelChange)="emitChange({ fechaDesde: $event, periodo: 'personalizado' })"
+                aria-label="Fecha desde"
+              />
+              <span class="date-separator">&mdash;</span>
+              <input
+                type="date"
+                class="date-input"
+                [ngModel]="filtro().fechaHasta"
+                (ngModelChange)="emitChange({ fechaHasta: $event, periodo: 'personalizado' })"
+                aria-label="Fecha hasta"
+              />
+            </div>
           </div>
-        </div>
+        }
 
-        <!-- Periodo preset -->
-        <div class="filter-group">
-          <label class="filter-label">Rango</label>
-          <select
-            class="filter-input"
-            [ngModel]="filtro().periodo"
-            (ngModelChange)="onPresetChange($event)"
-            aria-label="Seleccionar rango de periodo"
-          >
-            @for (p of presets; track p.key) {
-              <option [value]="p.key">{{ p.label }}</option>
-            }
-          </select>
-        </div>
+        @if (esCashFlow()) {
+          <!-- Horizonte de proyección (solo en Cash Flow) -->
+          <div class="filter-group">
+            <label class="filter-label">Horizonte</label>
+            <div class="horizonte-pills">
+              @for (h of horizontes; track h.value) {
+                <button
+                  class="pill-btn"
+                  [class.pill-active]="horizonteSeleccionado() === h.value"
+                  (click)="onHorizonteChange(h.value)"
+                  type="button"
+                  [attr.aria-label]="'Proyección a ' + h.value + ' días'"
+                >{{ h.label }}</button>
+              }
+            </div>
+          </div>
+        } @else if (esAgenda()) {
+          <!-- Proveedor (solo en Agenda de Pagos) -->
+          <div class="filter-group">
+            <label class="filter-label">Proveedor</label>
+            <select
+              class="filter-input filter-input--cuenta"
+              [ngModel]="proveedorSeleccionado()"
+              (ngModelChange)="onProveedorChange($event)"
+              aria-label="Filtrar por proveedor"
+            >
+              <option value="">Todos los proveedores</option>
+              <option value="Distribuidora Sur S.A.">Distribuidora Sur S.A.</option>
+              <option value="Frigorífico Norte">Frigorífico Norte</option>
+              <option value="Bebidas Express">Bebidas Express</option>
+              <option value="Verdulería Central">Verdulería Central</option>
+              <option value="Lácteos del Plata">Lácteos del Plata</option>
+              <option value="Pan Nacional SRL">Pan Nacional SRL</option>
+            </select>
+          </div>
 
-        <!-- Turno -->
-        <div class="filter-group">
-          <label class="filter-label">Turno</label>
-          <select
-            class="filter-input"
-            [ngModel]="filtro().turno"
-            (ngModelChange)="emitChange({ turno: $event })"
-            aria-label="Seleccionar turno"
-          >
-            <option value="todos">Todos los turnos</option>
-            <option value="manana">Manana</option>
-            <option value="tarde">Tarde</option>
-            <option value="noche">Noche</option>
-          </select>
-        </div>
+          <!-- Estado (solo en Agenda de Pagos) -->
+          <div class="filter-group">
+            <label class="filter-label">Estado</label>
+            <select
+              class="filter-input"
+              [ngModel]="estadoSeleccionado()"
+              (ngModelChange)="onEstadoChange($event)"
+              aria-label="Filtrar por estado"
+            >
+              <option value="">Todos los estados</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Vencida">Vencida</option>
+              <option value="Pagada">Pagada</option>
+              <option value="Parcial">Parcial</option>
+            </select>
+          </div>
+        } @else {
+          <!-- Periodo preset -->
+          <div class="filter-group">
+            <label class="filter-label">Rango</label>
+            <select
+              class="filter-input"
+              [ngModel]="filtro().periodo"
+              (ngModelChange)="onPresetChange($event)"
+              aria-label="Seleccionar rango de periodo"
+            >
+              @for (p of presets; track p.key) {
+                <option [value]="p.key">{{ p.label }}</option>
+              }
+            </select>
+          </div>
 
-        <!-- Cuenta (filtro global por cuenta) -->
-        <div class="filter-group">
-          <label class="filter-label">Cuenta</label>
-          <select
-            class="filter-input filter-input--cuenta"
-            [ngModel]="cuentaSeleccionada"
-            (ngModelChange)="onCuentaSeleccionada($event)"
-            aria-label="Seleccionar cuenta"
-          >
-            @for (c of cuentasOptions; track c.value) {
-              <option [value]="c.value">{{ c.label }}</option>
-            }
-          </select>
-        </div>
+          <!-- Categoría -->
+          <div class="filter-group">
+            <label class="filter-label">Categoría</label>
+            <select
+              class="filter-input"
+              [ngModel]="categoriaSeleccionada()"
+              (ngModelChange)="onCategoriaChange($event)"
+              aria-label="Seleccionar categoría"
+            >
+              <option value="">Todas las categorías</option>
+              <option value="Ventas/Cobros">Ventas/Cobros</option>
+              <option value="Proveedores">Proveedores</option>
+              <option value="Sueldos">Sueldos</option>
+              <option value="Servicios">Servicios</option>
+              <option value="Retiro Socios">Retiro Socios</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Transferencia">Transferencia</option>
+            </select>
+          </div>
+
+          <!-- Cuenta (filtro global por cuenta) -->
+          <div class="filter-group">
+            <label class="filter-label">Cuenta</label>
+            <select
+              class="filter-input filter-input--cuenta"
+              [ngModel]="cuentaSeleccionada"
+              (ngModelChange)="onCuentaSeleccionada($event)"
+              aria-label="Seleccionar cuenta"
+            >
+              @for (c of cuentasOptions; track c.value) {
+                <option [value]="c.value">{{ c.label }}</option>
+              }
+            </select>
+          </div>
+        }
       </div>
 
       <!-- Acciones alineadas a la derecha -->
@@ -238,17 +298,63 @@ interface CuentaOption {
       width: 16px;
       height: 16px;
     }
+
+    /* Horizonte pills */
+    .horizonte-pills {
+      display: flex;
+      gap: 4px;
+    }
+
+    .pill-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: 20px;
+      background: white;
+      color: var(--slate-500, #6B7280);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill-btn:hover:not(.pill-active) {
+      background: #F9FAFB;
+    }
+
+    .pill-active {
+      background: #1155CC;
+      color: #fff;
+      border-color: #1155CC;
+    }
   `],
 })
 export class TesoreriaFilterBarComponent {
   readonly filtro = input.required<FiltroTesoreria>();
+  readonly tabActivo = input.required<TabTesoreria>();
+  readonly esAgenda = computed(() => this.tabActivo() === 'agenda');
+  readonly esCashFlow = computed(() => this.tabActivo() === 'cashflow');
   readonly filtroChange = output<Partial<FiltroTesoreria>>();
   readonly onDescargar = output<'xlsx' | 'pdf'>();
   readonly onImprimir = output<void>();
   readonly onEnviar = output<void>();
   readonly cuentaChange = output<string>();
+  readonly categoriaChange = output<string>();
+  readonly proveedorChange = output<string>();
+  readonly estadoChange = output<string>();
+  readonly horizonteChange = output<number>();
 
   cuentaSeleccionada = 'todas';
+  readonly categoriaSeleccionada = signal<string>('');
+  readonly proveedorSeleccionado = signal<string>('');
+  readonly estadoSeleccionado = signal<string>('');
+  readonly horizonteSeleccionado = signal<number>(7);
+
+  readonly horizontes = [
+    { value: 7, label: '7 días' },
+    { value: 15, label: '15 días' },
+    { value: 30, label: '30 días' },
+  ];
 
   readonly presets: PresetOption[] = [
     { key: 'hoy', label: 'Hoy' },
@@ -298,6 +404,26 @@ export class TesoreriaFilterBarComponent {
   onCuentaSeleccionada(cuenta: string): void {
     this.cuentaSeleccionada = cuenta;
     this.cuentaChange.emit(cuenta);
+  }
+
+  onCategoriaChange(categoria: string): void {
+    this.categoriaSeleccionada.set(categoria);
+    this.categoriaChange.emit(categoria);
+  }
+
+  onProveedorChange(proveedor: string): void {
+    this.proveedorSeleccionado.set(proveedor);
+    this.proveedorChange.emit(proveedor);
+  }
+
+  onEstadoChange(estado: string): void {
+    this.estadoSeleccionado.set(estado);
+    this.estadoChange.emit(estado);
+  }
+
+  onHorizonteChange(value: number): void {
+    this.horizonteSeleccionado.set(value);
+    this.horizonteChange.emit(value);
   }
 
   emitChange(partial: Partial<FiltroTesoreria>): void {

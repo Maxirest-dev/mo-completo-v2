@@ -1,56 +1,15 @@
 import { Component, ChangeDetectionStrategy, input, signal, computed, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
 import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
 
 @Component({
   selector: 'app-agenda-pagos',
   standalone: true,
-  imports: [CommonModule, FormsModule, MroCurrencyPipe],
+  imports: [CommonModule, MroCurrencyPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: '../../../balances/styles/balances-shared.css',
   template: `
-    <!-- Action Bar -->
-    <div class="action-bar">
-      <div class="action-filters">
-        <select
-          class="filter-select"
-          aria-label="Filtrar por proveedor"
-          [ngModel]="filtroProveedor()"
-          (ngModelChange)="filtroProveedor.set($event)">
-          <option value="">Todos los proveedores</option>
-          @for (prov of proveedores(); track prov) {
-            <option [value]="prov">{{ prov }}</option>
-          }
-        </select>
-
-        <select
-          class="filter-select"
-          aria-label="Filtrar por estado"
-          [ngModel]="filtroEstado()"
-          (ngModelChange)="filtroEstado.set($event)">
-          <option value="">Todos los estados</option>
-          <option value="Pendiente">Pendiente</option>
-          <option value="Vencida">Vencida</option>
-          <option value="Pagada">Pagada</option>
-          <option value="Parcial">Parcial</option>
-        </select>
-      </div>
-
-      <div class="action-right">
-        <div class="view-toggle">
-          <button class="pill-btn pill-active" aria-label="Ver como lista">Lista</button>
-          <button
-            class="pill-btn"
-            aria-label="Ver como calendario"
-            [disabled]="true"
-            title="Próximamente">Calendario</button>
-        </div>
-        <button class="btn-action btn-export" (click)="onExportar.emit()">Exportar Excel</button>
-      </div>
-    </div>
-
     <!-- KPI Row -->
     <div class="kpi-row">
       @for (kpi of kpis(); track kpi.label) {
@@ -405,25 +364,15 @@ export class AgendaPagosComponent {
   readonly kpis = input.required<KpiAgenda[]>();
   readonly facturas = input.required<FacturaPendiente[]>();
 
+  readonly filtroProveedor = input<string>('');
+  readonly filtroEstado = input<string>('');
+
   /** Output emitido al hacer clic en "Pagar" */
   readonly onPagar = output<FacturaPendiente>();
-
-  /** Output emitido al hacer clic en "Exportar Excel" */
-  readonly onExportar = output<void>();
-
-  /** Filtros locales */
-  readonly filtroProveedor = signal<string>('');
-  readonly filtroEstado = signal<string>('');
 
   /** Paginacion */
   readonly currentPage = signal<number>(1);
   readonly pageSize = 7;
-
-  /** Lista unica de proveedores para el dropdown */
-  readonly proveedores = computed(() => {
-    const set = new Set(this.facturas().map(f => f.proveedor));
-    return [...set].sort();
-  });
 
   constructor() {
     effect(() => {

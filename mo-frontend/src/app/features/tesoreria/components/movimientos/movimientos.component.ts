@@ -279,40 +279,11 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
         </div>
 
         <div class="header-actions">
-          <select
-            class="filter-select"
-            aria-label="Filtrar por cuenta"
-            [ngModel]="filtroCuenta()"
-            (ngModelChange)="filtroCuenta.set($event)">
-            <option value="">Todas las cuentas</option>
-            @for (c of cuentasUnicas(); track c) {
-              <option [value]="c">{{ c }}</option>
-            }
-          </select>
-
-          <select
-            class="filter-select"
-            aria-label="Filtrar por categoria"
-            [ngModel]="filtroCategoria()"
-            (ngModelChange)="filtroCategoria.set($event)">
-            <option value="">Todas las categorias</option>
-            @for (cat of categoriasUnicas(); track cat) {
-              <option [value]="cat">{{ cat }}</option>
-            }
-          </select>
-
           <button class="btn-primary" type="button"
                   aria-label="Nuevo movimiento"
                   (click)="onNuevoMovimiento.emit()">
             <span class="btn-icon" aria-hidden="true">+</span>
             Nuevo Movimiento
-          </button>
-
-          <button class="btn-outline" type="button"
-                  aria-label="Exportar a Excel"
-                  (click)="onExportar.emit()">
-            <span class="btn-icon" aria-hidden="true">&#8615;</span>
-            Exportar Excel
           </button>
         </div>
       </div>
@@ -415,7 +386,6 @@ export class MovimientosComponent {
 
   /** Output events */
   readonly onNuevoMovimiento = output<void>();
-  readonly onExportar = output<void>();
 
   /** Filter signals */
   readonly filtroCuenta = signal('');

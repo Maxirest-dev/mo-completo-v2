@@ -2,6 +2,7 @@ import {
   Component,
   ChangeDetectionStrategy,
   input,
+  output,
   signal,
   computed,
   effect,
@@ -145,49 +146,6 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
       overflow-x: auto;
     }
 
-    .mov-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-    }
-
-    .mov-table thead tr {
-      background: var(--slate-50, #F8FAFC);
-    }
-
-    .mov-table th {
-      padding: 10px 12px;
-      font-weight: 600;
-      color: var(--slate-400, #90A1B9);
-      text-align: left;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      border-bottom: 1px solid var(--slate-200, #E2E8F0);
-    }
-
-    .mov-table th:first-child {
-      border-top-left-radius: var(--radius-sm, 8px);
-    }
-
-    .mov-table th:last-child {
-      border-top-right-radius: var(--radius-sm, 8px);
-    }
-
-    .mov-table td {
-      padding: 10px 12px;
-      color: var(--slate-700, #314158);
-      border-bottom: 1px solid var(--slate-200, #E2E8F0);
-      white-space: nowrap;
-    }
-
-    .mov-table tbody tr:hover {
-      background: var(--slate-50, #F8FAFC);
-    }
-
     .text-right {
       text-align: right;
     }
@@ -237,6 +195,35 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
       border-color: #FECACA;
     }
 
+    /* ===== TIPO BADGES ===== */
+    .tipo-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: var(--radius-sm, 8px);
+      border: 1px solid transparent;
+    }
+
+    .tipo-ingreso {
+      background: #F0FDF4;
+      color: #16A34A;
+      border-color: #BBF7D0;
+    }
+
+    .tipo-egreso {
+      background: #FEF2F2;
+      color: #EF4444;
+      border-color: #FECACA;
+    }
+
+    .tipo-transferencia {
+      background: #EFF6FF;
+      color: #2563EB;
+      border-color: #BFDBFE;
+    }
+
     /* ===== CELL HELPERS ===== */
     .cell-ref {
       font-family: 'Inter', monospace;
@@ -244,7 +231,7 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
       color: var(--slate-400, #90A1B9);
     }
 
-    /* ===== PAGINATION ===== */
+    /* ===== PAGINATION ROW ===== */
     .pagination-row {
       display: flex;
       justify-content: space-between;
@@ -254,48 +241,9 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
       border-top: 1px solid var(--slate-100, #F3F4F6);
     }
 
-    .pagination-info {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      color: var(--slate-400, #90A1B9);
-    }
-
     .pagination-buttons {
       display: flex;
       gap: 4px;
-    }
-
-    .page-btn {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      min-width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--slate-200, #E2E8F0);
-      border-radius: 6px;
-      background: #fff;
-      color: var(--slate-700, #314158);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .page-btn:hover:not(.page-active):not(:disabled) {
-      background: #F9FAFB;
-      border-color: #D1D5DB;
-    }
-
-    .page-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .page-active {
-      background: #1155CC;
-      color: #fff;
-      border-color: #1155CC;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -333,6 +281,7 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
         <div class="header-actions">
           <select
             class="filter-select"
+            aria-label="Filtrar por cuenta"
             [ngModel]="filtroCuenta()"
             (ngModelChange)="filtroCuenta.set($event)">
             <option value="">Todas las cuentas</option>
@@ -343,6 +292,7 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
 
           <select
             class="filter-select"
+            aria-label="Filtrar por categoria"
             [ngModel]="filtroCategoria()"
             (ngModelChange)="filtroCategoria.set($event)">
             <option value="">Todas las categorias</option>
@@ -351,13 +301,17 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
             }
           </select>
 
-          <button class="btn-primary" type="button">
-            <span class="btn-icon">+</span>
+          <button class="btn-primary" type="button"
+                  aria-label="Nuevo movimiento"
+                  (click)="onNuevoMovimiento.emit()">
+            <span class="btn-icon" aria-hidden="true">+</span>
             Nuevo Movimiento
           </button>
 
-          <button class="btn-outline" type="button">
-            <span class="btn-icon">&#8615;</span>
+          <button class="btn-outline" type="button"
+                  aria-label="Exportar a Excel"
+                  (click)="onExportar.emit()">
+            <span class="btn-icon" aria-hidden="true">&#8615;</span>
             Exportar Excel
           </button>
         </div>
@@ -365,15 +319,16 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
 
       <!-- Table -->
       <div class="table-wrapper">
-        <table class="mov-table">
+        <table class="data-table" aria-label="Historial de movimientos">
           <thead>
             <tr>
               <th>Fecha</th>
               <th>Cuenta</th>
+              <th>Tipo</th>
               <th>Categoria</th>
               <th>Descripcion</th>
               <th>Ref</th>
-              <th class="text-right">Monto</th>
+              <th class="th-right">Monto</th>
               <th>Estado</th>
             </tr>
           </thead>
@@ -382,10 +337,18 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
               <tr>
                 <td>{{ mov.fecha }}</td>
                 <td>{{ mov.cuenta }}</td>
+                <td>
+                  <span class="tipo-badge"
+                        [class.tipo-ingreso]="mov.tipo === 'Ingreso'"
+                        [class.tipo-egreso]="mov.tipo === 'Egreso'"
+                        [class.tipo-transferencia]="mov.tipo === 'Transferencia'">
+                    {{ mov.tipo }}
+                  </span>
+                </td>
                 <td>{{ mov.categoria }}</td>
                 <td>{{ mov.descripcion }}</td>
                 <td class="cell-ref">{{ mov.referencia }}</td>
-                <td class="text-right"
+                <td class="td-right"
                     [class.monto-positive]="mov.monto > 0"
                     [class.monto-negative]="mov.monto < 0"
                     [class.monto-zero]="mov.monto === 0">
@@ -402,9 +365,9 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
               </tr>
             } @empty {
               <tr>
-                <td colspan="7">
+                <td colspan="8">
                   <div class="empty-state">
-                    <span class="empty-state-icon">&#128203;</span>
+                    <span class="empty-state-icon" role="status" aria-hidden="true">&#128203;</span>
                     <span>No hay movimientos para mostrar</span>
                   </div>
                 </td>
@@ -449,6 +412,10 @@ import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
 })
 export class MovimientosComponent {
   readonly movimientos = input.required<Movimiento[]>();
+
+  /** Output events */
+  readonly onNuevoMovimiento = output<void>();
+  readonly onExportar = output<void>();
 
   /** Filter signals */
   readonly filtroCuenta = signal('');

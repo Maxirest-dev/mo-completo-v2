@@ -12,13 +12,15 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
   template: `
     <!-- Horizon Selector -->
     <div class="horizon-selector">
-      <span class="horizon-label">Horizonte de proyecci\u00f3n:</span>
+      <span class="horizon-label">Horizonte de proyección:</span>
       <div class="pill-group">
         @for (opt of horizonteOptions; track opt.value) {
           <button
             class="pill-btn"
             [class.pill-active]="horizonte() === opt.value"
-            (click)="horizonteChange.emit(opt.value)"
+            (click)="onHorizonteSelect(opt.value)"
+            [attr.aria-label]="'Proyección a ' + opt.value + ' días'"
+            [attr.aria-pressed]="horizonte() === opt.value"
             type="button"
           >
             {{ opt.label }}
@@ -32,7 +34,7 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
       <div class="summary-row">
         @for (kpi of kpis(); track $index; let last = $last; let first = $first) {
           @if (!first) {
-            <span class="summary-operator">{{ kpi.operador }}</span>
+            <span class="summary-operator" aria-hidden="true">{{ kpi.operador }}</span>
           }
           <div
             class="summary-item"
@@ -52,10 +54,10 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
 
     <!-- Bottom Row: Table + Alerts -->
     <div class="bottom-row-cashflow">
-      <!-- Left: Proyecci\u00f3n Diaria -->
+      <!-- Left: Proyección Diaria -->
       <div class="card table-card">
-        <h3 class="card-title">Proyecci\u00f3n Diaria de Saldos</h3>
-        <table class="data-table">
+        <h3 class="card-title">Proyección Diaria de Saldos</h3>
+        <table class="data-table" aria-label="Proyección diaria de saldos">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -74,19 +76,24 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
                 <td [class.td-bold]="first">{{ row.fecha }}</td>
                 <td [class.td-bold]="first">{{ row.detalle }}</td>
                 <td class="th-right td-entrada">
-                  {{ row.entradas != null ? (row.entradas | mroCurrency) : '\u2014' }}
+                  {{ row.entradas != null ? (row.entradas | mroCurrency) : '—' }}
                 </td>
                 <td class="th-right td-salida">
-                  {{ row.salidas != null ? (row.salidas | mroCurrency) : '\u2014' }}
+                  {{ row.salidas != null ? (row.salidas | mroCurrency) : '—' }}
                 </td>
-                <td class="th-right td-bold">{{ row.saldoAcumulado | mroCurrency }}</td>
+                <td
+                  class="th-right td-bold"
+                  [class.saldo-negative]="row.saldoAcumulado < 0"
+                >
+                  {{ row.saldoAcumulado | mroCurrency }}
+                </td>
               </tr>
             } @empty {
               <tr>
                 <td colspan="5">
-                  <div class="empty-state">
-                    <span class="empty-state-icon">\uD83D\uDCC9</span>
-                    No hay datos de proyecci\u00f3n disponibles
+                  <div class="empty-state" role="status">
+                    <span class="empty-state-icon" aria-hidden="true">📉</span>
+                    No hay datos de proyección disponibles
                   </div>
                 </td>
               </tr>
@@ -98,15 +105,15 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
       <!-- Right: Alertas y Recomendaciones -->
       <div class="card alerts-card">
         <h3 class="card-title">Alertas y Recomendaciones</h3>
-        <div class="alerts-list">
+        <div class="alerts-list" role="list">
           @for (alerta of alertas(); track $index) {
-            <div class="alert-item" [class]="'alert-border-' + alerta.severidad">
+            <div class="alert-item" role="listitem" [class]="'alert-border-' + alerta.severidad">
               <span class="alert-titulo">{{ alerta.titulo }}</span>
               <span class="alert-desc">{{ alerta.descripcion }}</span>
             </div>
           } @empty {
-            <div class="empty-state">
-              <span class="empty-state-icon">\u2705</span>
+            <div class="empty-state" role="status">
+              <span class="empty-state-icon" aria-hidden="true">✅</span>
               Sin alertas activas
             </div>
           }
@@ -220,12 +227,17 @@ import { KpiCashFlow, ProyeccionDiaria, AlertaCashFlow, HorizonteProyeccion } fr
     .td-entrada { color: #22C55E; }
     .td-salida  { color: #EF4444; }
 
+    .saldo-negative {
+      color: #EF4444;
+    }
+
     .row-alerta {
       background-color: #FFFBEB;
     }
 
     .row-hoy td {
       font-weight: 600;
+      background-color: #F0F5FF;
     }
 
     /* ===== ALERTS LIST ===== */
@@ -299,11 +311,15 @@ export class CashFlowComponent {
   readonly alertas = input.required<AlertaCashFlow[]>();
   readonly horizonte = input.required<number>();
 
-  readonly horizonteChange = output<number>();
+  readonly horizonteChange = output<HorizonteProyeccion>();
 
   readonly horizonteOptions: { value: HorizonteProyeccion; label: string }[] = [
-    { value: 7, label: '7 d\u00edas' },
-    { value: 15, label: '15 d\u00edas' },
-    { value: 30, label: '30 d\u00edas' },
+    { value: 7, label: '7 días' },
+    { value: 15, label: '15 días' },
+    { value: 30, label: '30 días' },
   ];
+
+  onHorizonteSelect(value: HorizonteProyeccion): void {
+    this.horizonteChange.emit(value);
+  }
 }

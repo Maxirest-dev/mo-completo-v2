@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, signal, computed, effect, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
@@ -16,6 +16,7 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
       <div class="action-filters">
         <select
           class="filter-select"
+          aria-label="Filtrar por proveedor"
           [ngModel]="filtroProveedor()"
           (ngModelChange)="filtroProveedor.set($event)">
           <option value="">Todos los proveedores</option>
@@ -26,6 +27,7 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
 
         <select
           class="filter-select"
+          aria-label="Filtrar por estado"
           [ngModel]="filtroEstado()"
           (ngModelChange)="filtroEstado.set($event)">
           <option value="">Todos los estados</option>
@@ -38,17 +40,21 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
 
       <div class="action-right">
         <div class="view-toggle">
-          <button class="pill-btn pill-active">Lista</button>
-          <button class="pill-btn">Calendario</button>
+          <button class="pill-btn pill-active" aria-label="Ver como lista">Lista</button>
+          <button
+            class="pill-btn"
+            aria-label="Ver como calendario"
+            [disabled]="true"
+            title="Próximamente">Calendario</button>
         </div>
-        <button class="btn-action btn-export">Exportar Excel</button>
+        <button class="btn-action btn-export" (click)="onExportar.emit()">Exportar Excel</button>
       </div>
     </div>
 
     <!-- KPI Row -->
     <div class="kpi-row">
       @for (kpi of kpis(); track kpi.label) {
-        <div class="kpi-card">
+        <div class="kpi-card" [style.background]="kpi.bgColor">
           <span class="kpi-label">{{ kpi.label }}</span>
           <span class="kpi-value" [style.color]="kpi.color">
             {{ kpi.value | mroCurrency }}
@@ -68,7 +74,7 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
       </div>
 
       <div class="table-wrapper">
-        <table class="data-table">
+        <table class="data-table" aria-label="Facturas pendientes de pago">
           <thead>
             <tr>
               <th>Proveedor</th>
@@ -85,7 +91,10 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
                 <td>{{ fp.proveedor }}</td>
                 <td class="cell-code">{{ fp.nroFactura }}</td>
                 <td>{{ fp.fechaVencimiento }}</td>
-                <td class="text-right font-bold">{{ fp.monto | mroCurrency }}</td>
+                <td class="text-right font-bold"
+                    [class.monto-vencida]="fp.estado === 'Vencida'">
+                  {{ fp.monto | mroCurrency }}
+                </td>
                 <td>
                   <span class="badge" [ngClass]="estadoBadgeClass(fp.estado)">
                     {{ fp.estado }}
@@ -93,14 +102,14 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
                 </td>
                 <td>
                   @if (fp.estado !== 'Pagada') {
-                    <button class="btn-pagar">Pagar</button>
+                    <button class="btn-pagar" (click)="onPagar.emit(fp)">Pagar</button>
                   }
                 </td>
               </tr>
             } @empty {
               <tr>
                 <td colspan="6">
-                  <div class="empty-state">
+                  <div class="empty-state" role="status">
                     <span class="empty-state-icon">📋</span>
                     <span>No hay facturas pendientes</span>
                   </div>
@@ -200,6 +209,11 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
       transition: all 0.15s ease;
     }
 
+    .pill-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .pill-active {
       background: #fff;
       color: var(--slate-900, #0F172B);
@@ -295,6 +309,9 @@ import { KpiAgenda, FacturaPendiente } from '../../models/tesoreria.model';
       color: var(--slate-400, #90A1B9);
     }
 
+    /* === MONTO VENCIDA === */
+    .monto-vencida { color: #EF4444; }
+
     /* === ESTADO BADGES === */
     .badge-yellow { background: #FEF3C7; color: #D97706; }
     .badge-red { background: #FEF2F2; color: #EF4444; }
@@ -388,6 +405,12 @@ export class AgendaPagosComponent {
   readonly kpis = input.required<KpiAgenda[]>();
   readonly facturas = input.required<FacturaPendiente[]>();
 
+  /** Output emitido al hacer clic en "Pagar" */
+  readonly onPagar = output<FacturaPendiente>();
+
+  /** Output emitido al hacer clic en "Exportar Excel" */
+  readonly onExportar = output<void>();
+
   /** Filtros locales */
   readonly filtroProveedor = signal<string>('');
   readonly filtroEstado = signal<string>('');
@@ -402,6 +425,14 @@ export class AgendaPagosComponent {
     return [...set].sort();
   });
 
+  constructor() {
+    effect(() => {
+      this.filtroProveedor();
+      this.filtroEstado();
+      this.currentPage.set(1);
+    });
+  }
+
   /** Facturas filtradas por proveedor y estado */
   readonly filteredFacturas = computed(() => {
     let result = this.facturas();
@@ -414,9 +445,6 @@ export class AgendaPagosComponent {
     if (est) {
       result = result.filter(f => f.estado === est);
     }
-
-    // Reset page when filters change
-    this.currentPage.set(1);
 
     return result;
   });

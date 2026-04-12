@@ -1,14 +1,17 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  Input,
+  ChangeDetectorRef,
+  NgZone,
   OnInit,
   OnDestroy,
+  input,
+  output,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MroCurrencyPipe } from '../../../balances/pipes/currency.pipe';
-import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
+import { EmpleadoEnTurno, FichajeRegistro, TipoFichaje } from '../../models/personal.model';
 
 @Component({
   selector: 'app-fichaje',
@@ -51,9 +54,9 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
 
     .fichaje-btn {
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      height: 48px;
+      height: 60px;
       width: 100%;
       border: none;
       border-radius: 10px;
@@ -93,6 +96,19 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
     .pin-dots {
       display: flex;
       gap: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .pin-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      font-size: 16px;
     }
 
     .pin-dot {
@@ -100,6 +116,11 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
       height: 12px;
       border-radius: 50%;
       background: var(--slate-200, #E5E7EB);
+      transition: background 0.15s ease;
+    }
+
+    .pin-dot.filled {
+      background: var(--slate-900, #111827);
     }
 
     /* ===== BADGE VARIANTS ===== */
@@ -130,21 +151,25 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
         <span class="clock-display">{{ horaActual() }}</span>
 
         <div class="fichaje-buttons">
-          <button class="fichaje-btn btn-entrada">Entrada</button>
-          <button class="fichaje-btn btn-descanso">Inicio Descanso</button>
-          <button class="fichaje-btn btn-fin">Fin Descanso</button>
-          <button class="fichaje-btn btn-salida">Salida</button>
+          <button type="button" class="fichaje-btn btn-entrada" (click)="onFichaje.emit('entrada')">Entrada</button>
+          <button type="button" class="fichaje-btn btn-descanso" (click)="onFichaje.emit('inicioDescanso')">Inicio Descanso</button>
+          <button type="button" class="fichaje-btn btn-fin" (click)="onFichaje.emit('finDescanso')">Fin Descanso</button>
+          <button type="button" class="fichaje-btn btn-salida" (click)="onFichaje.emit('salida')">Salida</button>
         </div>
 
         <div class="pin-section">
           <span class="pin-label">PIN:</span>
           <div class="pin-dots">
-            <span class="pin-dot"></span>
-            <span class="pin-dot"></span>
-            <span class="pin-dot"></span>
-            <span class="pin-dot"></span>
-            <span class="pin-dot"></span>
-            <span class="pin-dot"></span>
+            <input
+              class="pin-input"
+              type="password"
+              maxlength="6"
+              [value]="pin()"
+              (input)="onPinInput($event)"
+              aria-label="Ingresar PIN de fichaje" />
+            @for (i of pinSlots; track i) {
+              <span class="pin-dot" [class.filled]="i < pin().length"></span>
+            }
           </div>
         </div>
       </div>
@@ -153,18 +178,18 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
       <div class="card">
         <h3 class="card-title">Monitor de Turno Actual</h3>
 
-        <table class="data-table">
+        <table class="data-table" aria-label="Monitor de turno actual">
           <thead>
             <tr>
-              <th>Empleado</th>
-              <th>Puesto</th>
-              <th>Hora Entrada</th>
-              <th>Estado</th>
-              <th class="th-right">Hs Acum.</th>
+              <th scope="col">Empleado</th>
+              <th scope="col">Puesto</th>
+              <th scope="col">Hora Entrada</th>
+              <th scope="col">Estado</th>
+              <th scope="col" class="th-right">Hs Acum.</th>
             </tr>
           </thead>
           <tbody>
-            @for (et of enTurno; track et.id) {
+            @for (et of enTurno(); track et.id) {
               <tr>
                 <td class="td-bold">{{ et.empleado }}</td>
                 <td>{{ et.puesto }}</td>
@@ -199,20 +224,20 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
     <div class="card">
       <h3 class="card-title">Historial de Fichajes</h3>
 
-      <table class="data-table">
+      <table class="data-table" aria-label="Historial de fichajes">
         <thead>
           <tr>
-            <th>Fecha</th>
-            <th>Empleado</th>
-            <th>Rol</th>
-            <th>Entrada</th>
-            <th>Salida</th>
-            <th class="th-right">Hs Trabajadas</th>
-            <th class="th-right">Hs Extra</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Empleado</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Entrada</th>
+            <th scope="col">Salida</th>
+            <th scope="col" class="th-right">Hs Trabajadas</th>
+            <th scope="col" class="th-right">Hs Extra</th>
           </tr>
         </thead>
         <tbody>
-          @for (f of historial; track f.id) {
+          @for (f of historial(); track f.id) {
             <tr>
               <td>{{ f.fecha }}</td>
               <td class="td-bold">{{ f.empleado }}</td>
@@ -241,18 +266,30 @@ import { EmpleadoEnTurno, FichajeRegistro } from '../../models/personal.model';
   `,
 })
 export class FichajeComponent implements OnInit, OnDestroy {
-  @Input() enTurno: EmpleadoEnTurno[] = [];
-  @Input() historial: FichajeRegistro[] = [];
+  readonly enTurno = input<EmpleadoEnTurno[]>([]);
+  readonly historial = input<FichajeRegistro[]>([]);
+  readonly onFichaje = output<TipoFichaje>();
 
   horaActual = signal<string>(this.formatTime());
+  pin = signal<string>('');
+  readonly pinSlots = [0, 1, 2, 3, 4, 5];
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
+  constructor(
+    private readonly ngZone: NgZone,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
+
   ngOnInit(): void {
     this.horaActual.set(this.formatTime());
-    this.intervalId = setInterval(() => {
-      this.horaActual.set(this.formatTime());
-    }, 1000);
+
+    this.ngZone.runOutsideAngular(() => {
+      this.intervalId = setInterval(() => {
+        this.horaActual.set(this.formatTime());
+        this.cdr.markForCheck();
+      }, 1000);
+    });
   }
 
   ngOnDestroy(): void {
@@ -262,10 +299,18 @@ export class FichajeComponent implements OnInit, OnDestroy {
     }
   }
 
+  onPinInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.replace(/\D/g, '').slice(0, 6);
+    this.pin.set(value);
+    input.value = value;
+  }
+
   private formatTime(): string {
     const now = new Date();
     const hh = now.getHours().toString().padStart(2, '0');
     const mm = now.getMinutes().toString().padStart(2, '0');
-    return `${hh}:${mm}`;
+    const ss = now.getSeconds().toString().padStart(2, '0');
+    return `${hh}:${mm}:${ss}`;
   }
 }

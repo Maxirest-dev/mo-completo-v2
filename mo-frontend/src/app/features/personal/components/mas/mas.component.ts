@@ -24,8 +24,8 @@ type SeccionMas = 'propinas' | 'uniformes' | 'incidencias';
       font-size: 12px;
       font-weight: 500;
       padding: 6px 16px;
-      border: 1px solid var(--slate-200, #E5E7EB);
-      border-radius: 9999px;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
       background: #fff;
       color: var(--slate-500, #6B7280);
       cursor: pointer;
@@ -132,7 +132,7 @@ type SeccionMas = 'propinas' | 'uniformes' | 'incidencias';
               <tr>
                 <td colspan="4">
                   <div class="empty-state">
-                    <span class="empty-state-icon">--</span>
+                    <span class="empty-state-icon" aria-hidden="true">&#x1F4B0;</span>
                     <span>No hay registros de propinas</span>
                   </div>
                 </td>
@@ -179,7 +179,7 @@ type SeccionMas = 'propinas' | 'uniformes' | 'incidencias';
               <tr>
                 <td colspan="6">
                   <div class="empty-state">
-                    <span class="empty-state-icon">--</span>
+                    <span class="empty-state-icon" aria-hidden="true">&#x1F454;</span>
                     <span>No hay registros de uniformes</span>
                   </div>
                 </td>
@@ -223,7 +223,7 @@ type SeccionMas = 'propinas' | 'uniformes' | 'incidencias';
               <tr>
                 <td colspan="4">
                   <div class="empty-state">
-                    <span class="empty-state-icon">--</span>
+                    <span class="empty-state-icon" aria-hidden="true">&#x1F4CB;</span>
                     <span>No hay registros de incidencias</span>
                   </div>
                 </td>
@@ -248,11 +248,15 @@ export class MasComponent {
     { key: 'incidencias', label: 'Incidencias' },
   ];
 
-  readonly propinasHoy = computed(() =>
-    this.propinas()
-      .filter(p => p.fecha.includes('11/04') && !p.repartido)
-      .reduce((sum, p) => sum + p.monto, 0)
-  );
+  readonly propinasHoy = computed(() => {
+    const hoy = new Date();
+    const dd = hoy.getDate().toString().padStart(2, '0');
+    const mm = (hoy.getMonth() + 1).toString().padStart(2, '0');
+    const hoyStr = dd + '/' + mm;
+    return this.propinas()
+      .filter(p => p.fecha.includes(hoyStr) && !p.repartido)
+      .reduce((sum, p) => sum + p.monto, 0);
+  });
 
   readonly propinasRepartidas = computed(() =>
     this.propinas()

@@ -37,13 +37,14 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
     <div class="action-bar">
       <div class="action-filters">
         <div class="search-wrapper">
-          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <svg class="search-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
           </svg>
           <input
             type="text"
             class="search-input"
             placeholder="Buscar por nombre..."
+            aria-label="Buscar empleados por nombre"
             [ngModel]="busqueda()"
             (ngModelChange)="busqueda.set($event)"
           />
@@ -51,6 +52,7 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
 
         <select
           class="filter-input"
+          aria-label="Filtrar por rol"
           [ngModel]="filtroRol()"
           (ngModelChange)="filtroRol.set($event)"
         >
@@ -62,6 +64,7 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
 
         <select
           class="filter-input"
+          aria-label="Filtrar por estado"
           [ngModel]="filtroEstado()"
           (ngModelChange)="filtroEstado.set($event)"
         >
@@ -72,7 +75,7 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
         </select>
       </div>
 
-      <button class="btn-primary" type="button" (click)="onNuevoEmpleado.emit()">
+      <button class="btn-primary" type="button" (click)="nuevoEmpleado.emit()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="btn-icon">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
         </svg>
@@ -99,11 +102,22 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
     <!-- ===== STAFF GRID ===== -->
     <div class="staff-grid">
       @for (emp of filteredEmpleados(); track emp.id) {
-        <div class="staff-card">
+        <div
+          class="staff-card"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="emp.nombre + ', ' + emp.rol + ', ' + emp.estado"
+          (click)="onVerEmpleado.emit(emp.id)"
+          (keydown.enter)="onVerEmpleado.emit(emp.id)"
+        >
           <div class="staff-card-body">
-            <div class="avatar" [style.background-color]="getAvatarColor(emp.rol)">
-              {{ getInitials(emp.nombre) }}
-            </div>
+            @if (emp.avatar) {
+              <img class="avatar-img" [src]="emp.avatar" [alt]="emp.nombre">
+            } @else {
+              <div class="avatar" [style.background-color]="getAvatarColor(emp.rol)">
+                {{ getInitials(emp.nombre) }}
+              </div>
+            }
             <div class="staff-info">
               <span class="staff-nombre">{{ emp.nombre }}</span>
               <span class="staff-rol">{{ emp.rol }}</span>
@@ -254,6 +268,11 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
       transform: translateY(-1px);
     }
 
+    .staff-card:focus {
+      outline: 2px solid var(--primary-orange, #F27920);
+      outline-offset: 2px;
+    }
+
     .staff-card-body {
       display: flex;
       align-items: center;
@@ -273,6 +292,14 @@ const ESTADO_BADGE: Record<EstadoEmpleado, { bg: string; color: string }> = {
       font-weight: 700;
       color: #fff;
       letter-spacing: 0.02em;
+    }
+
+    .avatar-img {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     .staff-info {
@@ -345,7 +372,8 @@ export class StaffComponent {
 
   /* --- I/O --- */
   readonly empleados = input.required<Empleado[]>();
-  readonly onNuevoEmpleado = output<void>();
+  readonly nuevoEmpleado = output<void>();
+  readonly onVerEmpleado = output<string>();
 
   /* --- Filter signals --- */
   readonly busqueda   = signal('');

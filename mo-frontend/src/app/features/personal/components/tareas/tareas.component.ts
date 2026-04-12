@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
 
@@ -41,15 +41,15 @@ import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
           }
         </div>
 
-        <table class="data-table">
+        <table class="data-table" aria-label="Tabla de tareas">
           <thead>
             <tr>
-              <th>Titulo</th>
-              <th>Asignado a</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th>Prioridad</th>
-              <th>Fecha Limite</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Asignado a</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Prioridad</th>
+              <th scope="col">Fecha Limite</th>
             </tr>
           </thead>
           <tbody>
@@ -88,10 +88,10 @@ import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
     <!-- ========== CHECKLISTS VIEW ========== -->
     @if (vistaActiva() === 'checklists') {
       <div class="bottom-row-2">
-        @for (cl of checklists; track cl.tipo) {
+        @for (cl of checklists(); track cl.tipo) {
           @let completados = completadosCount(cl);
           @let total = cl.items.length;
-          @let pct = total > 0 ? Math.round((completados / total) * 100) : 0;
+          @let pct = calcPercent(completados, total);
           <div class="card checklist-card">
             <h3 class="card-title">{{ cl.titulo }}</h3>
 
@@ -133,9 +133,7 @@ import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
     /* ===== VIEW TOGGLE ===== */
     .view-toggle {
       display: flex;
-      background: var(--slate-100, #F3F4F6);
-      border-radius: 8px;
-      padding: 2px;
+      gap: 8px;
       margin-bottom: 16px;
       width: fit-content;
     }
@@ -144,19 +142,24 @@ import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
       font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 500;
-      padding: 6px 14px;
-      border: none;
-      border-radius: 6px;
+      padding: 6px 16px;
+      border: 1px solid var(--slate-200, #E5E7EB);
+      border-radius: 20px;
       background: transparent;
       color: var(--slate-500, #6B7280);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
+    .pill-btn:hover:not(.pill-active) {
+      border-color: #D1D5DB;
+      background: #F9FAFB;
+    }
+
     .pill-active {
-      background: #fff;
-      color: var(--slate-900, #0F172B);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      background: #1155CC;
+      color: #fff;
+      border-color: #1155CC;
     }
 
     /* ===== KPI ROW 4 COLS ===== */
@@ -286,10 +289,8 @@ import { Tarea, Checklist, EstadoTarea } from '../../models/personal.model';
 })
 export class TareasComponent {
 
-  @Input() tareas: Tarea[] = [];
-  @Input() checklists: Checklist[] = [];
-
-  readonly Math = Math;
+  readonly tareas = input<Tarea[]>([]);
+  readonly checklists = input<Checklist[]>([]);
 
   readonly filtroEstado = signal<string>('');
   readonly vistaActiva = signal<'tareas' | 'checklists'>('tareas');
@@ -303,7 +304,7 @@ export class TareasComponent {
 
   readonly tareasCount = computed(() => {
     const counts: Record<string, number> = {};
-    for (const t of this.tareas) {
+    for (const t of this.tareas()) {
       counts[t.estado] = (counts[t.estado] || 0) + 1;
     }
     return counts;
@@ -311,8 +312,8 @@ export class TareasComponent {
 
   readonly filteredTareas = computed(() => {
     const estado = this.filtroEstado();
-    if (!estado) return this.tareas;
-    return this.tareas.filter(t => t.estado === estado);
+    if (!estado) return this.tareas();
+    return this.tareas().filter(t => t.estado === estado);
   });
 
   toggleFiltro(estado: string): void {
@@ -334,6 +335,10 @@ export class TareasComponent {
       case 'Media': return 'badge-pending';
       case 'Baja': return 'badge-baja';
     }
+  }
+
+  calcPercent(completed: number, total: number): number {
+    return total === 0 ? 0 : Math.round((completed / total) * 100);
   }
 
   completadosCount(cl: Checklist): number {

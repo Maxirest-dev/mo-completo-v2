@@ -68,7 +68,8 @@ import {
           @case ('staff') {
             <app-staff
               [empleados]="empleados()"
-              (onNuevoEmpleado)="onNuevoEmpleado()"
+              (nuevoEmpleado)="onNuevoEmpleado()"
+              (onVerEmpleado)="onVerEmpleado($event)"
             />
           }
           @case ('fichaje') {
@@ -188,6 +189,10 @@ export class PersonalComponent implements OnInit {
 
   onNuevoEmpleado(): void {
     this.notifications.show('Formulario de nuevo empleado — en desarrollo', 'info');
+  }
+
+  onVerEmpleado(id: string): void {
+    this.notifications.show(`Detalle del empleado ${id} — en desarrollo`, 'info');
   }
 
   private loadData(): void {

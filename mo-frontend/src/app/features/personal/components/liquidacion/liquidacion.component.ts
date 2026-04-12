@@ -17,9 +17,7 @@ type VistaLiquidacion = 'preliquidacion' | 'adelantos';
     /* ===== PILL TOGGLE ===== */
     .pill-toggle {
       display: inline-flex;
-      background: var(--slate-100, #F3F4F6);
-      border-radius: 9999px;
-      padding: 3px;
+      gap: 8px;
       margin-bottom: 16px;
     }
 
@@ -28,23 +26,23 @@ type VistaLiquidacion = 'preliquidacion' | 'adelantos';
       font-size: 13px;
       font-weight: 500;
       padding: 6px 18px;
-      border: none;
-      border-radius: 9999px;
-      background: transparent;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      background: #fff;
       color: var(--slate-500, #6B7280);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .pill-btn:hover:not(.pill-active) {
-      color: var(--slate-700, #374151);
+      border-color: #D1D5DB;
+      background: #F9FAFB;
     }
 
     .pill-active {
-      background: #fff;
-      color: var(--slate-900, #111827);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      font-weight: 600;
+      background: #1155CC;
+      color: #fff;
+      border-color: #1155CC;
     }
 
     /* ===== TABLE CARD (Ventas style) ===== */
@@ -73,46 +71,13 @@ type VistaLiquidacion = 'preliquidacion' | 'adelantos';
 
     .table-wrapper { overflow-x: auto; }
 
-    .liq-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-    }
-
-    .liq-table thead tr {
+    /* ===== TABLE FOOTER (not in shared CSS) ===== */
+    .data-table tbody tr:hover {
       background: var(--slate-50, #F8FAFC);
     }
 
-    .liq-table th {
-      padding: 10px 12px;
-      font-weight: 600;
-      color: var(--slate-400, #90A1B9);
-      text-align: left;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      border-bottom: 1px solid var(--slate-200, #E2E8F0);
-    }
-
-    .liq-table th:first-child { border-top-left-radius: 8px; }
-    .liq-table th:last-child { border-top-right-radius: 8px; }
-
-    .liq-table td {
-      padding: 10px 12px;
-      color: var(--slate-700, #314158);
-      border-bottom: 1px solid var(--slate-200, #E2E8F0);
-      white-space: nowrap;
-    }
-
-    .liq-table tbody tr:hover {
-      background: var(--slate-50, #F8FAFC);
-    }
-
-    .liq-table tfoot td {
-      padding: 12px 12px;
+    .data-table tfoot td {
+      padding: 12px 6px;
       font-weight: 700;
       color: var(--slate-900, #111827);
       border-top: 2px solid var(--slate-200, #E2E8F0);
@@ -193,7 +158,7 @@ type VistaLiquidacion = 'preliquidacion' | 'adelantos';
           <span class="card-badge">{{ preLiquidacion().length }} empleados</span>
         </div>
         <div class="table-wrapper">
-          <table class="liq-table" aria-label="Tabla de pre-liquidacion">
+          <table class="data-table" aria-label="Tabla de pre-liquidacion">
             <thead>
               <tr>
                 <th scope="col">Empleado</th>
@@ -256,7 +221,7 @@ type VistaLiquidacion = 'preliquidacion' | 'adelantos';
           <span class="card-badge">{{ adelantos().length }} registros</span>
         </div>
         <div class="table-wrapper">
-          <table class="liq-table" aria-label="Tabla de adelantos">
+          <table class="data-table" aria-label="Tabla de adelantos">
             <thead>
               <tr>
                 <th scope="col">Fecha</th>

@@ -41,12 +41,17 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 ## 📝 Últimos cambios
 
-### 2026-04-11
+### 2026-04-14
 
 **Commits incluidos:**
-- 65b7e53 feat: major UI overhaul across all sections
+- d7fcd2b feat: add employee profile page + staff table redesign + remove modal
+- aad9d72 fix: polish Personal — signal migration, fichaje functional, ARIA, DRY
+- a6160b5 feat: add Personal module with 5 tabs (Staff, Fichaje, Tareas, Liquidación, Más)
+- cbc3967 fix: polish Tesorería UI — dynamic filter-bar per tab, Cash Flow KPI cards with operators
+- ffdffe0 fix: polish Tesorería — bug fix, filter-bar extract, ARIA, DRY, handlers
+- fac7c54 feat: add Tesorería module with 5 tabs (Disponibilidades, Movimientos, Conciliación, Agenda, Cash Flow)
+- e76bece fix: polish Balances UI — unified filter bar, compact alerts, table styles, KPI alignment
+- 0aefb0e feat: add Balances module with 4 tabs (Operativos, Económicos, Financieros, Fiscales)
 
 **Archivos modificados:**
-  - `.png`: logo-icon.png
-  - `.ts`: header.component.ts, app.routes.ts, carta.component.ts, actualizar-precios.component.ts, descuentos.component.ts, edicion-masiva.component.ts, detalle-dialog.component.ts, extras-dialog.component.ts, precios-dialog.component.ts, producto-perfil.component.ts, mock-categorias.data.ts, mock-producto-perfil.data.ts, producto-perfil.model.ts, conceptos-gasto-grid.component.ts, configuracion-page.component.ts, rubros-grid.component.ts, orden-page.component.ts, ordenes-grid.component.ts, ordenes-page.component.ts, proyeccion-pagos.component.ts, proveedor-modal.component.ts, proveedores-grid.component.ts, proveedores-page.component.ts, ai-summary-banner.component.ts, dashboard-panel.component.ts, demand-chart.component.ts, demand-forecast.component.ts, home.component.ts, kpi-card.component.ts, kpi-cards-row.component.ts, rentability-alerts.component.ts, stock-alert-item.component.ts, stock-alerts.component.ts, top-venta-item.component.ts, top-ventas.component.ts, insumo-perfil.component.ts, facturas.component.ts, negocio.component.ts, tramites.component.ts, config-modal.component.ts, configuracion-page.component.ts, configuracion-seccion.component.ts, auditoria-grid.component.ts, filtros-tab.component.ts, informe-page.component.ts, auditoria.models.ts, auditoria-mock.data.ts, auditoria.service.ts, auditoria.facade.ts, configuraciones.component.ts, plano-editor.component.ts, turno-kpis.component.ts, mock-pdv.data.ts, mock-plano.data.ts, pdv.model.ts, plano.model.ts, pdv.component.ts, estacion-dialog.component.ts, usuario-perfil.component.ts, usuarios.component.ts, dashboard.component.ts, ventas-header.component.ts, ventas.component.ts
-  - `.scss`: styles.scss
+  - `.ts`: app.routes.ts, empleado-dialog.component.ts, empleado-perfil.component.ts, staff.component.ts, mock-personal.data.ts, personal.model.ts, personal.component.ts

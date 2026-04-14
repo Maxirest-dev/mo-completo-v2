@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { AiPanelComponent } from '../ai-panel/ai-panel.component';
+import { TourOverlayComponent } from '../tour-overlay/tour-overlay.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent, AiPanelComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, AiPanelComponent, TourOverlayComponent],
   template: `
     <div class="layout">
       <app-header />
@@ -15,6 +16,7 @@ import { AiPanelComponent } from '../ai-panel/ai-panel.component';
         <router-outlet />
       </main>
       <app-ai-panel />
+      <app-tour-overlay />
     </div>
   `,
   styles: [`

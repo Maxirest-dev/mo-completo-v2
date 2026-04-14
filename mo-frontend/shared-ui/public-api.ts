@@ -11,7 +11,9 @@ export { AiPanelComponent } from './components/ai-panel/ai-panel.component';
 // Services
 export { NotificationService } from './services/notification.service';
 export { AiPanelService } from './services/ai-panel.service';
+export { TourService } from './services/tour.service';
 export type { Notification } from './services/notification.service';
+export type { TourStep, SectionTour, SectionHelp, SpotlightAction } from './services/tour.service';
 
 // Pipes
 export { CurrencyArsPipe } from './pipes/currency-ars.pipe';

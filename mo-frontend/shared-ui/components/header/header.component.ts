@@ -1,7 +1,9 @@
 import { Component, ChangeDetectionStrategy, signal, inject, HostListener, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { AiPanelService } from '../../services/ai-panel.service';
+import { TourService, SpotlightAction } from '../../services/tour.service';
 
 interface NavItem {
   label: string;
@@ -27,7 +29,7 @@ interface Brand {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   template: `
     <header class="header">
       <div class="header-single">
@@ -125,6 +127,66 @@ interface Brand {
               <span class="ai-cta-text">Habla con Maxi</span>
             </div>
           </button>
+
+          <button class="help-btn" aria-label="Ayuda" [attr.aria-expanded]="showHelpMenu()" (click)="toggleHelpMenu(); $event.stopPropagation()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+            </svg>
+          </button>
+          @if (showHelpMenu()) {
+            <div class="help-dropdown" (click)="$event.stopPropagation()">
+              <!-- Search -->
+              <div class="help-search">
+                <svg class="help-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                </svg>
+                <input type="text" class="help-search-input" placeholder="Buscar acción..."
+                  [ngModel]="helpSearch()" (ngModelChange)="helpSearch.set($event)" />
+              </div>
+
+              @if (spotlightResults().length > 0) {
+                <!-- Spotlight results -->
+                <div class="help-section">
+                  @for (action of spotlightResults(); track action.label) {
+                    <a class="help-action-item" [routerLink]="action.route" (click)="showHelpMenu.set(false); helpSearch.set('')">
+                      <span class="help-action-icon" aria-hidden="true">{{ action.icon }}</span>
+                      <div class="help-action-info">
+                        <span class="help-action-label">{{ action.label }}</span>
+                        <span class="help-action-desc">{{ action.description }}</span>
+                      </div>
+                      <span class="help-action-section">{{ action.section }}</span>
+                    </a>
+                  }
+                </div>
+              } @else {
+                <!-- Tour CTA -->
+                @if (currentSectionHelp()) {
+                  <button class="help-tour-btn" (click)="startCurrentTour()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"/>
+                    </svg>
+                    Iniciar tour de {{ currentSectionHelp()!.sectionName }}
+                  </button>
+                }
+
+                <!-- Context links -->
+                @if (currentSectionHelp()) {
+                  <div class="help-section">
+                    <span class="help-section-title">Ayuda de {{ currentSectionHelp()!.sectionName }}</span>
+                    @for (link of currentSectionHelp()!.links; track link.label) {
+                      <div class="help-link-item">
+                        <span class="help-link-icon" aria-hidden="true">{{ link.icon }}</span>
+                        <div class="help-link-info">
+                          <span class="help-link-label">{{ link.label }}</span>
+                          <span class="help-link-desc">{{ link.description }}</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          }
 
           <button class="notif-btn" aria-label="Notificaciones">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
@@ -393,6 +455,141 @@ interface Brand {
     @keyframes gentlePulse { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
 
     /* Notifications */
+    .help-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .help-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFFFF;
+    }
+
+    /* Help Dropdown */
+    .help-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 320px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--slate-200, #E2E8F0);
+      z-index: 100;
+      overflow: hidden;
+      animation: dropIn 0.15s ease;
+    }
+
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .help-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--slate-100, #F1F5F9);
+    }
+
+    .help-search-icon { color: var(--slate-400, #94A3B8); flex-shrink: 0; }
+
+    .help-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      color: var(--slate-900, #0F172B);
+      background: transparent;
+    }
+
+    .help-search-input::placeholder { color: var(--slate-400, #94A3B8); }
+
+    /* Tour CTA */
+    .help-tour-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background: var(--slate-50, #F8FAFC);
+      border-bottom: 1px solid var(--slate-100, #F1F5F9);
+      color: var(--primary-orange, #F18800);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .help-tour-btn:hover { background: #FFF7ED; }
+    .help-tour-btn svg { color: var(--primary-orange, #F18800); }
+
+    /* Section & links */
+    .help-section { padding: 8px 0; }
+
+    .help-section-title {
+      display: block;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-400, #94A3B8);
+    }
+
+    .help-link-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      cursor: default;
+      transition: background 0.1s;
+    }
+
+    .help-link-item:hover { background: var(--slate-50, #F8FAFC); }
+
+    .help-link-icon { font-size: 16px; flex-shrink: 0; }
+    .help-link-info { display: flex; flex-direction: column; }
+    .help-link-label { font-size: 13px; font-weight: 500; color: var(--slate-900, #0F172B); }
+    .help-link-desc { font-size: 11px; color: var(--slate-400, #94A3B8); }
+
+    /* Spotlight results */
+    .help-action-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      text-decoration: none;
+      transition: background 0.1s;
+      cursor: pointer;
+    }
+
+    .help-action-item:hover { background: var(--slate-50, #F8FAFC); }
+
+    .help-action-icon { font-size: 16px; flex-shrink: 0; }
+    .help-action-info { display: flex; flex-direction: column; flex: 1; }
+    .help-action-label { font-size: 13px; font-weight: 500; color: var(--slate-900, #0F172B); }
+    .help-action-desc { font-size: 11px; color: var(--slate-400, #94A3B8); }
+    .help-action-section {
+      font-size: 10px; font-weight: 500; color: var(--slate-400, #94A3B8);
+      background: var(--slate-100, #F1F5F9); padding: 2px 6px; border-radius: 4px;
+      flex-shrink: 0;
+    }
+
     .notif-btn {
       position: relative;
       display: flex;
@@ -536,10 +733,36 @@ interface Brand {
 })
 export class HeaderComponent {
   readonly aiPanel = inject(AiPanelService);
+  readonly tourService = inject(TourService);
+  private readonly router = inject(Router);
 
   showUserMenu = signal(false);
   showBrandMenu = signal(false);
   showMoreMenu = signal(false);
+  showHelpMenu = signal(false);
+  helpSearch = signal('');
+
+  readonly spotlightResults = computed(() => this.tourService.searchActions(this.helpSearch()));
+
+  readonly currentSectionHelp = computed(() => {
+    const section = this.tourService.detectSection(this.router.url);
+    return this.tourService.getSectionHelp(section);
+  });
+
+  toggleHelpMenu(): void {
+    this.showHelpMenu.update(v => !v);
+    this.helpSearch.set('');
+    // Close other menus
+    this.showUserMenu.set(false);
+    this.showMoreMenu.set(false);
+  }
+
+  startCurrentTour(): void {
+    const section = this.tourService.detectSection(this.router.url);
+    this.showHelpMenu.set(false);
+    this.helpSearch.set('');
+    setTimeout(() => this.tourService.startTour(section), 200);
+  }
 
   brands = signal<Brand[]>([
     {
@@ -610,6 +833,7 @@ export class HeaderComponent {
       this.showBrandMenu.set(false);
       this.showUserMenu.set(false);
       this.showMoreMenu.set(false);
+      this.showHelpMenu.set(false);
     }
   }
 
@@ -618,6 +842,7 @@ export class HeaderComponent {
     this.showBrandMenu.set(false);
     this.showUserMenu.set(false);
     this.showMoreMenu.set(false);
+    this.showHelpMenu.set(false);
   }
 
   selectBrand(brandId: string): void {

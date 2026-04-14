@@ -47,10 +47,14 @@ import { CategoriaConfiguracion, ConfiguracionAuditoria } from '../../models/aud
 
             <!-- Seguridad -->
             <div class="card seguridad-card">
-              <div class="card-header">
-                <h3>Seguridad</h3>
+              <div class="seccion-header">
+                <div class="seccion-info">
+                  <h3>Seguridad</h3>
+                  <span class="subtitulo">Configuraciones de acceso y control • {{ facade.conteosConfiguracion().seguridad.activas }} de {{ facade.conteosConfiguracion().seguridad.total }} activas</span>
+                </div>
               </div>
-              <div class="config-table-wrapper"><table class="config-table">
+              <div class="table-border-wrapper">
+              <table class="config-table">
                 <thead>
                   <tr>
                     <th>CONFIGURACIÓN</th>
@@ -89,7 +93,8 @@ import { CategoriaConfiguracion, ConfiguracionAuditoria } from '../../models/aud
                     </tr>
                   }
                 </tbody>
-              </table></div>
+              </table>
+              </div>
             </div>
           </div>
 
@@ -267,25 +272,30 @@ import { CategoriaConfiguracion, ConfiguracionAuditoria } from '../../models/aud
       color: white;
     }
 
-    .seguridad-card .card-header {
-      margin-bottom: 16px;
+    .seguridad-card .seccion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
     }
 
-    .seguridad-card h3 {
+    .seguridad-card .seccion-info h3 {
       font-size: 16px;
       font-weight: 600;
       color: var(--text-heading);
-      margin: 0 0 4px 0;
+      margin: 0;
     }
 
-    .seguridad-card .conteo {
+    .seguridad-card .subtitulo {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-secondary, #64748B);
+      margin-top: 4px;
+      display: block;
     }
 
-    .config-table-wrapper {
+    .table-border-wrapper {
       border: 1px solid #E5E7EB;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
     }
 

@@ -14,6 +14,7 @@ export const TIPOS_ACCION: TipoAccion[] = [
   { id: 9, codigo: 'CONTROL_MESA', nombre: 'Control de mesa', color: '#06B6D4', categoria: 'MESA' },
   { id: 10, codigo: 'MENU_CUBIERTO', nombre: 'Incluye Menu/Cubierto', color: '#0EA5E9', categoria: 'MESA' },
   { id: 11, codigo: 'ELIMINAR_PLANO', nombre: 'Eliminar mesa del plano', color: '#EF4444', categoria: 'MESA' },
+  { id: 27, codigo: 'REMARCHADO_COMANDA', nombre: 'Remarchado de comanda', color: '#E11D48', categoria: 'MESA' },
 
   // Factura
   { id: 12, codigo: 'FACTURA_ANULADA', nombre: 'Anulación de factura', color: '#EF4444', categoria: 'FACTURA' },
@@ -267,6 +268,7 @@ export const MOCK_CONFIGURACIONES: ConfiguracionAuditoria[] = [
   { id: 9, categoria: 'MESA', nombre: 'Control de mesa', activo: true, tieneConfigExtra: false },
   { id: 10, categoria: 'MESA', nombre: 'Incluye Menu/Cubierto', activo: false, tieneConfigExtra: false },
   { id: 11, categoria: 'MESA', nombre: 'Eliminar mesa del plano', activo: false, tieneConfigExtra: false },
+  { id: 22, categoria: 'MESA', nombre: 'Remarchado de comanda', activo: false, tieneConfigExtra: false },
 
   // Factura
   { id: 12, categoria: 'FACTURA', nombre: 'Anulada', activo: true, tieneConfigExtra: false },

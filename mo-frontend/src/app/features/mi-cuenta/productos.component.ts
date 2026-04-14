@@ -1,184 +1,76 @@
-import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-interface Integracion {
-  nombre: string;
-  descripcion: string;
-  activo: boolean;
-  boton: string | null;
-  iconColor: string | null;
-  iconLetter: string | null;
-}
-
-const INTEGRACIONES_SERVICIOS: Integracion[] = [
-  {
-    nombre: 'Ordering',
-    descripcion: 'Recibe pedidos de tu tienda, tu delivery, y gestiona todo en un solo lugar',
-    activo: true,
-    boton: 'Conoce mas',
-    iconColor: null,
-    iconLetter: null,
-  },
-  {
-    nombre: 'Manager',
-    descripcion: 'Panel de gestion de Pedidos, inventario y mas',
-    activo: false,
-    boton: 'Contratar info',
-    iconColor: null,
-    iconLetter: null,
-  },
-  {
-    nombre: 'Kitchen',
-    descripcion: 'Emite pedidos en la Pantalla de tu cocina y gestiona tus ordenes',
-    activo: true,
-    boton: 'Conoce mas',
-    iconColor: null,
-    iconLetter: null,
-  },
-  {
-    nombre: 'Menu',
-    descripcion: 'Menu digital, Contacto para tus clientes, tus integraciones',
-    activo: false,
-    boton: 'Contratar info',
-    iconColor: null,
-    iconLetter: null,
-  },
-];
-
-const INTEGRACIONES_DELIVERY: Integracion[] = [
-  {
-    nombre: 'PedidosYa',
-    descripcion: 'Activacion del comercio (PedidosYa) y recepcion a nuevos clientes',
-    activo: true,
-    boton: null,
-    iconColor: '#F27920',
-    iconLetter: 'PY',
-  },
-  {
-    nombre: 'Rappi',
-    descripcion: 'Aplica e gestiona de Rappi (Pedidos, menu, publicaciones, tarifas e envios)',
-    activo: true,
-    boton: null,
-    iconColor: '#F27920',
-    iconLetter: 'R',
-  },
-  {
-    nombre: 'Midity',
-    descripcion: 'Servicio de plataforma de Pedidos y pago digital',
-    activo: false,
-    boton: null,
-    iconColor: '#3B82F6',
-    iconLetter: 'M',
-  },
-  {
-    nombre: 'Wility',
-    descripcion: 'Activacion del comercio (Cuenta Grupo) y recepcion a nuevos clientes',
-    activo: false,
-    boton: null,
-    iconColor: '#8B5CF6',
-    iconLetter: 'W',
-  },
-];
+import { ProductoCardComponent } from './marketplaces/components/catalogo/producto-card.component';
+import { SolucionCardComponent } from './marketplaces/components/catalogo/solucion-card.component';
+import { WizardContainerComponent } from './marketplaces/components/wizard/wizard-container.component';
+import { MarketplacesFacade } from './marketplaces/state/marketplaces.facade';
+import { Solucion } from './marketplaces/models/marketplaces.models';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductoCardComponent, SolucionCardComponent, WizardContainerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- Header -->
-    <div class="page-header">
-      <button class="back-btn" (click)="goBack()" title="Volver">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-        </svg>
-      </button>
-      <div class="page-header-info">
-        <h1 class="page-title">Mis Productos</h1>
-        <p class="page-subtitle">Conoce tu sistema y gestionalo con las propuestas</p>
-      </div>
-    </div>
-
-    <!-- Main Product Card -->
-    <div class="product-hero">
-      <div class="product-hero-left">
-        <h2 class="product-hero-name">POINT</h2>
-        <div class="product-hero-badges">
-          <span class="badge badge--green-solid">Al corriente</span>
-          <span class="badge badge--blue-solid">App movil</span>
-        </div>
-        <div class="product-hero-price">
-          <span class="product-hero-amount">{{'$'}}29,250</span>
-          <span class="product-hero-tax">+ IVA (segun corresponda)</span>
-        </div>
-      </div>
-      <div class="product-hero-right">
-        <button class="btn-outline-white">Transacciones</button>
-        <button class="btn-plus-white">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    <div class="productos-page">
+      <!-- Header -->
+      <div class="page-header">
+        <button class="back-btn" (click)="goBack()" aria-label="Volver a mi cuenta">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
         </button>
+        <div class="title-section">
+          <h1 class="page-title">Mis Productos</h1>
+          <p class="page-subtitle">Contrata integraciones y productos para potenciar tu restaurante</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Integraciones Servicios -->
-    <div class="section">
-      <h3 class="section-title">Integraciones</h3>
-      <div class="integraciones-grid">
-        @for (item of integracionesServicios(); track item.nombre) {
-          <div class="integracion-card">
-            <div class="integracion-icon-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z" />
-              </svg>
-            </div>
-            <h4 class="integracion-nombre">{{ item.nombre }}</h4>
-            <p class="integracion-desc">{{ item.descripcion }}</p>
-            <div class="integracion-footer">
-              <span class="badge" [class.badge--green]="item.activo" [class.badge--gray]="!item.activo">
-                {{ item.activo ? 'Activo' : 'Inactivo' }}
-              </span>
-              @if (item.boton) {
-                <button class="btn-integracion">{{ item.boton }}</button>
-              }
-            </div>
+      @if (facade.loading()) {
+        <div class="loading-container">
+          <div class="loading-spinner"></div>
+          <p>Cargando catálogo...</p>
+        </div>
+      } @else {
+        <!-- Productos Hardware -->
+        <section class="section">
+          <h2 class="section-title">Productos</h2>
+          <p class="section-subtitle">Hardware y terminales para tu negocio</p>
+          <div class="productos-grid">
+            @for (producto of facade.productosHardware(); track producto.id) {
+              <app-producto-card [producto]="producto" (conocerMas)="onConocerMasProducto($event)" />
+            }
           </div>
-        }
-      </div>
-    </div>
+        </section>
 
-    <!-- Integraciones Delivery -->
-    <div class="section">
-      <h3 class="section-title">Integraciones</h3>
-      <div class="integraciones-grid">
-        @for (item of integracionesDelivery(); track item.nombre) {
-          <div class="integracion-card">
-            <div class="integracion-icon-circle" [style.background]="item.iconColor">
-              <span class="integracion-icon-letter">{{ item.iconLetter }}</span>
-            </div>
-            <h4 class="integracion-nombre">{{ item.nombre }}</h4>
-            <p class="integracion-desc">{{ item.descripcion }}</p>
-            <div class="integracion-footer">
-              <span class="badge" [class.badge--green]="item.activo" [class.badge--gray]="!item.activo">
-                {{ item.activo ? 'Activo' : 'Inactivo' }}
-              </span>
-            </div>
+        <!-- Soluciones / Integraciones -->
+        <section class="section">
+          <h2 class="section-title">Soluciones</h2>
+          <p class="section-subtitle">Integraciones con plataformas externas y herramientas digitales</p>
+          <div class="soluciones-grid">
+            @for (solucion of facade.soluciones(); track solucion.id) {
+              <app-solucion-card [solucion]="solucion" (conocerMas)="onConocerMasSolucion($event)" />
+            }
           </div>
-        }
-      </div>
+        </section>
+      }
+
+      <!-- Wizard Overlay -->
+      @if (facade.wizardAbierto()) {
+        <app-wizard-container />
+      }
     </div>
   `,
   styles: [`
-    :host { display: block; }
+    .productos-page { }
 
     /* Header */
     .page-header {
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .back-btn {
@@ -187,287 +79,561 @@ const INTEGRACIONES_DELIVERY: Integracion[] = [
       justify-content: center;
       width: 40px;
       height: 40px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--slate-200);
+      min-width: 40px;
       background: white;
-      color: var(--slate-700);
+      border: 1px solid var(--slate-200, #E2E8F0);
+      border-radius: var(--radius-md, 10px);
+      color: var(--slate-700, #314158);
       cursor: pointer;
       transition: all 0.15s ease;
-      flex-shrink: 0;
-      margin-top: 2px;
+      margin-top: 4px;
     }
+
     .back-btn:hover {
-      background: var(--slate-50);
-      border-color: var(--slate-300);
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
 
     .page-title {
       font-size: 26px;
-      font-weight: 600;
-      color: var(--slate-900);
+      font-weight: 700;
+      color: var(--slate-900, #0F172B);
       margin: 0 0 4px;
-      letter-spacing: -0.01em;
     }
+
     .page-subtitle {
       font-size: 14px;
-      color: var(--slate-500);
+      color: var(--slate-500, #64748B);
       margin: 0;
-    }
-
-    /* Product Hero Card */
-    .product-hero {
-      background: var(--slate-800);
-      border-radius: var(--radius-xl);
-      padding: 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
-    .product-hero-name {
-      font-size: 36px;
-      font-weight: 700;
-      color: white;
-      margin: 0 0 12px;
-      letter-spacing: 0.02em;
-    }
-
-    .product-hero-badges {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .badge--green-solid {
-      background: #22C55E;
-      color: white;
-      padding: 4px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .badge--blue-solid {
-      background: #3B82F6;
-      color: white;
-      padding: 4px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .product-hero-price {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-    }
-    .product-hero-amount {
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-    }
-    .product-hero-tax {
-      font-size: 13px;
-      color: var(--slate-400);
-    }
-
-    .product-hero-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-outline-white {
-      padding: 10px 24px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: transparent;
-      color: white;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .btn-outline-white:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.5);
-    }
-
-    .btn-plus-white {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: transparent;
-      color: white;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .btn-plus-white:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.5);
     }
 
     /* Sections */
     .section {
       margin-bottom: 32px;
     }
+
     .section-title {
       font-size: 18px;
       font-weight: 600;
-      color: var(--slate-900);
+      color: var(--slate-900, #0F172B);
+      margin: 0 0 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--slate-500, #64748B);
       margin: 0 0 16px;
     }
 
-    /* Integraciones Grid */
-    .integraciones-grid {
+    /* Grids */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .soluciones-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
-    .integracion-card {
-      background: white;
-      border: 1px solid var(--slate-200);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+    @media (max-width: 1200px) {
+      .soluciones-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .soluciones-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .soluciones-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Producto Card (hardware - colored) */
+    :host ::ng-deep .producto-card {
+      border-radius: 12px;
+      padding: 24px;
+      color: white;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-    }
-    .integracion-card:hover {
-      border-color: var(--slate-300);
-      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
     }
 
-    .integracion-icon-placeholder {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-md);
-      background: var(--slate-100);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--slate-500);
-      margin-bottom: 4px;
-    }
-
-    .integracion-icon-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 4px;
-    }
-    .integracion-icon-letter {
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .integracion-nombre {
-      font-size: 15px;
+    :host ::ng-deep .producto-card__label {
+      font-size: 11px;
       font-weight: 600;
-      color: var(--slate-900);
-      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.85;
+      margin-bottom: 4px;
     }
 
-    .integracion-desc {
+    :host ::ng-deep .producto-card__nombre {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 4px 0;
+    }
+
+    :host ::ng-deep .producto-card__subtitulo {
+      font-size: 14px;
+      opacity: 0.85;
+      margin-bottom: 0;
+    }
+
+    :host ::ng-deep .producto-card__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 auto 0;
+    }
+
+    :host ::ng-deep .producto-card__features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
-      color: var(--slate-500);
-      margin: 0;
-      line-height: 1.5;
-      flex: 1;
+      padding: 4px 0;
+      opacity: 0.9;
     }
 
-    .integracion-footer {
+    :host ::ng-deep .feature-check {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    :host ::ng-deep .producto-card__footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: auto;
-      padding-top: 8px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Badges */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 12px;
-      border-radius: var(--radius-sm);
+    :host ::ng-deep .precio-valor {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    :host ::ng-deep .precio-periodo {
       font-size: 12px;
-      font-weight: 600;
-      width: fit-content;
-    }
-    .badge--green {
-      background: #F0FDF4;
-      color: #16A34A;
-      border: 1px solid #BBF7D0;
-    }
-    .badge--gray {
-      background: var(--slate-100);
-      color: var(--slate-500);
-      border: 1px solid var(--slate-200);
+      opacity: 0.75;
     }
 
-    .btn-integracion {
-      padding: 6px 16px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--slate-200);
+    :host ::ng-deep .precio-iva {
+      font-size: 11px;
+      opacity: 0.6;
+      display: block;
+    }
+
+    :host ::ng-deep .btn-conocer-mas {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :host ::ng-deep .btn-conocer-mas:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Solucion Card (white) */
+    :host ::ng-deep .solucion-card {
       background: white;
-      color: var(--slate-700);
+      border: 1px solid var(--slate-200, #E5E7EB);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.15s ease;
+    }
+
+    :host ::ng-deep .solucion-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: var(--slate-300, #CBD5E1);
+    }
+
+    :host ::ng-deep .solucion-card__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    :host ::ng-deep .solucion-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    :host ::ng-deep .solucion-card__nombre {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--slate-900, #0F172B);
+      margin: 0 0 4px;
+    }
+
+    :host ::ng-deep .solucion-card__descripcion {
+      font-size: 13px;
+      color: var(--slate-500, #64748B);
+      line-height: 1.5;
+      margin-bottom: auto;
+      flex: 1;
+    }
+
+    :host ::ng-deep .solucion-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--slate-100, #F1F5F9);
+    }
+
+    :host ::ng-deep .solucion-precio {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900, #0F172B);
+    }
+
+    :host ::ng-deep .solucion-precio .precio-periodo {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--slate-500, #64748B);
+      opacity: 1;
+    }
+
+    :host ::ng-deep .btn-solucion {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--slate-200, #E5E7EB);
+      background: white;
+      color: var(--slate-700, #314158);
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
-    }
-    .btn-integracion:hover {
-      background: var(--slate-50);
-      border-color: var(--slate-300);
+      font-family: 'Inter', sans-serif;
     }
 
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .integraciones-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    :host ::ng-deep .btn-solucion:hover {
+      background: var(--slate-50, #F8FAFC);
+      border-color: var(--slate-300, #CBD5E1);
     }
 
-    @media (max-width: 768px) {
-      .integraciones-grid {
-        grid-template-columns: 1fr;
-      }
-      .product-hero {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        padding: 24px;
-      }
-      .product-hero-name {
-        font-size: 28px;
-      }
-      .product-hero-amount {
-        font-size: 22px;
-      }
-      .page-title {
-        font-size: 22px;
-      }
+    :host ::ng-deep .btn-solucion--primary {
+      background: #7C3AED;
+      color: white;
+      border-color: #7C3AED;
     }
+
+    :host ::ng-deep .btn-solucion--primary:hover {
+      background: #6D28D9;
+      border-color: #6D28D9;
+    }
+
+    /* Badge estado */
+    :host ::ng-deep .badge-estado {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    :host ::ng-deep .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    :host ::ng-deep .badge-estado--activo {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    :host ::ng-deep .badge-estado--activo .badge-dot { background: #16A34A; }
+
+    :host ::ng-deep .badge-estado--disponible {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    :host ::ng-deep .badge-estado--disponible .badge-dot { background: #3B82F6; }
+
+    :host ::ng-deep .badge-estado--inactivo {
+      background: var(--slate-100, #F1F5F9);
+      color: var(--slate-500, #64748B);
+    }
+
+    :host ::ng-deep .badge-estado--inactivo .badge-dot { background: var(--slate-400, #94A3B8); }
+
+    /* Wizard */
+    :host ::ng-deep .wizard-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    :host ::ng-deep .wizard-modal {
+      background: white;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: slideUp 0.25s ease;
+    }
+
+    :host ::ng-deep .wizard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--slate-200, #E5E7EB);
+      flex-shrink: 0;
+    }
+
+    :host ::ng-deep .wizard-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--slate-900, #0F172B);
+      margin: 0;
+    }
+
+    :host ::ng-deep .wizard-close {
+      background: none;
+      border: none;
+      color: var(--slate-400, #94A3B8);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 18px;
+      transition: color 0.15s;
+    }
+
+    :host ::ng-deep .wizard-close:hover {
+      color: var(--slate-600, #475569);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Wizard body/footer */
+    :host ::ng-deep .wizard-body { padding: 24px; overflow-y: auto; flex: 1; }
+    :host ::ng-deep .wizard-footer {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 12px; padding: 16px 24px; border-top: 1px solid #E5E7EB; flex-shrink: 0;
+    }
+
+    /* Progress bar */
+    :host ::ng-deep .wizard-progress { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+    :host ::ng-deep .progress-step { flex: 1; height: 4px; border-radius: 2px; background: #E5E7EB; transition: background 0.3s ease; }
+    :host ::ng-deep .progress-step--active, :host ::ng-deep .progress-step--completed { background: #7C3AED; }
+
+    /* Paso 1 - Contratacion */
+    :host ::ng-deep .contratacion-logo {
+      width: 64px; height: 64px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; margin-bottom: 16px; font-size: 28px; font-weight: 800;
+    }
+    :host ::ng-deep .contratacion-nombre { font-size: 22px; font-weight: 700; color: #0F172B; margin: 0 0 8px; }
+    :host ::ng-deep .contratacion-descripcion { font-size: 14px; color: #64748B; line-height: 1.6; margin-bottom: 24px; }
+    :host ::ng-deep .contratacion-features { list-style: none; padding: 0; margin: 0 0 24px; }
+    :host ::ng-deep .contratacion-features li { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 14px; color: #374151; }
+    :host ::ng-deep .feature-icon {
+      width: 22px; height: 22px; border-radius: 50%; background: #DCFCE7; color: #16A34A;
+      display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0;
+    }
+    :host ::ng-deep .contratacion-precio-box {
+      background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    :host ::ng-deep .precio-label { font-size: 12px; color: #64748B; margin-bottom: 4px; }
+    :host ::ng-deep .contratacion-precio-box .precio-valor { font-size: 28px; font-weight: 700; color: #0F172B; }
+    :host ::ng-deep .contratacion-precio-box .precio-periodo { font-size: 14px; font-weight: 400; color: #64748B; }
+    :host ::ng-deep .contratacion-precio-box .precio-iva { font-size: 12px; color: #94A3B8; display: block; margin-top: 2px; }
+
+    /* Paso 2 - Configuracion */
+    :host ::ng-deep .config-section { margin-bottom: 24px; }
+    :host ::ng-deep .config-label { display: block; font-size: 14px; font-weight: 600; color: #0F172B; margin-bottom: 8px; }
+    :host ::ng-deep .config-sublabel { font-size: 13px; color: #64748B; margin-bottom: 12px; }
+    :host ::ng-deep .config-select {
+      width: 100%; padding: 10px 14px; border: 1px solid #E5E7EB; border-radius: 8px;
+      font-size: 14px; font-family: inherit; color: #374151; background: white; cursor: pointer;
+    }
+    :host ::ng-deep .config-select:focus { outline: none; border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+    :host ::ng-deep .radio-cards { display: flex; flex-direction: column; gap: 10px; }
+    :host ::ng-deep .radio-card {
+      display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+      border: 2px solid #E5E7EB; border-radius: 8px; cursor: pointer; transition: all 0.15s ease;
+    }
+    :host ::ng-deep .radio-card:hover { border-color: #D1D5DB; background: #F8FAFC; }
+    :host ::ng-deep .radio-card--selected { border-color: #7C3AED; background: #F5F3FF; }
+    :host ::ng-deep .radio-card--selected:hover { border-color: #7C3AED; background: #F5F3FF; }
+    :host ::ng-deep .radio-indicator {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid #D1D5DB;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    :host ::ng-deep .radio-indicator::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: transparent; transition: all 0.15s; }
+    :host ::ng-deep .radio-card--selected .radio-indicator { border-color: #7C3AED; }
+    :host ::ng-deep .radio-card--selected .radio-indicator::after { background: #7C3AED; }
+    :host ::ng-deep .radio-content { flex: 1; }
+    :host ::ng-deep .radio-title { font-size: 14px; font-weight: 600; color: #0F172B; margin-bottom: 2px; display: flex; align-items: center; gap: 8px; }
+    :host ::ng-deep .radio-description { font-size: 13px; color: #64748B; line-height: 1.4; }
+    :host ::ng-deep .radio-meta { font-size: 12px; color: #94A3B8; margin-top: 4px; }
+    :host ::ng-deep .badge-recomendado { background: #EDE9FE; color: #5B21B6; padding: 2px 8px; border-radius: 9999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    :host ::ng-deep .warning-card {
+      display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+      background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; margin-top: 16px;
+    }
+    :host ::ng-deep .warning-icon { color: #D97706; font-size: 18px; flex-shrink: 0; }
+    :host ::ng-deep .warning-title { font-size: 13px; font-weight: 600; color: #92400E; margin-bottom: 2px; }
+    :host ::ng-deep .warning-text { font-size: 12px; color: #A16207; line-height: 1.4; }
+
+    /* Paso 3 - Confirmacion */
+    :host ::ng-deep .confirmacion-section {
+      margin-bottom: 20px; background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px;
+    }
+    :host ::ng-deep .confirmacion-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    :host ::ng-deep .confirmacion-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; }
+    :host ::ng-deep .btn-editar { background: none; border: none; color: #7C3AED; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+    :host ::ng-deep .btn-editar:hover { color: #6D28D9; text-decoration: underline; }
+    :host ::ng-deep .confirmacion-valor { font-size: 15px; font-weight: 600; color: #0F172B; }
+    :host ::ng-deep .confirmacion-detalle { font-size: 13px; color: #64748B; margin-top: 2px; }
+    :host ::ng-deep .facturacion-box { background: white; border: 1px solid #E5E7EB; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+    :host ::ng-deep .facturacion-title { font-size: 14px; font-weight: 600; color: #0F172B; margin-bottom: 12px; }
+    :host ::ng-deep .facturacion-row { display: flex; justify-content: space-between; padding: 6px 0; }
+    :host ::ng-deep .facturacion-label { font-size: 13px; color: #64748B; }
+    :host ::ng-deep .facturacion-valor { font-size: 13px; font-weight: 600; color: #0F172B; }
+    :host ::ng-deep .terminos-check {
+      display: flex; align-items: flex-start; gap: 10px; padding: 14px;
+      background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 8px;
+    }
+    :host ::ng-deep .terminos-check input[type="checkbox"] { width: 18px; height: 18px; margin-top: 1px; accent-color: #7C3AED; cursor: pointer; flex-shrink: 0; }
+    :host ::ng-deep .terminos-check label { font-size: 13px; color: #374151; line-height: 1.5; cursor: pointer; }
+    :host ::ng-deep .terminos-check label a { color: #7C3AED; text-decoration: underline; }
+
+    /* Activando */
+    :host ::ng-deep .activando-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 32px; text-align: center; }
+    :host ::ng-deep .activando-spinner { width: 56px; height: 56px; border: 4px solid #E5E7EB; border-top-color: #7C3AED; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 24px; }
+    :host ::ng-deep .activando-titulo { font-size: 18px; font-weight: 600; color: #0F172B; margin: 0 0 8px; }
+    :host ::ng-deep .activando-subtitulo { font-size: 14px; color: #64748B; }
+
+    /* Exito */
+    :host ::ng-deep .exito-container { display: flex; flex-direction: column; align-items: center; padding: 48px 32px; text-align: center; }
+    :host ::ng-deep .exito-check { width: 64px; height: 64px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px; animation: scaleIn 0.3s ease; }
+    @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+    :host ::ng-deep .exito-titulo { font-size: 22px; font-weight: 700; color: #0F172B; margin: 0 0 8px; }
+    :host ::ng-deep .exito-subtitulo { font-size: 14px; color: #64748B; margin-bottom: 32px; }
+    :host ::ng-deep .exito-checks { list-style: none; padding: 0; margin: 0 0 32px; width: 100%; max-width: 360px; }
+    :host ::ng-deep .exito-checks li { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 14px; color: #374151; border-bottom: 1px solid #F1F5F9; }
+    :host ::ng-deep .exito-checks li:last-child { border-bottom: none; }
+    :host ::ng-deep .check-icon { width: 22px; height: 22px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    :host ::ng-deep .exito-actions { display: flex; gap: 12px; }
+
+    /* Common buttons */
+    :host ::ng-deep .btn-ghost {
+      padding: 10px 20px; border-radius: 8px; border: 1px solid #E5E7EB; background: white;
+      color: #374151; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif;
+    }
+    :host ::ng-deep .btn-ghost:hover { background: #F8FAFC; border-color: #D1D5DB; }
+    :host ::ng-deep .btn-purple {
+      padding: 10px 20px; border-radius: 8px; border: none; background: #7C3AED;
+      color: white; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif;
+    }
+    :host ::ng-deep .btn-purple:hover:not(:disabled) { background: #6D28D9; }
+    :host ::ng-deep .btn-purple:disabled { opacity: 0.5; cursor: not-allowed; }
+    :host ::ng-deep .btn-purple-outline {
+      padding: 10px 20px; border-radius: 8px; border: 1px solid #7C3AED; background: white;
+      color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif;
+    }
+    :host ::ng-deep .btn-purple-outline:hover { background: #F5F3FF; }
+    :host ::ng-deep .btn-contratar {
+      padding: 12px 24px; border-radius: 8px; border: none; background: #E02020;
+      color: white; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif;
+    }
+    :host ::ng-deep .btn-contratar:hover { background: #C01A1A; }
+    :host ::ng-deep .btn-activar {
+      padding: 12px 24px; border-radius: 8px; border: none; background: #7C3AED;
+      color: white; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; font-family: 'Inter', sans-serif;
+    }
+    :host ::ng-deep .btn-activar:hover:not(:disabled) { background: #6D28D9; }
+    :host ::ng-deep .btn-activar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Loading */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px;
+      color: var(--slate-500, #64748B);
+      font-size: 14px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--slate-200, #E2E8F0);
+      border-top-color: var(--primary-orange, #F27920);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   `],
 })
-export class ProductosComponent {
+export class ProductosComponent implements OnInit {
+  readonly facade = inject(MarketplacesFacade);
   private readonly router = inject(Router);
 
-  readonly integracionesServicios = signal(INTEGRACIONES_SERVICIOS);
-  readonly integracionesDelivery = signal(INTEGRACIONES_DELIVERY);
+  ngOnInit(): void {
+    this.facade.cargarCatalogo();
+  }
 
   goBack(): void {
     this.router.navigate(['/mi-cuenta']);
+  }
+
+  onConocerMasProducto(_producto: unknown): void {
+    // Productos hardware: solo info
+  }
+
+  onConocerMasSolucion(solucion: Solucion): void {
+    if (solucion.tieneWizard) {
+      this.facade.abrirContratacion(solucion);
+    }
   }
 }

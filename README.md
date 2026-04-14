@@ -44,14 +44,8 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 ### 2026-04-14
 
 **Commits incluidos:**
-- d7fcd2b feat: add employee profile page + staff table redesign + remove modal
-- aad9d72 fix: polish Personal — signal migration, fichaje functional, ARIA, DRY
-- a6160b5 feat: add Personal module with 5 tabs (Staff, Fichaje, Tareas, Liquidación, Más)
-- cbc3967 fix: polish Tesorería UI — dynamic filter-bar per tab, Cash Flow KPI cards with operators
-- ffdffe0 fix: polish Tesorería — bug fix, filter-bar extract, ARIA, DRY, handlers
-- fac7c54 feat: add Tesorería module with 5 tabs (Disponibilidades, Movimientos, Conciliación, Agenda, Cash Flow)
-- e76bece fix: polish Balances UI — unified filter bar, compact alerts, table styles, KPI alignment
-- 0aefb0e feat: add Balances module with 4 tabs (Operativos, Económicos, Financieros, Fiscales)
+- b1a3093 feat: add interactive help system — contextual tours, spotlight search, help dropdown
+- 2e404b5 feat: migrate marketplace cards + wizard to Mis Productos, polish PdV auditoría
 
 **Archivos modificados:**
-  - `.ts`: app.routes.ts, empleado-dialog.component.ts, empleado-perfil.component.ts, staff.component.ts, mock-personal.data.ts, personal.model.ts, personal.component.ts
+  - `.ts`: header.component.ts, layout.component.ts, tour-overlay.component.ts, public-api.ts, tour.service.ts

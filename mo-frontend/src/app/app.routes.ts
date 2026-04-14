@@ -174,6 +174,13 @@ export const routes: Routes = [
             (m) => m.PersonalComponent
           ),
       },
+      {
+        path: 'personal/empleado/:id',
+        loadComponent: () =>
+          import('./features/personal/components/empleado-perfil/empleado-perfil.component').then(
+            (m) => m.EmpleadoPerfilComponent
+          ),
+      },
 
       // Mi Cuenta
       {

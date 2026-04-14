@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ToastContainerComponent, NotificationService } from '@mro/shared-ui';
 import { PersonalTabNavComponent } from './components/tab-nav/tab-nav.component';
 import { StaffComponent } from './components/staff/staff.component';
@@ -57,7 +58,7 @@ import {
           (tabChange)="tabActivo.set($event)"
         />
       </header>
-      <div class="page-divider"></div>
+      <div class="page-spacer"></div>
 
       <!-- Tab Content -->
       @for (tab of [tabActivo()]; track tab) {
@@ -101,6 +102,7 @@ import {
         }
       </div>
       }
+
     }
   `,
   styles: [`
@@ -115,7 +117,7 @@ import {
       color: var(--slate-900, #0F172B); margin: 0; letter-spacing: -0.01em;
     }
     .page-subtitle { font-size: 14px; color: var(--slate-400, #90A1B9); margin: 0; }
-    .page-divider { height: 1px; background: var(--slate-200, #E2E8F0); margin: 16px 0 20px; }
+    .page-spacer { height: 20px; }
 
     .tab-content { animation: tabFadeIn 0.3s ease; }
     @keyframes tabFadeIn {
@@ -153,10 +155,12 @@ import {
 })
 export class PersonalComponent implements OnInit {
   private readonly notifications = inject(NotificationService);
+  private readonly router = inject(Router);
 
   readonly tabActivo = signal<TabPersonal>('staff');
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
+
 
   // Staff
   readonly empleados = signal<Empleado[]>([]);
@@ -188,11 +192,11 @@ export class PersonalComponent implements OnInit {
   }
 
   onNuevoEmpleado(): void {
-    this.notifications.show('Formulario de nuevo empleado — en desarrollo', 'info');
+    this.router.navigate(['/personal/empleado', 'nuevo']);
   }
 
   onVerEmpleado(id: string): void {
-    this.notifications.show(`Detalle del empleado ${id} — en desarrollo`, 'info');
+    this.router.navigate(['/personal/empleado', id]);
   }
 
   private loadData(): void {

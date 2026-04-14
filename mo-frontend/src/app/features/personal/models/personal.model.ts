@@ -15,6 +15,7 @@ export interface Empleado {
   dni: string;
   cuil: string;
   telefono: string;
+  email: string;
   contactoEmergencia: string;
   fechaIngreso: string;
   sueldoBase: number;

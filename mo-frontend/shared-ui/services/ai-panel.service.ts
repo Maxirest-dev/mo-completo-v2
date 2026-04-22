@@ -67,7 +67,9 @@ export class AiPanelService {
     const lower = userInput.toLowerCase();
     let response = '';
 
-    if (lower.includes('inventario') || lower.includes('stock')) {
+    if (lower.includes('margen') || lower.includes('margin')) {
+      response = 'Tu campeón de **abril** fue la **Milanesa Napolitana** 🥇\n\n• **Margen bruto**: 68% (vs. 61% en marzo)\n• **Unidades vendidas**: 312\n• **Aporte total**: $ 1.248.000\n\nSubió 14% en ventas desde la última actualización de precios. Te recomendaría reforzar stock de **muzzarella** y **jamón cocido** antes del fin de semana — van camino a crítico.\n\n¿Querés ver los 5 platos con mejor margen?';
+    } else if (lower.includes('inventario') || lower.includes('stock')) {
       response = 'En el módulo de **Inventario** podés:\n\n• Ver el stock actual de todos los insumos\n• Registrar movimientos de entrada y salida\n• Configurar alertas de stock mínimo\n• Ver transformaciones entre insumos\n\n¿Querés que te guíe a alguna sección específica?';
     } else if (lower.includes('venta') || lower.includes('ventas')) {
       response = 'El módulo de **Ventas** te permite:\n\n• Consultar ventas por período\n• Ver comprobantes emitidos (facturas, notas de crédito)\n• Analizar métricas con gráficos interactivos\n• Filtrar por tipo de comprobante y estado\n\n¿Necesitás algo en particular?';

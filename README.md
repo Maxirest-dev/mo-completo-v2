@@ -41,11 +41,11 @@ Clonado de [mo-completo-v1](https://github.com/Maxirest-dev/mo-completo-v1) (com
 
 ## 📝 Últimos cambios
 
-### 2026-04-14
+### 2026-04-24
 
 **Commits incluidos:**
-- b1a3093 feat: add interactive help system — contextual tours, spotlight search, help dropdown
-- 2e404b5 feat: migrate marketplace cards + wizard to Mis Productos, polish PdV auditoría
+- 3c210cd feat(marketplaces): rework Pedidos Ya wizard + promote Mis Productos to header as Tienda
+- 41568ba feat(ai-panel): add Maxi vendor response for margin question
 
 **Archivos modificados:**
-  - `.ts`: header.component.ts, layout.component.ts, tour-overlay.component.ts, public-api.ts, tour.service.ts
+  - `.ts`: header.component.ts, app.routes.ts, paso-identificacion-tienda.component.ts, paso1-contratacion.component.ts, paso2-configuracion.component.ts, paso3-confirmacion.component.ts, wizard-container.component.ts, wizard-exito.component.ts, wizard-stepper.component.ts, marketplaces-mock.data.ts, marketplaces.service.ts, marketplaces.models.ts, marketplaces.facade.ts, mi-cuenta.component.ts, productos.component.ts

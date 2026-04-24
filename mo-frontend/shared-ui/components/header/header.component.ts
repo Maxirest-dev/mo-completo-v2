@@ -114,6 +114,13 @@ interface Brand {
               </div>
             }
           </div>
+
+          <a routerLink="/mis-productos" routerLinkActive="nav-item-active" class="nav-item nav-item-icon" title="Mis Productos" aria-label="Mis Productos">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
+              <path d="M3 9h18l-1.5 11a2 2 0 0 1-2 1.75H6.5a2 2 0 0 1-2-1.75L3 9Z" />
+              <path d="M8 9V6a4 4 0 0 1 8 0v3" />
+            </svg>
+          </a>
         </nav>
 
         <!-- Right: AI CTA + User -->
@@ -700,6 +707,18 @@ interface Brand {
     /* More menu */
     .nav-more { position: relative; }
     .nav-more .nav-item { gap: 4px; cursor: pointer; }
+
+    /* Nav icon-only button */
+    .nav-item-icon {
+      padding: 7px 10px;
+      color: rgba(255, 255, 255, 0.85);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-item-icon:hover { color: #FFFFFF; }
+    .nav-item-icon.nav-item-active { color: #FFFFFF; }
+    .nav-item-icon svg { display: block; }
     .more-chevron { transition: transform 0.2s ease; }
     .more-chevron-open { transform: rotate(180deg); }
 

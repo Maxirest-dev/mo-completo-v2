@@ -7,14 +7,16 @@ import {
   ListaPrecios,
   MetodoAceptacionOption,
   DatosFacturacion,
-  ResultadoActivacion
+  ResultadoActivacion,
+  Sucursal
 } from '../models/marketplaces.models';
 import {
   MOCK_PRODUCTOS_HARDWARE,
   MOCK_SOLUCIONES,
   MOCK_LISTAS_PRECIOS,
   MOCK_METODOS_ACEPTACION,
-  MOCK_DATOS_FACTURACION
+  MOCK_DATOS_FACTURACION,
+  MOCK_SUCURSALES
 } from './marketplaces-mock.data';
 
 @Injectable({ providedIn: 'root' })
@@ -40,6 +42,13 @@ export class MarketplacesService {
   }
 
   // ============== WIZARD PEDIDOS YA ==============
+
+  listarSucursales(): Observable<Sucursal[]> {
+    if (this.useMock) {
+      return of([...MOCK_SUCURSALES]).pipe(delay(150));
+    }
+    return this.http.get<Sucursal[]>(`${this.baseUrl}/marketplaces/sucursales`);
+  }
 
   listarListasPrecios(): Observable<ListaPrecios[]> {
     if (this.useMock) {

@@ -33,6 +33,21 @@ export interface Solucion {
 
 // --- Wizard Pedidos Ya ---
 
+export interface Sucursal {
+  id: string;
+  codigo: string;
+  nombre: string;
+  marca: string;
+}
+
+export type TipoIdentificacionTienda = 'existente' | 'nueva';
+
+export interface IdentificacionTienda {
+  sucursal: Sucursal | null;
+  tipo: TipoIdentificacionTienda | null;
+  idTienda: string;
+}
+
 export interface ListaPrecios {
   id: number;
   nombre: string;
@@ -61,6 +76,7 @@ export interface DatosFacturacion {
 export type EstadoIntegracion =
   | 'idle'
   | 'contratacion'
+  | 'identificacion'
   | 'configuracion'
   | 'confirmacion'
   | 'activando'

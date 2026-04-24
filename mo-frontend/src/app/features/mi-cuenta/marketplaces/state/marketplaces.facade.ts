@@ -10,7 +10,10 @@ import {
   DatosFacturacion,
   ConfiguracionPedidosYa,
   EstadoIntegracion,
-  ResultadoActivacion
+  ResultadoActivacion,
+  IdentificacionTienda,
+  TipoIdentificacionTienda,
+  Sucursal
 } from '../models/marketplaces.models';
 
 @Injectable({ providedIn: 'root' })
@@ -36,6 +39,12 @@ export class MarketplacesFacade {
     metodoAceptacion: null,
     terminosAceptados: false
   });
+  private _identificacion = signal<IdentificacionTienda>({
+    sucursal: null,
+    tipo: null,
+    idTienda: ''
+  });
+  private _sucursales = signal<Sucursal[]>([]);
   private _resultadoActivacion = signal<ResultadoActivacion | null>(null);
 
   // ============== SELECTORES PUBLICOS (READONLY) ==============
@@ -49,6 +58,8 @@ export class MarketplacesFacade {
   readonly metodosAceptacion = this._metodosAceptacion.asReadonly();
   readonly datosFacturacion = this._datosFacturacion.asReadonly();
   readonly configuracion = this._configuracion.asReadonly();
+  readonly identificacion = this._identificacion.asReadonly();
+  readonly sucursales = this._sucursales.asReadonly();
   readonly resultadoActivacion = this._resultadoActivacion.asReadonly();
 
   // ============== SELECTORES COMPUTADOS ==============
@@ -60,6 +71,14 @@ export class MarketplacesFacade {
   readonly configuracionValida = computed(() => {
     const config = this._configuracion();
     return config.listaPrecios !== null && config.metodoAceptacion !== null;
+  });
+
+  readonly identificacionValida = computed(() => {
+    const ident = this._identificacion();
+    if (ident.sucursal === null) return false;
+    if (ident.tipo === 'nueva') return true;
+    if (ident.tipo === 'existente') return ident.idTienda.trim().length > 0;
+    return false;
   });
 
   readonly puedeActivar = computed(() => {
@@ -105,10 +124,33 @@ export class MarketplacesFacade {
       metodoAceptacion: null,
       terminosAceptados: false
     });
+    this._identificacion.set({
+      sucursal: null,
+      tipo: null,
+      idTienda: ''
+    });
     this._resultadoActivacion.set(null);
   }
 
+  async avanzarAIdentificacion(): Promise<void> {
+    this._estadoIntegracion.set('identificacion');
+    if (this._sucursales().length === 0) {
+      try {
+        const sucursales = await firstValueFrom(this.service.listarSucursales());
+        this._sucursales.set(sucursales);
+        // Autoselección si solo hay una sucursal
+        if (sucursales.length === 1 && this._identificacion().sucursal === null) {
+          this._identificacion.update(i => ({ ...i, sucursal: sucursales[0] }));
+        }
+      } catch (err) {
+        console.error('Error al cargar sucursales', err);
+        this.notificationService.error('Error al cargar las sucursales');
+      }
+    }
+  }
+
   async avanzarAConfiguracion(): Promise<void> {
+    if (!this.identificacionValida()) return;
     this._estadoIntegracion.set('configuracion');
     // Load wizard data if not loaded
     if (this._listasPrecios().length === 0) {
@@ -138,6 +180,10 @@ export class MarketplacesFacade {
     this._estadoIntegracion.set('contratacion');
   }
 
+  volverAIdentificacion(): void {
+    this._estadoIntegracion.set('identificacion');
+  }
+
   volverAConfiguracion(): void {
     this._estadoIntegracion.set('configuracion');
   }
@@ -165,6 +211,11 @@ export class MarketplacesFacade {
       metodoAceptacion: null,
       terminosAceptados: false
     });
+    this._identificacion.set({
+      sucursal: null,
+      tipo: null,
+      idTienda: ''
+    });
     this._resultadoActivacion.set(null);
   }
 
@@ -174,11 +225,40 @@ export class MarketplacesFacade {
     this._configuracion.update(c => ({ ...c, listaPrecios: lista }));
   }
 
+  crearListaPrecios(nombre: string, basadaEnId: number): void {
+    const base = this._listasPrecios().find(l => l.id === basadaEnId);
+    const nextId = Math.max(0, ...this._listasPrecios().map(l => l.id)) + 1;
+    const nuevaLista: ListaPrecios = {
+      id: nextId,
+      nombre: nombre.trim(),
+      productosSincronizados: base?.productosSincronizados ?? 0
+    };
+    this._listasPrecios.update(list => [...list, nuevaLista]);
+    this._configuracion.update(c => ({ ...c, listaPrecios: nuevaLista }));
+    this.notificationService.success(`Lista "${nuevaLista.nombre}" creada y seleccionada`);
+  }
+
   setMetodoAceptacion(metodo: MetodoAceptacionOption): void {
     this._configuracion.update(c => ({ ...c, metodoAceptacion: metodo }));
   }
 
   setTerminosAceptados(aceptados: boolean): void {
     this._configuracion.update(c => ({ ...c, terminosAceptados: aceptados }));
+  }
+
+  setTipoIdentificacion(tipo: TipoIdentificacionTienda): void {
+    this._identificacion.update(i => ({
+      ...i,
+      tipo,
+      idTienda: tipo === 'nueva' ? '' : i.idTienda
+    }));
+  }
+
+  setIdTienda(idTienda: string): void {
+    this._identificacion.update(i => ({ ...i, idTienda }));
+  }
+
+  setSucursal(sucursal: Sucursal): void {
+    this._identificacion.update(i => ({ ...i, sucursal }));
   }
 }

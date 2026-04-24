@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { ProductoCardComponent } from './marketplaces/components/catalogo/producto-card.component';
 import { SolucionCardComponent } from './marketplaces/components/catalogo/solucion-card.component';
 import { WizardContainerComponent } from './marketplaces/components/wizard/wizard-container.component';
@@ -16,13 +15,8 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
     <div class="productos-page">
       <!-- Header -->
       <div class="page-header">
-        <button class="back-btn" (click)="goBack()" aria-label="Volver a mi cuenta">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="20" height="20" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
-        </button>
         <div class="title-section">
-          <h1 class="page-title">Mis Productos</h1>
+          <h1 class="page-title">Tienda</h1>
           <p class="page-subtitle">Contrata integraciones y productos para potenciar tu restaurante</p>
         </div>
       </div>
@@ -33,27 +27,20 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
           <p>Cargando catálogo...</p>
         </div>
       } @else {
-        <!-- Productos Hardware -->
-        <section class="section">
-          <h2 class="section-title">Productos</h2>
-          <p class="section-subtitle">Hardware y terminales para tu negocio</p>
-          <div class="productos-grid">
-            @for (producto of facade.productosHardware(); track producto.id) {
-              <app-producto-card [producto]="producto" (conocerMas)="onConocerMasProducto($event)" />
-            }
-          </div>
-        </section>
-
-        <!-- Soluciones / Integraciones -->
-        <section class="section">
-          <h2 class="section-title">Soluciones</h2>
-          <p class="section-subtitle">Integraciones con plataformas externas y herramientas digitales</p>
-          <div class="soluciones-grid">
-            @for (solucion of facade.soluciones(); track solucion.id) {
-              <app-solucion-card [solucion]="solucion" (conocerMas)="onConocerMasSolucion($event)" />
-            }
-          </div>
-        </section>
+        <div class="catalogo-grid">
+          @for (producto of facade.productosHardware(); track producto.id) {
+            <app-producto-card
+              class="catalogo-item catalogo-item--destacado"
+              [producto]="producto"
+              (conocerMas)="onConocerMasProducto($event)" />
+          }
+          @for (solucion of facade.soluciones(); track solucion.id) {
+            <app-solucion-card
+              class="catalogo-item"
+              [solucion]="solucion"
+              (conocerMas)="onConocerMasSolucion($event)" />
+          }
+        </div>
       }
 
       <!-- Wizard Overlay -->
@@ -73,27 +60,6 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
       margin-bottom: 32px;
     }
 
-    .back-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      background: white;
-      border: 1px solid var(--slate-200, #E2E8F0);
-      border-radius: var(--radius-md, 10px);
-      color: var(--slate-700, #314158);
-      cursor: pointer;
-      transition: all 0.15s ease;
-      margin-top: 4px;
-    }
-
-    .back-btn:hover {
-      background: var(--slate-50, #F8FAFC);
-      border-color: var(--slate-300, #CBD5E1);
-    }
-
     .page-title {
       font-size: 26px;
       font-weight: 700;
@@ -108,46 +74,23 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
     }
 
     /* Sections */
-    .section {
-      margin-bottom: 32px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--slate-900, #0F172B);
-      margin: 0 0 4px;
-    }
-
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--slate-500, #64748B);
-      margin: 0 0 16px;
-    }
-
-    /* Grids */
-    .productos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
-    }
-
-    .soluciones-grid {
+    /* Grid unificado — todas las cards con el mismo ancho */
+    .catalogo-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
+      align-items: stretch;
     }
+    .catalogo-item { display: flex; }
 
     @media (max-width: 1200px) {
-      .soluciones-grid { grid-template-columns: repeat(3, 1fr); }
+      .catalogo-grid { grid-template-columns: repeat(3, 1fr); }
     }
-
     @media (max-width: 900px) {
-      .soluciones-grid { grid-template-columns: repeat(2, 1fr); }
+      .catalogo-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 600px) {
-      .soluciones-grid { grid-template-columns: 1fr; }
+      .catalogo-grid { grid-template-columns: 1fr; }
     }
 
     /* Producto Card (hardware - colored) */
@@ -159,6 +102,7 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
 
     :host ::ng-deep .producto-card__label {
@@ -261,6 +205,7 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
       display: flex;
       flex-direction: column;
       transition: all 0.15s ease;
+      width: 100%;
     }
 
     :host ::ng-deep .solucion-card:hover {
@@ -416,6 +361,7 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       animation: slideUp 0.25s ease;
     }
+    :host ::ng-deep .wizard-modal--compact { max-width: 440px; }
 
     :host ::ng-deep .wizard-header {
       display: flex;
@@ -489,8 +435,12 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
     :host ::ng-deep .config-label { display: block; font-size: 14px; font-weight: 600; color: #0F172B; margin-bottom: 8px; }
     :host ::ng-deep .config-sublabel { font-size: 13px; color: #64748B; margin-bottom: 12px; }
     :host ::ng-deep .config-select {
-      width: 100%; padding: 10px 14px; border: 1px solid #E5E7EB; border-radius: 8px;
+      width: 100%; padding: 10px 40px 10px 14px; border: 1px solid #E5E7EB; border-radius: 8px;
       font-size: 14px; font-family: inherit; color: #374151; background: white; cursor: pointer;
+      appearance: none; -webkit-appearance: none; -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
     }
     :host ::ng-deep .config-select:focus { outline: none; border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
     :host ::ng-deep .radio-cards { display: flex; flex-direction: column; gap: 10px; }
@@ -551,16 +501,16 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
     :host ::ng-deep .activando-subtitulo { font-size: 14px; color: #64748B; }
 
     /* Exito */
-    :host ::ng-deep .exito-container { display: flex; flex-direction: column; align-items: center; padding: 48px 32px; text-align: center; }
-    :host ::ng-deep .exito-check { width: 64px; height: 64px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 24px; animation: scaleIn 0.3s ease; }
+    :host ::ng-deep .exito-container { display: flex; flex-direction: column; align-items: center; padding: 32px 24px; text-align: center; }
+    :host ::ng-deep .exito-check { width: 56px; height: 56px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 18px; animation: scaleIn 0.3s ease; }
     @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
-    :host ::ng-deep .exito-titulo { font-size: 22px; font-weight: 700; color: #0F172B; margin: 0 0 8px; }
-    :host ::ng-deep .exito-subtitulo { font-size: 14px; color: #64748B; margin-bottom: 32px; }
+    :host ::ng-deep .exito-titulo { font-size: 20px; font-weight: 700; color: #0F172B; margin: 0 0 6px; }
+    :host ::ng-deep .exito-subtitulo { font-size: 13px; color: #64748B; margin-bottom: 22px; line-height: 1.55; }
     :host ::ng-deep .exito-checks { list-style: none; padding: 0; margin: 0 0 32px; width: 100%; max-width: 360px; }
-    :host ::ng-deep .exito-checks li { display: flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 14px; color: #374151; border-bottom: 1px solid #F1F5F9; }
+    :host ::ng-deep .exito-checks li { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 0; font-size: 14px; color: #374151; border-bottom: 1px solid #F1F5F9; }
     :host ::ng-deep .exito-checks li:last-child { border-bottom: none; }
     :host ::ng-deep .check-icon { width: 22px; height: 22px; border-radius: 50%; background: #DCFCE7; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
-    :host ::ng-deep .exito-actions { display: flex; gap: 12px; }
+    :host ::ng-deep .exito-actions { display: flex; gap: 12px; margin-top: 24px; }
 
     /* Common buttons */
     :host ::ng-deep .btn-ghost {
@@ -617,14 +567,9 @@ import { Solucion } from './marketplaces/models/marketplaces.models';
 })
 export class ProductosComponent implements OnInit {
   readonly facade = inject(MarketplacesFacade);
-  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.facade.cargarCatalogo();
-  }
-
-  goBack(): void {
-    this.router.navigate(['/mi-cuenta']);
   }
 
   onConocerMasProducto(_producto: unknown): void {

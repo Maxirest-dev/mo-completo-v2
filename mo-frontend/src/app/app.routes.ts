@@ -198,6 +198,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'mis-productos',
+        loadComponent: () =>
+          import('./features/mi-cuenta/productos.component').then(
+            (m) => m.ProductosComponent
+          ),
+      },
+      {
         path: 'mi-cuenta/facturas',
         loadComponent: () =>
           import('./features/mi-cuenta/facturas.component').then(

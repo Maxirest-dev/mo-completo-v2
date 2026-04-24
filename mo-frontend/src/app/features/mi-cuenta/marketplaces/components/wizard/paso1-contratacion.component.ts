@@ -1,37 +1,21 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { MroCurrencyPipe } from '../../../../balances/pipes/currency.pipe';
 import { Solucion } from '../../models/marketplaces.models';
+import { WizardStepperComponent } from './wizard-stepper.component';
 
 @Component({
   selector: 'app-paso1-contratacion',
   standalone: true,
-  imports: [MroCurrencyPipe],
+  imports: [MroCurrencyPipe, WizardStepperComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- Stepper -->
-    <div class="pos-stepper">
-      <div class="pos-step pos-step--active">
-        <span class="pos-step-dot">1</span>
-        <span class="pos-step-label">Información</span>
-      </div>
-      <span class="pos-step-line"></span>
-      <div class="pos-step">
-        <span class="pos-step-dot">2</span>
-        <span class="pos-step-label">Configuración</span>
-      </div>
-      <span class="pos-step-line"></span>
-      <div class="pos-step">
-        <span class="pos-step-dot">3</span>
-        <span class="pos-step-label">Confirmación</span>
-      </div>
-    </div>
+    <app-wizard-stepper [steps]="stepLabels" [activeIndex]="0" />
 
     <!-- Hero -->
     <div class="pos-step-body">
       <div class="pos-hero-icon" [style.background]="solucion().iconColor">
         {{ solucion().iconText }}
       </div>
-      <h2 class="pos-hero-title">{{ solucion().nombre }}</h2>
       <p class="pos-hero-desc">{{ solucion().descripcionLarga || solucion().descripcion }}</p>
 
       <!-- Price block -->
@@ -67,25 +51,6 @@ import { Solucion } from '../../models/marketplaces.models';
   `,
   styles: [`
     :host { display: flex; flex-direction: column; flex: 1; min-height: 0; }
-
-    /* Stepper */
-    .pos-stepper {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; padding: 24px 32px 0;
-    }
-    .pos-step { display: flex; align-items: center; gap: 8px; opacity: 0.4; }
-    .pos-step--active { opacity: 1; }
-    .pos-step--done { opacity: 0.7; }
-    .pos-step-dot {
-      width: 26px; height: 26px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700;
-      background: var(--slate-200, #E2E8F0); color: var(--slate-500, #64748B);
-    }
-    .pos-step--active .pos-step-dot { background: var(--primary-blue, #1155CC); color: white; }
-    .pos-step-label { font-size: 13px; font-weight: 500; color: var(--text-secondary, #64748B); }
-    .pos-step--active .pos-step-label { color: var(--text-heading, #0F172B); }
-    .pos-step-line { width: 40px; height: 2px; background: var(--slate-200, #E2E8F0); margin: 0 12px; }
 
     /* Hero */
     .pos-step-body { padding: 24px 32px 0; }
@@ -142,6 +107,7 @@ export class Paso1ContratacionComponent {
   contratar = output<void>();
   cancelar = output<void>();
 
+  readonly stepLabels = ['Información', 'Tienda', 'Configuración', 'Confirmación'];
   readonly featureIcons = ['⚡', '📋', '🔄', '📊', '⏰', '🎁'];
 
   formatPrice(value: number): string {

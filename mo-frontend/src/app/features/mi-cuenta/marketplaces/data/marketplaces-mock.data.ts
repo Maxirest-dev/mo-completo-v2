@@ -3,7 +3,8 @@ import {
   Solucion,
   ListaPrecios,
   MetodoAceptacionOption,
-  DatosFacturacion
+  DatosFacturacion,
+  Sucursal
 } from '../models/marketplaces.models';
 
 // ============================================================
@@ -46,7 +47,7 @@ export const MOCK_SOLUCIONES: Solucion[] = [
       'Sincronizacion de menu y precios en tiempo real',
       'Reportes de ventas por plataforma'
     ],
-    descripcionLarga: 'Integra Pedidos Ya con tu sistema Maxirest y recibe todos los pedidos directamente en tu terminal de gestion. Sin tablets adicionales, sin carga manual. Tu menu se sincroniza automaticamente y los pedidos entran al flujo normal de tu cocina.'
+    descripcionLarga: 'Conectá Maxirest con PedidosYa para que todos los pedidos de la app se registren directo en tu software, agilizando la gestión y los envíos, y aumentando tus ventas.'
   },
   {
     id: 2,
@@ -150,3 +151,16 @@ export const MOCK_DATOS_FACTURACION: DatosFacturacion = {
   metodoPago: 'Debito automatico - Visa **** 4532',
   proximoCargo: '15 de Marzo 2026'
 };
+
+// ============================================================
+// Sucursales de la marca activa (mock — mismas del header)
+// ============================================================
+
+export const MOCK_SUCURSALES: Sucursal[] = [
+  { id: 'bp-c2330', codigo: 'C2330', nombre: 'Quilmes', marca: 'BIG PONS' },
+  { id: 'bp-c2326', codigo: 'C2326', nombre: 'Lomas de Zamora', marca: 'BIG PONS' },
+  { id: 'bp-c2340', codigo: 'C2340', nombre: 'Escobar', marca: 'BIG PONS' },
+  { id: 'bp-c2345', codigo: 'C2345', nombre: 'Pilar', marca: 'BIG PONS' },
+  { id: 'bp-c2350', codigo: 'C2350', nombre: 'San Isidro', marca: 'BIG PONS' },
+  { id: 'bp-c2360', codigo: 'C2360', nombre: 'Tigre', marca: 'BIG PONS' }
+];

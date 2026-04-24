@@ -5,21 +5,17 @@ import {
   ConfiguracionPedidosYa,
   DatosFacturacion
 } from '../../models/marketplaces.models';
+import { WizardStepperComponent } from './wizard-stepper.component';
 
 @Component({
   selector: 'app-paso3-confirmacion',
   standalone: true,
-  imports: [MroCurrencyPipe],
+  imports: [MroCurrencyPipe, WizardStepperComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="wizard-body">
-      <!-- Progress bar -->
-      <div class="wizard-progress">
-        <div class="progress-step progress-step--completed"></div>
-        <div class="progress-step progress-step--completed"></div>
-        <div class="progress-step progress-step--active"></div>
-      </div>
+    <app-wizard-stepper [steps]="stepLabels" [activeIndex]="3" />
 
+    <div class="wizard-body">
       <h3 class="confirm-heading">Confirmar activación</h3>
       <p class="confirm-subheading">Revisá los detalles de tu integración antes de activar</p>
 
@@ -198,6 +194,8 @@ export class Paso3ConfirmacionComponent {
   configuracion = input.required<ConfiguracionPedidosYa>();
   datosFacturacion = input.required<DatosFacturacion | null>();
   puedeActivar = input.required<boolean>();
+
+  readonly stepLabels = ['Información', 'Tienda', 'Configuración', 'Confirmación'];
 
   editar = output<void>();
   activar = output<void>();

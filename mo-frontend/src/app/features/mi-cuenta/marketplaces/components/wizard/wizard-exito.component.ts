@@ -19,36 +19,13 @@ import { ResultadoActivacion } from '../../models/marketplaces.models';
         <div class="exito-check">&#10003;</div>
         <h3 class="exito-titulo">Integracion activada con exito</h3>
         <p class="exito-subtitulo">
-          Tu restaurante ya esta conectado con Pedidos Ya.
+          Tu restaurante ya esta conectado con Pedidos Ya.<br>
           Los pedidos comenzaran a llegar a tu sistema.
         </p>
 
-        @if (resultado()) {
-          <ul class="exito-checks">
-            @if (resultado()!.sincronizacionIniciada) {
-              <li>
-                <span class="check-icon">&#10003;</span>
-                Sincronizacion de menu iniciada
-              </li>
-            }
-            @if (resultado()!.menuPublicado) {
-              <li>
-                <span class="check-icon">&#10003;</span>
-                Menu publicado en Pedidos Ya
-              </li>
-            }
-            @if (resultado()!.sistemaListo) {
-              <li>
-                <span class="check-icon">&#10003;</span>
-                Sistema listo para recibir pedidos
-              </li>
-            }
-          </ul>
-        }
-
         <div class="exito-actions">
-          <button class="btn-ghost" (click)="volverInicio.emit()">Volver al inicio</button>
-          <button class="btn-purple" (click)="verPanel.emit()">Ver panel de Pedidos Ya</button>
+          <button class="btn-ghost" (click)="cerrar.emit()">Cerrar</button>
+          <button class="btn-purple" (click)="configurarCatalogo.emit()">Configurar catálogo</button>
         </div>
       </div>
     </div>
@@ -56,6 +33,6 @@ import { ResultadoActivacion } from '../../models/marketplaces.models';
 })
 export class WizardExitoComponent {
   resultado = input.required<ResultadoActivacion | null>();
-  volverInicio = output<void>();
-  verPanel = output<void>();
+  cerrar = output<void>();
+  configurarCatalogo = output<void>();
 }

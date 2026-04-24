@@ -61,27 +61,7 @@ import { Router } from '@angular/router';
         </div>
       </div>
 
-      <!-- Row 2: 2 cards -->
-      <div class="card-item" (click)="navigate('/mi-cuenta/productos')">
-        <div class="card-left-border card-left-border--green"></div>
-        <div class="card-content">
-          <h3 class="card-title">Mis Productos</h3>
-          <p class="card-description">Descubri lo que tenemos preparado para potenciar tu restaurante, entre servicios, promociones, complementos y mas</p>
-          <div class="card-data">
-            <span class="card-label">Oferta activa</span>
-            <div class="card-data-row">
-              <span class="badge badge--green">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="12" height="12">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                16% OFF
-              </span>
-            </div>
-            <span class="card-detail">en todos y medios de pago</span>
-          </div>
-        </div>
-      </div>
-
+      <!-- Row 2: 1 card -->
       <div class="card-item" (click)="navigate('/mi-cuenta/negocio')">
         <div class="card-left-border card-left-border--blue"></div>
         <div class="card-content">
